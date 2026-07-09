@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spudlicious sitemap. OWNER TODO: replace spudlicious.bh with your real domain
+     and update <lastmod> on each deploy. This is a single-page app (SPA); the hash
+     routes below are the primary in-page destinations. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://spudlicious.bh/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://spudlicious.bh/assets/social/og-image.jpg</image:loc>
+      <image:title>Spudlicious food truck at night in Busaiteen, Bahrain</image:title>
+    </image:image>
+  </url>
+  <url><loc>https://spudlicious.bh/#menu</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://spudlicious.bh/#find-us</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://spudlicious.bh/#catering</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://spudlicious.bh/#reviews</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://spudlicious.bh/#gallery</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://spudlicious.bh/#founder</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://spudlicious.bh/#faq</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+</urlset>

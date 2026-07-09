@@ -1,0 +1,43 @@
+{
+  "name": "Spudlicious — Bahrain's Home of Loaded Potatoes",
+  "short_name": "Spudlicious",
+  "description": "Bahrain's first dedicated loaded baked potato food truck. 100% Halal, loaded to the max, made fresh in Busaiteen.",
+  "id": "/",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#05090f",
+  "theme_color": "#1C91F2",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["food", "restaurant", "shopping"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Order Now",
+      "short_name": "Order",
+      "description": "Build your spud and order via WhatsApp",
+      "url": "/?utm_source=pwa_shortcut#menu",
+      "icons": [{ "src": "assets/icons/shortcut-order.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Find Us",
+      "short_name": "Find Us",
+      "description": "Get directions to the truck in Busaiteen",
+      "url": "/?utm_source=pwa_shortcut#find-us"
+    },
+    {
+      "name": "Catering",
+      "short_name": "Catering",
+      "description": "Book Spudlicious for your event",
+      "url": "/?utm_source=pwa_shortcut#catering"
+    }
+  ]
+}

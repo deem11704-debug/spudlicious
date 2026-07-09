@@ -1,0 +1,27 @@
+# Spudlicious — robots.txt
+# OWNER TODO: replace spudlicious.bh with your real domain before launch.
+
+User-agent: *
+Allow: /
+
+# AI / LLM crawlers — explicitly welcomed for discoverability
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://spudlicious.bh/sitemap.xml
