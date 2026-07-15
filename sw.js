@@ -6,7 +6,7 @@
      • Fonts / static       → cache-first.
    Bump CACHE_VERSION on every deploy to invalidate old caches cleanly.
    ══════════════════════════════════════════════════════════════════════════ */
-const CACHE_VERSION = 'spud-v6';
+const CACHE_VERSION = 'spud-v7';
 const SHELL_CACHE   = `${CACHE_VERSION}-shell`;
 const ASSET_CACHE   = `${CACHE_VERSION}-assets`;
 
