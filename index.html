@@ -66,7 +66,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 
 <!-- Preload the LCP brand asset (Mr. Spud mascot shown in the loader/hero) -->
-<link rel="preload" as="image" href="assets/web/mascot-web.png" fetchpriority="high">
+<link rel="preload" as="image" href="assets/web/mascot-web.webp" type="image/webp" fetchpriority="high">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,8 +74,15 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="dns-prefetch" href="https://wa.me">
 <link rel="dns-prefetch" href="https://maps.google.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<!-- Fonts load async (media=print → all on load): text paints immediately with
+     system fallbacks, brand fonts swap in without ever blocking first render. -->
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript>
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</noscript>
 
 <!-- ═══ STRUCTURED DATA (JSON-LD) — Restaurant / LocalBusiness / Menu / FAQ / Org / Breadcrumb ═══ -->
 <script type="application/ld+json">
@@ -3375,10 +3382,10 @@ body.spa-account #page-account{padding-top:130px}
     <div class="lsteam"></div><div class="lsteam"></div><div class="lsteam"></div>
   </div>
   <div class="loader-logo-wrap">
-    <img class="loader-logo-img" src="assets/web/spudlicious-logo-web.png" alt="Spudlicious" draggable="false"/>
+    <img class="loader-logo-img" src="assets/web/spudlicious-logo-web.webp" alt="Spudlicious" draggable="false"/>
   </div>
   <div class="loader-mascot-wrap">
-    <img class="loader-mascot-img" src="assets/web/mascot-web.png" alt="" draggable="false" aria-hidden="true" fetchpriority="high" decoding="async"/>
+    <img class="loader-mascot-img" src="assets/web/mascot-web.webp" alt="" draggable="false" aria-hidden="true" fetchpriority="high" decoding="async"/>
   </div>
   <div class="loader-sub">Bahrain's Home of Loaded Potatoes</div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
@@ -3392,7 +3399,7 @@ body.spa-account #page-account{padding-top:130px}
   <div class="nav-inner">
     <button class="nav-logo" data-sp="" aria-label="Spudlicious — Home">
       <!-- Official Spudlicious brand logo — DO NOT replace with SVG or recreate -->
-      <img class="nav-logo-img" src="assets/web/spudlicious-logo-web.png" alt="Spudlicious" draggable="false"/>
+      <img class="nav-logo-img" src="assets/web/spudlicious-logo-web.webp" alt="Spudlicious" draggable="false"/>
     </button>
 
     <!-- Breadcrumb — visible when not on home page -->
@@ -3644,7 +3651,7 @@ body.spa-account #page-account{padding-top:130px}
           <!-- MASCOT — Official master PNG, CSS-animated. Never redraw. -->
           <div id="mascot-float">
             <div id="mascot-lean">
-              <img id="hero-mascot" class="mascot-img" src="assets/web/mascot-web.png" alt="Spudlicious Mascot" draggable="false" style="position:relative;z-index:1"/>
+              <img id="hero-mascot" class="mascot-img" src="assets/web/mascot-web.webp" alt="Spudlicious Mascot" draggable="false" style="position:relative;z-index:1"/>
             </div>
             <div id="mascot-shadow"></div>
           </div>
@@ -3794,7 +3801,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="reveal">
         <div class="about-mascot-wrap">
-          <img id="about-mascot" class="about-mascot-img" src="assets/web/mascot-web.png" alt="Spudlicious Mascot" draggable="false"/>
+          <img id="about-mascot" class="about-mascot-img" src="assets/web/mascot-web.webp" alt="Spudlicious Mascot" draggable="false"/>
         </div>
       </div>
     </div>
@@ -4096,7 +4103,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="mascot-cameo" style="width:100px;flex-shrink:0;align-self:flex-end;margin-bottom:-12px" aria-hidden="true">
         <span class="mascot-cameo-bubble" data-ar="👈 اختر بطاطسة!">👈 Choose a spud!</span>
-        <img src="assets/web/mascot-web.png" alt="" style="width:100px;transform:scaleX(-1);opacity:.9"/>
+        <img src="assets/web/mascot-web.webp" alt="" style="width:100px;transform:scaleX(-1);opacity:.9"/>
       </div>
     </div>
     </div>
@@ -4681,7 +4688,7 @@ body.spa-account #page-account{padding-top:130px}
 
     <!-- 7 · THE FUTURE / CLOSING -->
     <div class="fs-future reveal">
-      <img class="fs-future-mascot" src="assets/web/mascot-web.png" alt="" aria-hidden="true" loading="lazy" decoding="async"/>
+      <img class="fs-future-mascot" src="assets/web/mascot-web.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"/>
       <h3 class="fs-future-title" data-ar="هذه ليست نهاية القصة. إنها بدايتها.">This isn't the end of the story. It's the beginning.</h3>
       <p class="fs-future-text" data-ar="عندما تطلب من سبودلشيس، أنت لا تشتري طعامًا فحسب — أنت تنضمّ إلى رحلة. وأفضل ما فيها لم يأتِ بعد.">When you order from Spudlicious, you're not just buying food — you're joining a journey. And the best of it is still to come.</p>
       <div class="fs-signature">
@@ -4739,7 +4746,7 @@ body.spa-account #page-account{padding-top:130px}
       <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div class="mascot-cameo" style="width:90px;flex-shrink:0" aria-hidden="true">
           <span class="mascot-cameo-bubble" data-ar="📖 أقرأ التقييمات...">📖 Reading reviews...</span>
-          <img src="assets/web/mascot-web.png" alt="" style="width:90px;opacity:.92"/>
+          <img src="assets/web/mascot-web.webp" alt="" style="width:90px;opacity:.92"/>
         </div>
         <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" data-ar="⭐ اكتب تقييماً" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--blue-dark);color:#fff;border-radius:50px;font-weight:800;font-size:.85rem;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='#0a5da8'" onmouseout="this.style.background='var(--blue-dark)'">⭐ Write a Review</a>
       </div>
@@ -4837,7 +4844,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="mascot-cameo" style="width:82px;flex-shrink:0" aria-hidden="true">
         <span class="mascot-cameo-bubble" data-ar="🤔 اسأل!">🤔 Ask away!</span>
-        <img src="assets/web/mascot-web.png" alt="" style="width:82px;opacity:.85"/>
+        <img src="assets/web/mascot-web.webp" alt="" style="width:82px;opacity:.85"/>
       </div>
     </div>
     <div class="faq-list">
@@ -7459,12 +7466,12 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 
 <!-- AI Food Assistant -->
 <button id="ai-fab" aria-label="Chat with The Spud Guy" title="Chat with The Spud Guy — tap and I'll talk!">
-  <img class="ai-fab-avatar" src="assets/founder/poses/reactions/expression-16-hackett-02.png" alt="" draggable="false" onerror="this.style.display='none';this.parentNode.insertBefore(document.createTextNode('🥔'),this)"/>
+  <img class="ai-fab-avatar" src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.insertBefore(document.createTextNode('🥔'),this)}"/>
   <span class="ai-fab-badge" id="ai-fab-badge" aria-hidden="true">AI</span>
 </button>
 <div id="ai-panel" role="dialog" aria-label="The Spud Guy — Spudlicious assistant" aria-modal="true">
   <div class="ai-panel-header">
-    <div class="ai-avatar"><img src="assets/founder/poses/reactions/expression-16-hackett-02.png" alt="" draggable="false" onerror="this.style.display='none';this.parentNode.textContent='🥔'"/></div>
+    <div class="ai-avatar"><img src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.textContent='🥔'}"/></div>
     <div>
       <div class="ai-name">The Spud Guy</div>
       <div class="ai-status">Online — ask me anything 🥔</div>
@@ -8452,35 +8459,35 @@ if(document.readyState === 'loading'){
   var BASE = 'assets/founder/';
   var RX = 'poses/reactions/';   /* expressions + hands + animation frames */
   var POSES = {
-    'wave':           RX + 'animation-11-hackett-v2-04.png',  /* full-body wave */
-    'point-left':     RX + 'hand-9-hackett-01.png',
-    'point-right':    RX + 'hand-9-hackett-02.png',
-    'double-point':   RX + 'hand-9-hackett-05.png',
-    'holding-potato': RX + 'animation-11-hackett-v2-05.png',  /* serving pose */
-    'serving':        RX + 'animation-11-hackett-v2-05.png',
-    'celebrating':    RX + 'expression-16-hackett-09.png',    /* fist-pump */
-    'thumbs-up':      RX + 'hand-9-hackett-07.png',
-    'happy':          RX + 'expression-16-hackett-02.png',
-    'open-arms':      RX + 'animation-11-hackett-v2-01.png',  /* full-body idle */
-    'neutral':        RX + 'animation-11-hackett-v2-01.png',
-    'thinking':       RX + 'expression-16-hackett-05.png',
-    'confused':       RX + 'expression-16-hackett-06.png',
-    'cinematic':      RX + 'animation-11-hackett-v2-01.png'
+    'wave':           RX + 'animation-11-hackett-v2-04.webp',  /* full-body wave */
+    'point-left':     RX + 'hand-9-hackett-01.webp',
+    'point-right':    RX + 'hand-9-hackett-02.webp',
+    'double-point':   RX + 'hand-9-hackett-05.webp',
+    'holding-potato': RX + 'animation-11-hackett-v2-05.webp',  /* serving pose */
+    'serving':        RX + 'animation-11-hackett-v2-05.webp',
+    'celebrating':    RX + 'expression-16-hackett-09.webp',    /* fist-pump */
+    'thumbs-up':      RX + 'hand-9-hackett-07.webp',
+    'happy':          RX + 'expression-16-hackett-02.webp',
+    'open-arms':      RX + 'animation-11-hackett-v2-01.webp',  /* full-body idle */
+    'neutral':        RX + 'animation-11-hackett-v2-01.webp',
+    'thinking':       RX + 'expression-16-hackett-05.webp',
+    'confused':       RX + 'expression-16-hackett-06.webp',
+    'cinematic':      RX + 'animation-11-hackett-v2-01.webp'
   };
   /* Intrinsic pixel dimensions per source file — lets the browser reserve the
      correct aspect box before load, eliminating layout shift (CLS). */
   var POSE_DIMS = {
-    'animation-11-hackett-v2-04.png':[290,969],
-    'animation-11-hackett-v2-05.png':[300,990],
-    'animation-11-hackett-v2-01.png':[299,969],
-    'expression-16-hackett-09.png':[429,657],
-    'expression-16-hackett-02.png':[429,657],
-    'expression-16-hackett-05.png':[429,657],
-    'expression-16-hackett-06.png':[429,657],
-    'hand-9-hackett-01.png':[429,657],
-    'hand-9-hackett-02.png':[429,657],
-    'hand-9-hackett-05.png':[429,657],
-    'hand-9-hackett-07.png':[429,657]
+    'animation-11-hackett-v2-04.webp':[290,969],
+    'animation-11-hackett-v2-05.webp':[300,990],
+    'animation-11-hackett-v2-01.webp':[299,969],
+    'expression-16-hackett-09.webp':[429,657],
+    'expression-16-hackett-02.webp':[429,657],
+    'expression-16-hackett-05.webp':[429,657],
+    'expression-16-hackett-06.webp':[429,657],
+    'hand-9-hackett-01.webp':[429,657],
+    'hand-9-hackett-02.webp':[429,657],
+    'hand-9-hackett-05.webp':[429,657],
+    'hand-9-hackett-07.webp':[429,657]
   };
 
   /* ── Wire up every .spud-founder element ── */
@@ -8496,6 +8503,12 @@ if(document.readyState === 'loading'){
       if (dims) { img.setAttribute('width', dims[0]); img.setAttribute('height', dims[1]); }
       img.src = src;
       img.onerror = function() {
+        /* WebP unsupported? retry the PNG once before giving up. */
+        if (/\.webp$/.test(img.src) && !img.dataset.pngRetry) {
+          img.dataset.pngRetry = '1';
+          img.src = img.src.replace(/\.webp$/, '.png');
+          return;
+        }
         el.dataset.missing = '1';
         el.style.display = 'none';
       };
@@ -8787,46 +8800,46 @@ var P = {
   BASE:   'assets/founder/',
   POSES:  'assets/founder/poses/',
   /* Canonical full-body / gesture poses — new Founder Library only */
-  wave:           'assets/founder/poses/reactions/animation-11-hackett-v2-04.png',
-  openArms:       'assets/founder/poses/reactions/animation-11-hackett-v2-01.png',
-  holdingPotato:  'assets/founder/poses/reactions/animation-11-hackett-v2-05.png',
-  celebrating:    'assets/founder/poses/reactions/expression-16-hackett-09.png',
-  neutral:        'assets/founder/poses/reactions/animation-11-hackett-v2-01.png',
+  wave:           'assets/founder/poses/reactions/animation-11-hackett-v2-04.webp',
+  openArms:       'assets/founder/poses/reactions/animation-11-hackett-v2-01.webp',
+  holdingPotato:  'assets/founder/poses/reactions/animation-11-hackett-v2-05.webp',
+  celebrating:    'assets/founder/poses/reactions/expression-16-hackett-09.webp',
+  neutral:        'assets/founder/poses/reactions/animation-11-hackett-v2-01.webp',
   /* Phase 3 — reactions (expressions) */
-  exNeutral:      'assets/founder/poses/reactions/expression-16-hackett-01.png',
-  exHappy:        'assets/founder/poses/reactions/expression-16-hackett-02.png',
-  exSmile:        'assets/founder/poses/reactions/expression-16-hackett-03.png',
-  exLaugh:        'assets/founder/poses/reactions/expression-16-hackett-04.png',
-  exThinking:     'assets/founder/poses/reactions/expression-16-hackett-05.png',
-  exConfused:     'assets/founder/poses/reactions/expression-16-hackett-06.png',
-  exCurious:      'assets/founder/poses/reactions/expression-16-hackett-07.png',
-  exDetermined:   'assets/founder/poses/reactions/expression-16-hackett-08.png',
-  exCelebrating:  'assets/founder/poses/reactions/expression-16-hackett-09.png',
-  exShocked:      'assets/founder/poses/reactions/expression-16-hackett-10.png',
-  exEmbarrassed:  'assets/founder/poses/reactions/expression-16-hackett-11.png',
-  exProud:        'assets/founder/poses/reactions/expression-16-hackett-12.png',
-  exExcited:      'assets/founder/poses/reactions/expression-16-hackett-13.png',
-  exFocused:      'assets/founder/poses/reactions/expression-16-hackett-14.png',
-  exFrustrated:   'assets/founder/poses/reactions/expression-16-hackett-15.png',
-  exPlayful:      'assets/founder/poses/reactions/expression-16-hackett-16.png',
+  exNeutral:      'assets/founder/poses/reactions/expression-16-hackett-01.webp',
+  exHappy:        'assets/founder/poses/reactions/expression-16-hackett-02.webp',
+  exSmile:        'assets/founder/poses/reactions/expression-16-hackett-03.webp',
+  exLaugh:        'assets/founder/poses/reactions/expression-16-hackett-04.webp',
+  exThinking:     'assets/founder/poses/reactions/expression-16-hackett-05.webp',
+  exConfused:     'assets/founder/poses/reactions/expression-16-hackett-06.webp',
+  exCurious:      'assets/founder/poses/reactions/expression-16-hackett-07.webp',
+  exDetermined:   'assets/founder/poses/reactions/expression-16-hackett-08.webp',
+  exCelebrating:  'assets/founder/poses/reactions/expression-16-hackett-09.webp',
+  exShocked:      'assets/founder/poses/reactions/expression-16-hackett-10.webp',
+  exEmbarrassed:  'assets/founder/poses/reactions/expression-16-hackett-11.webp',
+  exProud:        'assets/founder/poses/reactions/expression-16-hackett-12.webp',
+  exExcited:      'assets/founder/poses/reactions/expression-16-hackett-13.webp',
+  exFocused:      'assets/founder/poses/reactions/expression-16-hackett-14.webp',
+  exFrustrated:   'assets/founder/poses/reactions/expression-16-hackett-15.webp',
+  exPlayful:      'assets/founder/poses/reactions/expression-16-hackett-16.webp',
   /* Phase 3 — hands (pointing) */
-  handPointLeft:  'assets/founder/poses/reactions/hand-9-hackett-01.png',
-  handPointRight: 'assets/founder/poses/reactions/hand-9-hackett-02.png',
-  handPointUp:    'assets/founder/poses/reactions/hand-9-hackett-03.png',
-  handPointDown:  'assets/founder/poses/reactions/hand-9-hackett-04.png',
-  handDoublePoint:'assets/founder/poses/reactions/hand-9-hackett-05.png',
-  handOpen:       'assets/founder/poses/reactions/hand-9-hackett-06.png',
-  handThumbsUp:   'assets/founder/poses/reactions/hand-9-hackett-07.png',
-  handWave:       'assets/founder/poses/reactions/hand-9-hackett-v2-01.png',
+  handPointLeft:  'assets/founder/poses/reactions/hand-9-hackett-01.webp',
+  handPointRight: 'assets/founder/poses/reactions/hand-9-hackett-02.webp',
+  handPointUp:    'assets/founder/poses/reactions/hand-9-hackett-03.webp',
+  handPointDown:  'assets/founder/poses/reactions/hand-9-hackett-04.webp',
+  handDoublePoint:'assets/founder/poses/reactions/hand-9-hackett-05.webp',
+  handOpen:       'assets/founder/poses/reactions/hand-9-hackett-06.webp',
+  handThumbsUp:   'assets/founder/poses/reactions/hand-9-hackett-07.webp',
+  handWave:       'assets/founder/poses/reactions/hand-9-hackett-v2-01.webp',
   /* Phase 3 — animation frames (full body) */
-  animIdle:       'assets/founder/poses/reactions/animation-11-hackett-v2-01.png',
-  animBlink:      'assets/founder/poses/reactions/animation-11-hackett-v2-02.png',
-  animWave:       'assets/founder/poses/reactions/animation-11-hackett-v2-04.png',
-  animServe:      'assets/founder/poses/reactions/animation-11-hackett-v2-05.png',
-  animDeliver:    'assets/founder/poses/reactions/animation-11-hackett-v2-06.png',
+  animIdle:       'assets/founder/poses/reactions/animation-11-hackett-v2-01.webp',
+  animBlink:      'assets/founder/poses/reactions/animation-11-hackett-v2-02.webp',
+  animWave:       'assets/founder/poses/reactions/animation-11-hackett-v2-04.webp',
+  animServe:      'assets/founder/poses/reactions/animation-11-hackett-v2-05.webp',
+  animDeliver:    'assets/founder/poses/reactions/animation-11-hackett-v2-06.webp',
   /* Phase 3 — outfits (welcome / full body neutrals) */
-  outfitPolo:     'assets/founder/poses/website/neutral-polo-blue.png',
-  outfitPolo2:    'assets/founder/poses/website/neutral-polo-blue-v2.png',
+  outfitPolo:     'assets/founder/poses/website/neutral-polo-blue.webp',
+  outfitPolo2:    'assets/founder/poses/website/neutral-polo-blue-v2.webp',
 };
 
 /* ── Scene definitions per page ──────────────────────────────────────────── */
@@ -9021,12 +9034,19 @@ PngFounderRenderer.prototype.mount = function(stageEl){
   this.img.setAttribute('draggable', 'false');
   this.img.setAttribute('loading', 'lazy');
   this.img.decoding = 'async';
+  /* WebP unsupported? swap to the PNG derivative once per pose. */
+  this.img.onerror = function(){
+    if (/\.webp$/.test(this.src) && !this.dataset.pngRetry) {
+      this.dataset.pngRetry = '1';
+      this.src = this.src.replace(/\.webp$/, '.png');
+    }
+  };
   stageEl.appendChild(this.img);
   /* expose for legacy references */
   imgEl = this.img;
 };
 PngFounderRenderer.prototype.setPose = function(src){
-  if (this.img) this.img.src = src;
+  if (this.img) { delete this.img.dataset.pngRetry; this.img.src = src; }
 };
 PngFounderRenderer.prototype.setAnimation = function(/* name */){
   /* PNG animations are driven by CSS classes on the host (see swapImg);
@@ -9121,7 +9141,15 @@ function preload(src, cb) {
   if (preloaded[src]) { if(cb) cb(); return; }
   var i = new Image();
   i.onload = function() { preloaded[src] = true; if(cb) cb(); };
-  i.onerror = function() { preloaded[src] = 'err'; if(cb) cb(); };
+  i.onerror = function() {
+    /* WebP unsupported? fall back to the PNG derivative once. */
+    if (/\.webp$/.test(i.src) && !i.dataset.pngRetry) {
+      i.dataset.pngRetry = '1';
+      i.src = i.src.replace(/\.webp$/, '.png');
+      return;
+    }
+    preloaded[src] = 'err'; if(cb) cb();
+  };
   i.src = src;
 }
 
