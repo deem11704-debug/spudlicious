@@ -67,7 +67,7 @@ self.addEventListener('fetch', (event) => {
   /* Cross-origin fonts (Google Fonts / Fontshare) → cache-first so the app
      still has its typography when offline; failures degrade to system fonts. */
   if (!sameOrigin) {
-    if (/fonts\.(googleapis|gstatic)\.com|(api|cdn)\.fontshare\.com/.test(url.hostname)) {
+    if (/fonts\.(googleapis|gstatic)\.com|api\.fontshare\.com/.test(url.hostname)) {
       event.respondWith(
         caches.open(ASSET_CACHE).then((cache) =>
           cache.match(req).then((cached) =>
