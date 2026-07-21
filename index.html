@@ -2885,6 +2885,7 @@ a.nav-dd-item{text-decoration:none;display:block}
 .kin-prep .kin-word{opacity:0}
 .kin-go .kin-word,.fw-quote.is-on .kin-word{animation:kinUp .62s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--kw,0)*.04s)}
 @keyframes kinUp{from{opacity:0;transform:translateY(.55em) rotate(2.5deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
+.kin-sr{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
 /* 3D tilt cards + light glare */
 .tilt-glare{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s ease;z-index:4;border-radius:inherit}
 .tilting{transition:transform .06s linear!important}
@@ -2901,6 +2902,34 @@ body.after-dark .hero-bg{filter:hue-rotate(-6deg) brightness(.94) saturate(1.1)}
 body.after-dark .marquee-item{text-shadow:0 0 16px rgba(255,213,179,.4)}
 @media(prefers-reduced-motion:reduce){.kin-go .kin-word,.fw-quote.is-on .kin-word{animation:none;opacity:1}.mag{transition:none}}
 
+/* ══ CINEMA LAYER II — video hero, wipes, drift, grain, ember transitions ══ */
+/* Living video hero — washed motion layer between bg and text veil */
+#hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transform:scale(1.14);filter:blur(9px) saturate(1.3) brightness(1.1) contrast(1.05);transition:opacity 2s ease .3s;pointer-events:none}
+#hero-video.on{opacity:.15}
+body.after-dark #hero-video.on{opacity:.22}
+/* Cinematic wipe reveals on editorial imagery */
+body.cine-on .wipe-img{clip-path:inset(0 100% 0 0);transition:clip-path .85s cubic-bezier(.22,1,.36,1) calc(var(--wd,0)*.07s)}
+body.cine-on .visible .wipe-img,body.cine-on .wipe-img.visible{clip-path:inset(0 0 0 0)}
+/* Slow parallax drift on large imagery */
+body.cine-on .drift-img{will-change:transform}
+/* Film grain on cinematic sections */
+#nights-editorial,#truck-live{position:relative}
+body.cine-on #hero::before,body.cine-on #founder-words::after,body.cine-on #nights-editorial::after,body.cine-on #truck-live::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grainJit 1.15s steps(2) infinite;
+}
+@keyframes grainJit{0%{transform:translate(0,0)}50%{transform:translate(-6px,4px)}100%{transform:translate(3px,-5px)}}
+/* Ember-edge page transition (n10 burn-through, brand version) */
+.spo-bar{box-shadow:inset -24px 0 28px -14px rgba(255,196,120,.55)}
+@media(prefers-reduced-motion:reduce){
+  #hero-video{display:none}
+  body.cine-on #hero::before,body.cine-on #founder-words::after,body.cine-on #nights-editorial::after,body.cine-on #truck-live::after{animation:none;display:none}
+}
+
+/* Double-founder guard: while the hero's own companion is on screen,
+   the dock FounderOS slides out (reuses .fo-host exit motion). */
+body.hero-founder-inview .fo-host.fo-visible{transform:translateX(140px);opacity:0}
 [data-spa-hidden]{
   display:none!important;
 }
@@ -7507,9 +7536,20 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       if(el.dataset.kin)return; el.dataset.kin='1';
       if(/[\u0600-\u06FF]/.test(el.textContent||''))return;
       var label=((el.innerText!==undefined?el.innerText:el.textContent)||'').replace(/\s+/g,' ').trim();
-      if(label)el.setAttribute('aria-label',label);
+      var labelAsAttr=/^H[1-6]$/.test(el.tagName);
+      if(label&&labelAsAttr)el.setAttribute('aria-label',label);
       var walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null),nodes=[],n,idx=0;
-      while((n=walker.nextNode()))if(n.nodeValue.trim())nodes.push(n);
+      while((n=walker.nextNode())){
+        if(!n.nodeValue.trim())continue;
+        /* gradient-clipped spans (accent words) must stay whole — background-clip:text
+           breaks across inline-block children and renders the text invisible. */
+        var anc=n.parentElement,skip=false;
+        while(anc&&anc!==el){
+          if(/accent|blue-line/.test(anc.className||'')){skip=true;break;}
+          anc=anc.parentElement;
+        }
+        if(!skip)nodes.push(n);
+      }
       nodes.forEach(function(tn){
         var frag=document.createDocumentFragment();
         tn.nodeValue.split(/(\s+)/).forEach(function(part){
@@ -7522,6 +7562,12 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
         });
         tn.parentNode.replaceChild(frag,tn);
       });
+      if(label&&!labelAsAttr){
+        /* blockquotes etc. can't take aria-label — give screen readers a hidden
+           copy of the text instead (the split words are aria-hidden). */
+        var sr=document.createElement('span');sr.className='kin-sr';sr.textContent=label;
+        el.insertBefore(sr,el.firstChild);
+      }
       el.classList.add('kin-prep');
     }
     function kinetic(){
@@ -7636,12 +7682,87 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       if(hr>=19||hr<3)document.body.classList.add('after-dark');
     }
 
-    function cinemaBoot(){kinetic();tilt();magnetic();steam();afterDark();}
+    /* — living video hero (lazy after load; washed; pauses off-screen) — */
+    function videoHero(){
+      if(cinReduced)return;
+      try{if(navigator.connection&&navigator.connection.saveData)return;}catch(e){}
+      var hero=document.getElementById('hero');if(!hero)return;
+      function add(){
+        if(document.getElementById('hero-video'))return;
+        var v=document.createElement('video');
+        v.id='hero-video';v.muted=true;v.loop=true;v.playsInline=true;
+        v.setAttribute('playsinline','');v.setAttribute('muted','');v.setAttribute('aria-hidden','true');
+        v.poster='assets/web/posters/serving-customer-window-long.jpg';
+        v.src='assets/web/videos/serving-customer-window-long.mp4';
+        v.addEventListener('loadeddata',function(){v.classList.add('on');},{once:true});
+        var bg=hero.querySelector('.hero-bg');
+        if(bg&&bg.nextSibling)hero.insertBefore(v,bg.nextSibling);else hero.insertBefore(v,hero.firstChild);
+        function play(){var p=v.play();if(p&&p.catch)p.catch(function(){});}
+        if('IntersectionObserver' in window){
+          new IntersectionObserver(function(es){es.forEach(function(e){
+            if(e.isIntersecting&&!document.hidden)play();else v.pause();
+          });},{threshold:.05}).observe(hero);
+        }else play();
+        document.addEventListener('visibilitychange',function(){
+          if(document.hidden)v.pause();
+          else{var r=hero.getBoundingClientRect();
+            if(r.bottom>0&&r.top<window.innerHeight&&getComputedStyle(hero).display!=='none')play();}
+        });
+      }
+      if(document.readyState==='complete')setTimeout(add,400);
+      else window.addEventListener('load',function(){setTimeout(add,400);},{once:true});
+    }
+
+    /* — cinematic wipe reveals on editorial imagery — */
+    function wipes(){
+      if(cinReduced)return;
+      var i=0;
+      document.querySelectorAll('.ne-feature img,.ne-photo img,.ks-item img,.fs-portrait img,.find-us-hero img,.catering-hero img').forEach(function(img){
+        img.classList.add('wipe-img');
+        img.style.setProperty('--wd',String(i++%6));
+      });
+    }
+
+    /* — slow parallax drift on large imagery while scrolling — */
+    function drift(){
+      if(cinReduced||!finePointer)return;
+      var els=[].slice.call(document.querySelectorAll('.ne-feature img,.fs-portrait img,.find-us-hero img,.catering-hero img'));
+      if(!els.length)return;
+      els.forEach(function(el){el.classList.add('drift-img');});
+      var ticking=false;
+      function apply(){
+        ticking=false;
+        var vh=window.innerHeight;
+        els.forEach(function(el){
+          var r=el.getBoundingClientRect();
+          if(r.bottom<0||r.top>vh||r.height===0)return;
+          var c=(r.top+r.height/2-vh/2)/vh;
+          var y=Math.max(-14,Math.min(14,-c*22));
+          el.style.transform='translate3d(0,'+y.toFixed(1)+'px,0) scale(1.07)';
+        });
+      }
+      window.addEventListener('scroll',function(){
+        if(!ticking){ticking=true;requestAnimationFrame(apply);}
+      },{passive:true});
+      apply();
+    }
+
+    function cinemaBoot(){if(!cinReduced)document.body.classList.add('cine-on');kinetic();tilt();magnetic();steam();videoHero();wipes();drift();afterDark();}
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',cinemaBoot);
     else cinemaBoot();
   })();
 
-  /* ── KONAMI CODE HOOK FOR LOYALTY ─────────────────────────── */
+  /* ── DOUBLE-FOUNDER GUARD ── hero companion vs dock FounderOS ── */
+(function(){
+  var hf=document.querySelector('.spud-founder--hero');
+  if(!hf||!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(en){
+    document.body.classList.toggle('hero-founder-inview',en[0].isIntersecting&&en[0].intersectionRatio>0.15);
+  },{threshold:[0,.15,.3]});
+  io.observe(hf);
+})();
+
+/* ── KONAMI CODE HOOK FOR LOYALTY ─────────────────────────── */
   (function(){
     var seq=[38,38,40,40,37,39,37,39,66,65],pos=0;
     document.addEventListener('keydown',function(e){
