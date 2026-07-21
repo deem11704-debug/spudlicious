@@ -2879,6 +2879,28 @@ a.nav-dd-item{text-decoration:none;display:block}
 .fs-letter-sigrole{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;color:#4d6f91;margin-top:2px}
 @media(prefers-reduced-motion:reduce){.fs-letter-paper{animation:none}.fs-letter-chev{transition:none}}
 
+/* ══ CINEMA LAYER — ported from the No10 build, zero dependencies ═════════ */
+/* Kinetic split-word titles */
+.kin-word{display:inline-block;will-change:transform}
+.kin-prep .kin-word{opacity:0}
+.kin-go .kin-word,.fw-quote.is-on .kin-word{animation:kinUp .62s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--kw,0)*.04s)}
+@keyframes kinUp{from{opacity:0;transform:translateY(.55em) rotate(2.5deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
+/* 3D tilt cards + light glare */
+.tilt-glare{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s ease;z-index:4;border-radius:inherit}
+.tilting{transition:transform .06s linear!important}
+.explore-card{position:relative}
+/* Magnetic CTAs — springy elastic return */
+.mag{will-change:transform;transition:transform .55s cubic-bezier(.34,1.8,.5,1)}
+.mag.mag-live{transition:transform .09s linear}
+/* Interactive steam field over the hero */
+#hero{position:relative}
+#hero-steam{position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:screen}
+body.steam-on .hero-particle{display:none}
+/* After dark — the site warms up when the truck fires up (7PM Bahrain) */
+body.after-dark .hero-bg{filter:hue-rotate(-6deg) brightness(.94) saturate(1.1)}
+body.after-dark .marquee-item{text-shadow:0 0 16px rgba(255,213,179,.4)}
+@media(prefers-reduced-motion:reduce){.kin-go .kin-word,.fw-quote.is-on .kin-word{animation:none;opacity:1}.mag{transition:none}}
+
 [data-spa-hidden]{
   display:none!important;
 }
@@ -7471,6 +7493,152 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?start():stop(); }); },{threshold:.25}).observe(stage);
     } else { start(); }
+  })();
+
+  /* ══ CINEMA LAYER — kinetic titles, tilt, magnetic, steam, after-dark ══
+     Ported from the No10 Lounge build (GSAP/Lenis) to pure vanilla. All effects
+     gate on prefers-reduced-motion; pointer effects gate on pointer:fine. */
+  (function(){
+    var cinReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var finePointer=window.matchMedia&&window.matchMedia('(pointer:fine)').matches;
+
+    /* — kinetic split-word titles (Arabic-safe: skips joined scripts) — */
+    function kinSplit(el){
+      if(el.dataset.kin)return; el.dataset.kin='1';
+      if(/[\u0600-\u06FF]/.test(el.textContent||''))return;
+      var label=((el.innerText!==undefined?el.innerText:el.textContent)||'').replace(/\s+/g,' ').trim();
+      if(label)el.setAttribute('aria-label',label);
+      var walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null),nodes=[],n,idx=0;
+      while((n=walker.nextNode()))if(n.nodeValue.trim())nodes.push(n);
+      nodes.forEach(function(tn){
+        var frag=document.createDocumentFragment();
+        tn.nodeValue.split(/(\s+)/).forEach(function(part){
+          if(!part)return;
+          if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));return;}
+          var w=document.createElement('span');w.className='kin-word';
+          w.setAttribute('aria-hidden','true');
+          w.style.setProperty('--kw',Math.min(idx++,12));
+          w.textContent=part;frag.appendChild(w);
+        });
+        tn.parentNode.replaceChild(frag,tn);
+      });
+      el.classList.add('kin-prep');
+    }
+    function kinetic(){
+      if(cinReduced)return;
+      var els=document.querySelectorAll('.hero-title,.section-title,.fs-headline,.fw-quote');
+      els.forEach(kinSplit);
+      if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('kin-go');});return;}
+      var kio=new IntersectionObserver(function(es){es.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('kin-go');
+          if(!e.target.classList.contains('fw-quote'))kio.unobserve(e.target);}
+      });},{threshold:.25});
+      els.forEach(function(el){kio.observe(el);});
+    }
+
+    /* — 3D tilt + glare on cards — */
+    function tilt(){
+      if(cinReduced||!finePointer)return;
+      document.querySelectorAll('.menu-card:not(.menu-card-empty),.explore-card').forEach(function(card){
+        var glare=document.createElement('div');glare.className='tilt-glare';card.appendChild(glare);
+        var raf=0;
+        card.addEventListener('pointermove',function(e){
+          cancelAnimationFrame(raf);
+          raf=requestAnimationFrame(function(){
+            var r=card.getBoundingClientRect();
+            var px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+            card.classList.add('tilting');
+            card.style.transform='perspective(900px) rotateX('+((py-.5)*-8).toFixed(2)+'deg) rotateY('+((px-.5)*10).toFixed(2)+'deg) translateY(-6px)';
+            glare.style.background='radial-gradient(circle at '+(px*100).toFixed(1)+'% '+(py*100).toFixed(1)+'%, rgba(255,240,215,.18), transparent 55%)';
+            glare.style.opacity='1';
+          });
+        });
+        card.addEventListener('pointerleave',function(){
+          cancelAnimationFrame(raf);card.classList.remove('tilting');
+          card.style.transform='';glare.style.opacity='0';
+        });
+      });
+    }
+
+    /* — magnetic CTAs — */
+    function magnetic(){
+      if(cinReduced||!finePointer)return;
+      document.querySelectorAll('.order-nav-btn,.fw-cta,#hero .btn-primary,#hero .btn-secondary').forEach(function(el){
+        el.classList.add('mag');
+        el.addEventListener('pointermove',function(e){
+          var r=el.getBoundingClientRect();
+          var x=Math.max(-10,Math.min(10,(e.clientX-r.left-r.width/2)*.22));
+          var y=Math.max(-8,Math.min(8,(e.clientY-r.top-r.height/2)*.3));
+          el.classList.add('mag-live');
+          el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';
+        });
+        el.addEventListener('pointerleave',function(){
+          el.classList.remove('mag-live');el.style.transform='';
+        });
+      });
+    }
+
+    /* — interactive steam field over the hero (their ember sim, our steam) — */
+    function steam(){
+      if(cinReduced)return;
+      var hero=document.getElementById('hero');if(!hero)return;
+      var cv=document.createElement('canvas');cv.id='hero-steam';cv.setAttribute('aria-hidden','true');
+      hero.appendChild(cv);document.body.classList.add('steam-on');
+      var ctx=cv.getContext('2d');if(!ctx)return;
+      var W,H,DPR=Math.min(window.devicePixelRatio||1,1.5);
+      function size(){var r=hero.getBoundingClientRect();
+        W=cv.width=Math.max(1,r.width*DPR);H=cv.height=Math.max(1,r.height*DPR);
+        cv.style.width=r.width+'px';cv.style.height=r.height+'px';}
+      size();window.addEventListener('resize',size,{passive:true});
+      var P=[],N=34;
+      function re(p){p.x=Math.random()*W;p.y=H+20*DPR;p.r=(14+Math.random()*26)*DPR;
+        p.vx=(Math.random()-.5)*.12*DPR;p.vy=-(.25+Math.random()*.5)*DPR;p.a=0;p.max=.05+Math.random()*.07;}
+      for(var i=0;i<N;i++){var p={};re(p);p.y=Math.random()*H;p.a=Math.random()*p.max;P.push(p);}
+      var mx=-1,my=-1;
+      hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();
+        mx=(e.clientX-r.left)*DPR;my=(e.clientY-r.top)*DPR;},{passive:true});
+      hero.addEventListener('pointerleave',function(){mx=my=-1;},{passive:true});
+      var run=false,raf;
+      function frame(){
+        if(!run)return;
+        ctx.clearRect(0,0,W,H);
+        for(var i=0;i<P.length;i++){var p=P[i];
+          if(mx>=0){var dx=p.x-mx,dy=p.y-my,d2=dx*dx+dy*dy,rad=180*DPR;
+            if(d2<rad*rad){var d=Math.sqrt(d2)||1,f=(1-d/rad)*.9*DPR;p.vx+=dx/d*f;p.vy+=dy/d*f;}}
+          p.vx*=.985;p.vy=p.vy*.985-.004*DPR;p.x+=p.vx;p.y+=p.vy;
+          if(p.a<p.max)p.a+=.0015;
+          if(p.y<-40*DPR||p.x<-60*DPR||p.x>W+60*DPR)re(p);
+          var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);
+          g.addColorStop(0,'rgba(255,250,240,'+p.a.toFixed(3)+')');
+          g.addColorStop(.6,'rgba(210,230,255,'+(p.a*.5).toFixed(3)+')');
+          g.addColorStop(1,'rgba(255,255,255,0)');
+          ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.2832);ctx.fill();}
+        raf=requestAnimationFrame(frame);
+      }
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){es.forEach(function(e){
+          var want=e.isIntersecting&&!document.hidden;
+          if(want&&!run){run=true;frame();}else if(!want){run=false;cancelAnimationFrame(raf);}
+        });},{threshold:.05}).observe(hero);
+      }else{run=true;frame();}
+      document.addEventListener('visibilitychange',function(){
+        if(document.hidden){run=false;cancelAnimationFrame(raf);}
+        else{var r=hero.getBoundingClientRect();
+          if(r.bottom>0&&r.top<window.innerHeight&&getComputedStyle(hero).display!=='none'){run=true;cancelAnimationFrame(raf);frame();}}
+      });
+    }
+
+    /* — after dark: the site warms when the truck fires up (Bahrain time) — */
+    function afterDark(){
+      var hr;
+      try{hr=+new Intl.DateTimeFormat('en-GB',{hour:'numeric',hour12:false,timeZone:'Asia/Bahrain'}).format(new Date());}
+      catch(e){hr=new Date().getHours();}
+      if(hr>=19||hr<3)document.body.classList.add('after-dark');
+    }
+
+    function cinemaBoot(){kinetic();tilt();magnetic();steam();afterDark();}
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',cinemaBoot);
+    else cinemaBoot();
   })();
 
   /* ── KONAMI CODE HOOK FOR LOYALTY ─────────────────────────── */
