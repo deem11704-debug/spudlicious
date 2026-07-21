@@ -2827,25 +2827,31 @@ a.nav-dd-item{text-decoration:none;display:block}
 .spo-bar{
   flex:1;background:var(--blue);
   transform:scaleX(0);transform-origin:left center;
-  transition:transform .38s cubic-bezier(0.22,1,0.36,1);
+  transition:transform .22s cubic-bezier(0.22,1,0.36,1);
 }
 .spo-bar-1{background:var(--blue)}
-.spo-bar-2{background:#0A5FAF;transition-delay:.04s}
-.spo-bar-3{background:var(--ink);transition-delay:.08s}
+.spo-bar-2{background:#0A5FAF;transition-delay:.03s}
+.spo-bar-3{background:var(--ink);transition-delay:.06s}
 #spa-overlay.entering .spo-bar{transform:scaleX(1)}
 #spa-overlay.leaving .spo-bar{
   transform-origin:right center;
   transform:scaleX(0);
   transition:transform .35s cubic-bezier(0.22,1,0.36,1);
 }
-#spa-overlay.leaving .spo-bar-2{transition-delay:.04s}
-#spa-overlay.leaving .spo-bar-3{transition-delay:.08s}
+#spa-overlay.leaving .spo-bar-2{transition-delay:.03s}
+#spa-overlay.leaving .spo-bar-3{transition-delay:.06s}
 @media(prefers-reduced-motion:reduce){#spa-overlay{display:none}}
 
 /* ── SPA SECTION VISIBILITY ── */
 /* Sections hidden when not on their page */
 [data-spa-hidden]{
   display:none!important;
+}
+/* During SPA navigation the incoming page appears as ONE unit — no cascading
+   box-by-box pop-in. Scroll-triggered reveals keep their normal stagger. */
+body.spa-instant .reveal,body.spa-instant .stagger,body.spa-instant .stagger>*,
+body.spa-instant .location-info,body.spa-instant .loc-card,body.spa-instant .explore-card{
+  transition-duration:.18s!important;transition-delay:0s!important;
 }
 
 /* ── MOBILE NAV — sectioned layout ── */
@@ -8003,8 +8009,8 @@ function doNavigate(page){
       if(overlay) overlay.classList.remove('leaving');
       isTransitioning = false;
       document.body.classList.remove('spa-transitioning');
-    }, 400);
-  }, 400);
+    }, 300);
+  }, 260);
 }
 
 function applyPage(page){
@@ -8052,7 +8058,21 @@ function applyPage(page){
   // Update breadcrumb
   updateBreadcrumb(page);
 
-  // Force reveal visible elements
+  // Reveal the incoming page as ONE unit — everything in view shows at once,
+  // synchronously, so boxes never pop in one over another after navigation.
+  document.body.classList.add('spa-instant');
+  var instantPass = function(){
+    document.querySelectorAll('.reveal:not(.visible),.stagger:not(.visible),.location-info:not(.visible),.explore-card:not(.visible)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight * 1.2 && r.bottom > -60) el.classList.add('visible');
+    });
+  };
+  instantPass();                                   // now
+  requestAnimationFrame(instantPass);              // after first layout
+  setTimeout(instantPass, 200);                    // after images size the layout
+  setTimeout(function(){ document.body.classList.remove('spa-instant'); }, 550);
+
+  // Safety net for anything the instant pass missed
   forceReveal();
 
   // Update scroll story rail for the current page
