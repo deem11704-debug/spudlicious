@@ -64,24 +64,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  /* Cross-origin fonts (Google Fonts / Fontshare) → cache-first so the app
-     still has its typography when offline; failures degrade to system fonts. */
-  if (!sameOrigin) {
-    if (/fonts\.(googleapis|gstatic)\.com|api\.fontshare\.com/.test(url.hostname)) {
-      event.respondWith(
-        caches.open(ASSET_CACHE).then((cache) =>
-          cache.match(req).then((cached) =>
-            cached ||
-            fetch(req).then((res) => {
-              if (res && (res.status === 200 || res.type === 'opaque')) cache.put(req, res.clone());
-              return res;
-            }).catch(() => cached)
-          )
-        )
-      );
-    }
-    return; /* all other third-party requests: let the network handle them */
-  }
+  /* Cross-origin (fonts CDNs, maps, etc.) → never intercept. The browser's own
+     HTTP cache handles fonts (long max-age); offline falls back to system fonts
+     via font-display:swap. SW interception of CORS font binaries caused
+     ERR_FAILED races — do not reintroduce it. */
+  if (!sameOrigin) return;
 
   const dest = req.destination;
 
