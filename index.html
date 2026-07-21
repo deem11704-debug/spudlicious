@@ -2844,6 +2844,41 @@ a.nav-dd-item{text-decoration:none;display:block}
 
 /* ── SPA SECTION VISIBILITY ── */
 /* Sections hidden when not on their page */
+/* ══ WORDS FROM THE FOUNDER — kinetic quote band ══════════════════════════ */
+#founder-words{background:linear-gradient(150deg,#060f20 0%,#0A2E5C 55%,#0d3a70 100%);padding:96px 24px;position:relative;overflow:hidden}
+#founder-words::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 18% 30%,rgba(28,145,242,.10) 0%,transparent 52%),radial-gradient(ellipse at 85% 75%,rgba(255,213,179,.08) 0%,transparent 48%);pointer-events:none}
+.fw-inner{max-width:900px;margin:0 auto;text-align:center;position:relative}
+.fw-mark{position:absolute;top:-58px;left:50%;transform:translateX(-50%);font-family:var(--font-head);font-size:clamp(6rem,14vw,10rem);line-height:1;background:linear-gradient(135deg,rgba(28,145,242,.5),rgba(255,213,179,.35));-webkit-background-clip:text;background-clip:text;color:transparent;pointer-events:none;user-select:none}
+.fw-stage{position:relative;min-height:clamp(120px,20vw,180px);display:flex;align-items:center;justify-content:center}
+.fw-quote{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;font-family:var(--font-head);font-weight:700;color:#fff;font-size:clamp(1.45rem,3.6vw,2.7rem);line-height:1.28;letter-spacing:-0.01em;text-wrap:balance;opacity:0;transform:translateY(16px) scale(.985);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1);pointer-events:none}
+.fw-quote.is-on{opacity:1;transform:translateY(0) scale(1)}
+.fw-attrib{margin-top:18px}
+.fw-name{display:block;font-family:var(--font-head);font-weight:600;color:var(--peach-light);font-size:1.1rem;letter-spacing:.01em}
+.fw-role{display:block;color:rgba(255,255,255,.55);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.fw-dots{display:flex;gap:7px;justify-content:center;margin-top:20px}
+.fw-dots i{width:7px;height:7px;border-radius:7px;background:rgba(255,255,255,.22);transition:all .45s cubic-bezier(.22,1,.36,1)}
+.fw-dots i.on{width:24px;background:linear-gradient(90deg,var(--blue),#7BC3FF)}
+.fw-cta{margin-top:26px;display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:11px 26px;border-radius:50px;font-family:var(--font-body);font-weight:800;font-size:.86rem;cursor:pointer;transition:all .25s}
+.fw-cta:hover{background:var(--blue-dark);border-color:var(--blue-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(28,145,242,.35)}
+@media(prefers-reduced-motion:reduce){.fw-quote{transition:none}.fw-dots i{transition:none}}
+
+/* ══ A LETTER FROM THE FOUNDER — premium stationery ══════════════════════ */
+.fs-letter-wrap{max-width:760px;margin:64px auto 0}
+.fs-letter summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 28px;border-radius:50px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.16);color:#fff;font-weight:800;font-size:.95rem;transition:all .25s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.fs-letter summary::-webkit-details-marker{display:none}
+.fs-letter summary:hover{background:rgba(28,145,242,.16);border-color:rgba(28,145,242,.4)}
+.fs-letter-seal{font-size:1.15rem}
+.fs-letter-chev{transition:transform .3s cubic-bezier(.22,1,.36,1);opacity:.7}
+.fs-letter[open] .fs-letter-chev{transform:rotate(180deg)}
+.fs-letter-paper{margin-top:20px;background:linear-gradient(178deg,#FFFDF8 0%,#FFF6EA 100%);color:var(--ink);border-radius:var(--r-lg);padding:clamp(30px,5.5vw,56px);box-shadow:0 30px 80px rgba(0,0,0,.45),0 2px 0 rgba(255,255,255,.35) inset;animation:fsLetterIn .55s cubic-bezier(.22,1,.36,1) both;text-align:left}
+@keyframes fsLetterIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.fs-letter-p{font-size:1.02rem;line-height:1.9;margin-bottom:18px;color:#1d3a5f}
+.fs-letter-first::first-letter{font-family:var(--font-head);font-weight:800;font-size:3.4em;float:left;line-height:.85;padding:4px 10px 0 0;color:var(--blue-dark)}
+.fs-letter-sig{margin-top:26px;padding-top:20px;border-top:1.5px solid rgba(10,46,92,.12)}
+.fs-letter-signame{display:block;font-family:'Clash Display',cursive;font-weight:600;font-size:1.5rem;color:var(--ink)}
+.fs-letter-sigrole{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;color:#4d6f91;margin-top:2px}
+@media(prefers-reduced-motion:reduce){.fs-letter-paper{animation:none}.fs-letter-chev{transition:none}}
+
 [data-spa-hidden]{
   display:none!important;
 }
@@ -4692,6 +4727,28 @@ body.spa-account #page-account{padding-top:130px}
       <p class="fs-vision-text" data-ar-html="أن نبني علامةً يعرفها الناس ليس فقط بطعامها الاستثنائي، بل بإبداعها، ومصداقيتها، وضيافتها الصادقة — علامةً تجمع الناس، وتخلق ذكريات، وترفع المعايير باستمرار.">To build a brand people recognize not only for exceptional food, but for creativity, reliability, and genuine hospitality — a brand that brings people together, creates memories, and keeps raising the standard.</p>
     </div>
 
+    <!-- A LETTER FROM THE FOUNDER — his complete words, as premium stationery -->
+    <div class="fs-letter-wrap reveal">
+      <details class="fs-letter" id="fs-letter">
+        <summary class="fs-letter-summary">
+          <span class="fs-letter-seal" aria-hidden="true">✉</span>
+          <span class="fs-letter-label" data-ar="اقرأ رسالة عبدالرحمن كاملة">Read Abdulrahman&rsquo;s letter in full</span>
+          <span class="fs-letter-chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="fs-letter-paper">
+          <p class="fs-letter-p fs-letter-first">Every great business begins with a simple idea. Mine started with a passion for creating something that brings people together through great food and unforgettable experiences. I wanted to take a comfort food that everyone knows and reinvent it with bold flavors, quality ingredients, and a unique identity. That idea became Spudlicious.</p>
+          <p class="fs-letter-p">I&rsquo;m Abdulrahman Alhamad, the founder of Spudlicious. By profession, I&rsquo;m an engineer, but I&rsquo;ve always had an entrepreneurial mindset. Engineering taught me to think strategically, solve problems, and pay attention to every detail, while entrepreneurship gave me the opportunity to turn creativity into reality. I&rsquo;ve always believed that success comes from combining discipline with innovation.</p>
+          <p class="fs-letter-p">Spudlicious is more than a loaded potato concept &mdash; it&rsquo;s a reflection of my commitment to quality, consistency, and customer satisfaction. From developing our recipes to building our brand, every decision is made with one goal in mind: creating an experience that keeps people coming back. Whether it&rsquo;s the first bite or the last, I want every customer to leave with a smile and a reason to return.</p>
+          <p class="fs-letter-p">Outside of business, I&rsquo;m constantly looking for ways to grow. I enjoy learning from successful entrepreneurs, exploring new business ideas, and finding inspiration in everyday experiences. I believe that great brands are never finished &mdash; they evolve through continuous improvement, listening to customers, and always striving to raise the standard.</p>
+          <p class="fs-letter-p">My vision for Spudlicious is to build a brand that people recognize not only for exceptional food but also for creativity, reliability, and genuine hospitality. This is only the beginning of the journey, and I&rsquo;m excited to continue growing Spudlicious into a name that customers trust, recommend, and proudly support for years to come.</p>
+          <div class="fs-letter-sig">
+            <span class="fs-letter-signame">Abdulrahman Alhamad</span>
+            <span class="fs-letter-sigrole">Founder &middot; Spudlicious</span>
+          </div>
+        </div>
+      </details>
+    </div>
+
     <!-- 7 · THE FUTURE / CLOSING -->
     <div class="fs-future reveal">
       <img class="fs-future-mascot" src="assets/web/mascot-web.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"/>
@@ -4959,6 +5016,26 @@ body.spa-account #page-account{padding-top:130px}
     <path class="wave-path" d="M0,0 L0,52 C360,8 720,72 1080,22 C1260,0 1380,48 1440,35 L1440,0 Z"/>
   </svg>
 </div>
+
+<!-- WORDS FROM THE FOUNDER — kinetic quote band (his verbatim words) -->
+<section id="founder-words" aria-label="Words from the founder">
+  <div class="fw-inner reveal">
+    <div class="fw-mark" aria-hidden="true">&ldquo;</div>
+    <div class="fw-stage" id="fw-stage" aria-live="polite">
+      <blockquote class="fw-quote is-on" data-fw="0">Every great business begins with a simple idea.</blockquote>
+      <blockquote class="fw-quote" data-fw="1">Success comes from combining discipline with innovation.</blockquote>
+      <blockquote class="fw-quote" data-fw="2">Great brands are never finished &mdash; they evolve.</blockquote>
+      <blockquote class="fw-quote" data-fw="3">I want every customer to leave with a smile and a reason to return.</blockquote>
+      <blockquote class="fw-quote" data-fw="4">This is only the beginning of the journey.</blockquote>
+    </div>
+    <div class="fw-attrib">
+      <span class="fw-name">Abdulrahman Alhamad</span>
+      <span class="fw-role" data-ar="المؤسس">Founder, Spudlicious</span>
+    </div>
+    <div class="fw-dots" id="fw-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+    <button class="fw-cta" onclick="spudNavigate('founder')" data-ar="اقرأ قصته ←">Read his story &rarr;</button>
+  </div>
+</section>
 
 <!-- FINAL CTA -->
 <section id="final-cta">
@@ -6798,6 +6875,9 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       setTimeout(function(){var l=document.getElementById('location')||document.getElementById('find-us');l&&l.scrollIntoView({behavior:'smooth',block:'start'});},650);
     }else if(kind==='hours'){
       addBubble("We fire up the oven every night, 7PM till midnight. Come hungry! 🕖",'bot');
+    }else if(kind==='founder'){
+      addBubble("\"This is only the beginning of the journey.\" Taking you to his story — it's a good one. 📖",'bot');
+      (window.spudNavigate?spudNavigate('founder'):(location.hash='#founder'));
     }
     renderQRs(OWNER_ACTIONS);
   }
@@ -6972,6 +7052,10 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     }
     if(/thank|thanks|great|awesome|perfect|love/.test(lower)){
       return "You're welcome! 🥔 Come hungry — we'll make sure you leave happy. Is there anything else I can help with?";
+    }
+    if(/founder|abdulrahman|owner|who.*(behind|made|started)|your story|the story/.test(lower)){
+      renderQRs([["Read his story","📖","founder"],["See the menu","🍽️","menu"]]);
+      return "\"Every great business begins with a simple idea.\" — Abdulrahman Alhamad, our founder. An engineer with an entrepreneur's mind who believes success comes from combining discipline with innovation. His full story is worth the read — tap below! 📖";
     }
     if(/hi|hello|hey|sup/.test(lower)){
       renderQRs(QUICK_REPLIES.slice(0,3));
@@ -7368,6 +7452,26 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       setTimeout(function(){window.openOrderTracker&&window.openOrderTracker();},1200);
     },{once:false});
   }
+
+  /* ── WORDS FROM THE FOUNDER — quote rotator (pauses off-screen) ── */
+  (function(){
+    var stage=document.getElementById('fw-stage'); if(!stage) return;
+    var quotes=stage.querySelectorAll('.fw-quote');
+    var dots=document.querySelectorAll('#fw-dots i');
+    if(quotes.length<2) return;
+    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var idx=0, timer=null;
+    function show(n){
+      quotes[idx].classList.remove('is-on'); if(dots[idx])dots[idx].classList.remove('on');
+      idx=n%quotes.length;
+      quotes[idx].classList.add('is-on'); if(dots[idx])dots[idx].classList.add('on');
+    }
+    function start(){ if(!timer) timer=setInterval(function(){ show(idx+1); },6500); }
+    function stop(){ clearInterval(timer); timer=null; }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?start():stop(); }); },{threshold:.25}).observe(stage);
+    } else { start(); }
+  })();
 
   /* ── KONAMI CODE HOOK FOR LOYALTY ─────────────────────────── */
   (function(){
@@ -7866,7 +7970,7 @@ var PAGE_LABELS = {
 
 /* Sections each page shows — everything else is hidden */
 var PAGE_SECTIONS = {
-  '':           ['hero','marquee-strip','stripe-hero-marquee','explore-hub','stripe-home','final-cta','wave-home-cta'],
+  '':           ['hero','marquee-strip','stripe-hero-marquee','explore-hub','stripe-home','founder-words','final-cta','wave-home-cta'],
   'menu':       ['process','cta-build','stripe-menu','menu','cta-order'],
   'story':      ['about','wave-story-1','ingredients','wave-story-2','truck-showcase','truck-live','nights-editorial','stripe-truck-why','why'],
   'founder':    ['founders'],
@@ -7925,7 +8029,7 @@ function assignRuntimeIds(){
 /* ── ALL SECTION IDS (for hiding) ── */
 var ALL_SECTION_IDS = [
   /* Home */
-  'hero','marquee-strip','stripe-hero-marquee','explore-hub','stripe-home','final-cta','wave-home-cta',
+  'hero','marquee-strip','stripe-hero-marquee','explore-hub','stripe-home','founder-words','final-cta','wave-home-cta',
   /* Menu */
   'process','cta-build','stripe-menu','menu','cta-order',
   /* Cross-page divider — always hidden */
