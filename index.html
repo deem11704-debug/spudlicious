@@ -2859,7 +2859,7 @@ a.nav-dd-item{text-decoration:none;display:block}
 .fw-inner{max-width:900px;margin:0 auto;text-align:center;position:relative}
 .fw-mark{position:absolute;top:-58px;left:50%;transform:translateX(-50%);font-family:var(--font-head);font-size:clamp(6rem,14vw,10rem);line-height:1;background:linear-gradient(135deg,rgba(28,145,242,.5),rgba(255,213,179,.35));-webkit-background-clip:text;background-clip:text;color:transparent;pointer-events:none;user-select:none}
 .fw-stage{position:relative;min-height:clamp(120px,20vw,180px);display:flex;align-items:center;justify-content:center}
-.fw-quote{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;font-family:var(--font-head);font-weight:700;color:#fff;font-size:clamp(1.45rem,3.6vw,2.7rem);line-height:1.28;letter-spacing:-0.01em;text-wrap:balance;opacity:0;transform:translateY(16px) scale(.985);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1);pointer-events:none}
+.fw-quote{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;font-family:var(--font-head);font-weight:700;color:#fff;font-size:clamp(1.45rem,3.6vw,2.7rem);line-height:1.28;letter-spacing:-0.01em;word-spacing:.1em;text-wrap:balance;opacity:0;transform:translateY(16px) scale(.985);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1);pointer-events:none}
 .fw-quote.is-on{opacity:1;transform:translateY(0) scale(1)}
 .fw-attrib{margin-top:18px}
 .fw-name{display:block;font-family:var(--font-head);font-weight:600;color:var(--peach-light);font-size:1.1rem;letter-spacing:.01em}
@@ -7587,6 +7587,16 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
         });
         tn.parentNode.replaceChild(frag,tn);
       });
+      /* in a flex/grid container every word span becomes its own item and the
+         whitespace text between them is discarded (no inter-word gaps) — keep the
+         words in one inline run so the spaces survive. Only Latin text is split, so
+         pin the run LTR — on the Arabic (RTL) page the inline-block words would
+         otherwise be laid out right-to-left and read backwards. */
+      if(/flex|grid/.test(getComputedStyle(el).display)){
+        var line=document.createElement('span');line.className='kin-line';line.dir='ltr';
+        while(el.firstChild)line.appendChild(el.firstChild);
+        el.appendChild(line);
+      }
       if(label&&!labelAsAttr){
         /* blockquotes etc. can't take aria-label — give screen readers a hidden
            copy of the text instead (the split words are aria-hidden). */
