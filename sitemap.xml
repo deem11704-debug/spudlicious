@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Spudlicious sitemap. OWNER TODO: replace spudlicious.bh with your real domain
-     and update <lastmod> on each deploy. This is a single-page app (SPA); the hash
+<!-- Spudlicious sitemap. Update <lastmod> on each deploy. This is a single-page app (SPA); the hash
      routes below are the primary in-page destinations. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://spudlicious.bh/</loc>
-    <lastmod>2026-07-01</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>

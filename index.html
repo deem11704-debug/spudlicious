@@ -1,24 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" data-loyalty="soon">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 
-<!--  ════════════════════════════════════════════════════════════════════════
-      OWNER TODO before launch: replace the canonical domain below with your
-      real live domain everywhere it appears (search this file for SITE_ORIGIN
-      and for "https://spudlicious.bh"). Also confirm the WhatsApp number,
-      geo-coordinates, and opening hours in the JSON-LD block further down.
-      Nothing here is fabricated — placeholders are clearly marked.
-      ════════════════════════════════════════════════════════════════════════ -->
 <link rel="canonical" href="https://spudlicious.bh/">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
 
 <title>Spudlicious — Bahrain's Home of Loaded Potatoes | Busaiteen Food Truck</title>
-<meta name="description" content="Bahrain's first dedicated loaded baked potato food truck. Crispy outside, impossibly fluffy inside, loaded to the max. 100% Halal. Find us in Busaiteen — order now via WhatsApp.">
-<meta name="keywords" content="spudlicious, loaded potato, baked potato, food truck Bahrain, Busaiteen, halal food, chicken bechamel, beef bechamel, potato Bahrain, street food Bahrain, loaded fries">
+<meta name="description" content="Loaded. Delicious. Legendary. Bahrain's first dedicated loaded baked potato food truck — crispy outside, fluffy inside. 100% Halal. Busaiteen — order via WhatsApp.">
+<meta name="keywords" content="spudlicious, loaded potato, baked potato, food truck Bahrain, Busaiteen, Halal food, chicken bechamel, beef bechamel, potato Bahrain, street food Bahrain, loaded fries">
 <meta name="author" content="Spudlicious">
 <meta name="publisher" content="Spudlicious">
 <meta name="rating" content="general">
@@ -33,13 +26,13 @@
 <!-- Local business / geo signals -->
 <meta name="geo.region" content="BH">
 <meta name="geo.placename" content="Busaiteen, Kingdom of Bahrain">
-<meta name="geo.position" content="26.2686034;50.5932179"><!-- OWNER TODO: confirm exact truck coordinates -->
+<meta name="geo.position" content="26.2686034;50.5932179">
 <meta name="ICBM" content="26.2686034, 50.5932179">
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="Spudlicious">
 <meta property="og:title" content="Spudlicious — Bahrain's Home of Loaded Potatoes">
-<meta property="og:description" content="Where Every Potato Becomes a Masterpiece. 100% Halal, loaded to the max, made fresh in Busaiteen. Order now via WhatsApp!">
+<meta property="og:description" content="Loaded. Delicious. Legendary. Where Every Potato Becomes a Masterpiece — 100% Halal, made fresh in Busaiteen. Order now via WhatsApp!">
 <meta property="og:type" content="restaurant.restaurant">
 <meta property="og:url" content="https://spudlicious.bh/">
 <meta property="og:locale" content="en_US">
@@ -54,7 +47,7 @@
 <!-- Twitter / X Cards -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Spudlicious — Bahrain's Home of Loaded Potatoes">
-<meta name="twitter:description" content="Where Every Potato Becomes a Masterpiece. 100% Halal, loaded to the max, made fresh in Busaiteen. Order now via WhatsApp!">
+<meta name="twitter:description" content="Loaded. Delicious. Legendary. Where Every Potato Becomes a Masterpiece — 100% Halal, made fresh in Busaiteen. Order now via WhatsApp!">
 <meta name="twitter:image" content="https://spudlicious.bh/assets/social/og-image.jpg">
 <meta name="twitter:image:alt" content="The Spudlicious food truck at night in Busaiteen, Bahrain">
 
@@ -117,9 +110,14 @@
       },
       "openingHoursSpecification": [{
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "dayOfWeek": ["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday"],
         "opens": "19:00",
-        "closes": "23:59"
+        "closes": "00:00"
+      },{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Friday"],
+        "opens": "19:00",
+        "closes": "01:00"
       }],
       "sameAs": [
         "https://www.instagram.com/spudlicious.bh/",
@@ -159,9 +157,9 @@
           "name": "Loaded Baked Potatoes",
           "hasMenuItem": [
             { "@type": "MenuItem", "name": "Chicken Béchamel", "description": "Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Beef Béchamel", "description": "Seasoned halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Chicken Ranch", "description": "Juicy chicken combined with our flavorful ranch sauce — fresh, satisfying, and totally addictive.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Beef Ranch", "description": "Perfectly seasoned halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavor.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } }
+            { "@type": "MenuItem", "name": "Beef Béchamel", "description": "Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Chicken Ranch", "description": "Juicy chicken combined with our flavourful ranch sauce — fresh, satisfying, and totally addictive.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Beef Ranch", "description": "Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } }
           ]
         },
         {
@@ -181,7 +179,7 @@
         { "@type": "Question", "name": "Is Spudlicious 100% Halal?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, absolutely. Every single ingredient — from our meats to our sauces — is 100% Halal certified. No exceptions, ever." } },
         { "@type": "Question", "name": "How do I place an order?", "acceptedAnswer": { "@type": "Answer", "text": "Add items to your cart on the website and tap Send Order via WhatsApp — we'll confirm and prepare your spud. Or visit the truck directly in Busaiteen." } },
         { "@type": "Question", "name": "Where exactly are you located?", "acceptedAnswer": { "@type": "Answer", "text": "We're based in Busaiteen, Kingdom of Bahrain. DM us on Instagram @spudlicious.bh for our exact spot each day." } },
-        { "@type": "Question", "name": "What are your opening hours?", "acceptedAnswer": { "@type": "Answer", "text": "We typically operate evenings from 7PM. Follow @spudlicious.bh on Instagram for daily updates on hours and location." } },
+        { "@type": "Question", "name": "What are your opening hours?", "acceptedAnswer": { "@type": "Answer", "text": "Our hours: Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM. Follow @spudlicious.bh on Instagram for daily location updates." } },
         { "@type": "Question", "name": "Do you cater for events?", "acceptedAnswer": { "@type": "Answer", "text": "Yes! We cater corporate events, weddings, private parties, schools, universities, and festivals. Use the booking form or WhatsApp us." } }
       ]
     },
@@ -202,6 +200,15 @@
 :focus-visible{outline:2.5px solid var(--blue,#1C91F2);outline-offset:3px;border-radius:4px}
 .skip-to-main{position:absolute;top:-100%;left:0;z-index:var(--z-a11y);background:var(--blue);color:#fff;padding:12px 24px;font-weight:700;border-radius:0 0 12px 0;text-decoration:none;transition:top .2s}
 .skip-to-main:focus{top:0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Loyalty "Coming soon" state — html[data-loyalty="soon"] until the rewards backend exists */
+html:not([data-loyalty="soon"]) .loyalty-soon{display:none!important}
+html[data-loyalty="soon"] :is(#loyalty-badge,#loyalty-panel,.rh-tier-xp,.rhe-val,.tier-xp,.rhs-tier,.rhs-xp,.rhs-bar-wrap,.rhs-next,#rh-status-widget .btn-primary){display:none!important}
+.soon-pill{display:flex;width:fit-content;align-items:center;gap:6px;margin:16px auto 0;padding:7px 16px;border-radius:50px;background:rgba(255,193,7,.16);border:1px solid rgba(255,193,7,.55);font-weight:800;font-size:.82rem;letter-spacing:.03em;color:inherit}
+.soon-pill-sm{margin:10px 0 0;padding:4px 12px;font-size:.72rem}
+.rhs-soon{font-family:var(--font-head);font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:8px}
+.rhs-soon-sub{font-size:.9rem;color:rgba(255,255,255,0.7);max-width:40ch;margin:0 auto}
+.final-cta-tagline{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;opacity:.9;margin-bottom:10px}
 :root{
   --peach:#FFD5B3;--peach-light:#FFE7C7;--blue:#1C91F2;--blue-dark:#0D6FBF;
   --ink:#0A2E5C;--white:#FFFFFF;--cream:#FFFAF4;
@@ -3261,8 +3268,8 @@ body.spa-account #page-account{padding-top:130px}
 .order-step-card p{font-size:.8rem;color:var(--text-muted);line-height:1.45;margin:0}
 
 /* ── Page: Account / Tiers ── */
-.tier-list{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:800px;margin:0 auto 40px}
-@media(max-width:700px){.tier-list{grid-template-columns:repeat(3,1fr)}}
+.tier-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:800px;margin:0 auto 40px}
+@media(max-width:700px){.tier-list{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:400px){.tier-list{grid-template-columns:1fr 1fr}}
 .tier-card{border-radius:var(--r);padding:18px 10px;text-align:center;border:2px solid transparent;transition:transform .2s}
 .tier-card:hover{transform:translateY(-3px)}
@@ -3477,7 +3484,7 @@ body.spa-account #page-account{padding-top:130px}
     <img class="loader-logo-img" src="assets/web/spudlicious-logo-web.webp" alt="Spudlicious" draggable="false"/>
   </div>
   <div class="loader-mascot-wrap">
-    <img class="loader-mascot-img" src="assets/web/mascot-web.webp" alt="" draggable="false" aria-hidden="true" fetchpriority="high" decoding="async"/>
+    <img class="loader-mascot-img" src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot" draggable="false" aria-hidden="true" fetchpriority="high" decoding="async"/>
   </div>
   <div class="loader-sub">Bahrain's Home of Loaded Potatoes</div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
@@ -3641,7 +3648,7 @@ body.spa-account #page-account{padding-top:130px}
 
 <!-- FLOAT -->
 <div id="float-cta">
-  <a class="float-btn float-wa" href="https://wa.me/97333260007" target="_blank">
+  <a class="float-btn float-wa" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer">
     <span>💬</span><span class="float-label" data-ar="واتساب">WhatsApp</span>
   </a>
   <button class="float-btn float-order" onclick="document.getElementById('cart-open-btn').click()">
@@ -3759,7 +3766,7 @@ body.spa-account #page-account{padding-top:130px}
   <div class="hero-stripe-frame"></div>
   <!-- FOUNDER — wave greeting, slides in from right after loader -->
   <div class="spud-founder spud-founder--hero" data-pose="wave" aria-hidden="true">
-    <img class="founder-img" alt="" draggable="false" />
+    <img class="founder-img" alt="Illustration of Abdulrahman Alhamad, founder of Spudlicious" draggable="false" />
   </div>
 </section>
 <div class="stripe-divider-sm"></div>
@@ -3826,6 +3833,7 @@ body.spa-account #page-account{padding-top:130px}
         <div class="ec-icon">⭐</div>
         <h3 class="ec-title" data-ar="المكافآت">Rewards</h3>
         <p class="ec-sub" data-ar="اجمع نقاطاً، افتح مستويات، واستمتع بعروض حصرية">Earn points, unlock tiers, and enjoy exclusive deals</p>
+        <div class="loyalty-soon soon-pill soon-pill-sm" data-ar="قريباً">Coming soon</div>
         <div class="ec-cta" data-ar="انضم للمكافآت →">Join Rewards →</div>
       </div>
       <div class="explore-card reveal" data-sp="catering" style="--ec-delay:.32s">
@@ -3886,7 +3894,7 @@ body.spa-account #page-account{padding-top:130px}
             <div class="stat-label" data-ar="بطاطس مميزة">Signature Spuds</div>
           </div>
           <div class="stat-card">
-            <div><span class="stat-number" data-target="1">0</span><span class="stat-suffix">st</span></div>
+            <div><span class="stat-number" data-target="1">1</span><span class="stat-suffix">st</span></div>
             <div class="stat-label" data-ar="الأول في البحرين">In Bahrain</div>
           </div>
         </div>
@@ -3926,13 +3934,13 @@ body.spa-account #page-account{padding-top:130px}
       <div class="ingr-card">
         <span class="ingr-icon">🍗</span>
         <div class="ingr-name" data-ar="دجاج حلال">Halal Chicken</div>
-        <div class="ingr-desc" data-ar="صدر دجاج حلال معتمد، متبل بمزيجنا المميز. طري وعصير، لا يجف أبداً.">Certified halal chicken breast, seasoned with our signature blend. Tender, juicy, never dry.</div>
+        <div class="ingr-desc" data-ar="صدر دجاج حلال معتمد، متبل بمزيجنا المميز. طري وعصير، لا يجف أبداً.">Certified Halal chicken breast, seasoned with our signature blend. Tender, juicy, never dry.</div>
         <span class="ingr-tag" data-ar="✓ حلال 100%">✓ 100% Halal</span>
       </div>
       <div class="ingr-card">
         <span class="ingr-icon">🥩</span>
         <div class="ingr-name" data-ar="لحم بقري حلال">Halal Beef</div>
-        <div class="ingr-desc" data-ar="لحم بقري حلال ممتاز، متبل ببطء ومطبوخ بإتقان. غني وجريء ومُشبع.">Premium halal beef, slow-seasoned and cooked to perfection. Rich, bold, deeply satisfying.</div>
+        <div class="ingr-desc" data-ar="لحم بقري حلال ممتاز، متبل ببطء ومطبوخ بإتقان. غني وجريء ومُشبع.">Premium Halal beef, slow-seasoned and cooked to perfection. Rich, bold, deeply satisfying.</div>
         <span class="ingr-tag" data-ar="✓ حلال 100%">✓ 100% Halal</span>
       </div>
       <div class="ingr-card">
@@ -3995,7 +4003,7 @@ body.spa-account #page-account{padding-top:130px}
       <p data-ar="مزينة بألواننا المميزة الزرقاء والكريمية، مضاءة تحت أضواء السلسلة كل ليلة — هذا هو المكان الذي يحدث فيه السحر. اعثر علينا في البسيتين وتذوق سبب حديث الجميع.">Dressed in our signature blue & cream, lit up under string lights every night — this is where the magic happens. Find us in Busaiteen and taste why everyone's talking.</p>
       <div class="truck-detail-chips">
         <span class="truck-chip" data-ar="📍 البسيتين، البحرين">📍 Busaiteen, Bahrain</span>
-        <span class="truck-chip" data-ar="🕖 مفتوح 7م – 12ص">🕖 Open 7PM – 12AM</span>
+        <span class="truck-chip" data-ar="🕖 السبت – الخميس 7:00م – 12:00ص · الجمعة 7:00م – 1:00ص">🕖 Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM</span>
         <span class="truck-chip" data-ar="🌿 حلال 100%">🌿 100% Halal</span>
         <span class="truck-chip" data-ar="⭐ الأول في البحرين">⭐ Bahrain's First</span>
       </div>
@@ -4092,7 +4100,7 @@ body.spa-account #page-account{padding-top:130px}
       <div class="why-card">
         <div class="why-icon">⭐</div>
         <div class="why-title" data-ar="جودة ممتازة">Premium Quality</div>
-        <div class="why-desc" data-ar="أعلى جودة من المكونات الحلال، صلصات مصنوعة من الصفر، وصفر اختصارات.">The highest quality halal ingredients, sauces made from scratch, and zero shortcuts.</div>
+        <div class="why-desc" data-ar="أعلى جودة من المكونات الحلال، صلصات مصنوعة من الصفر، وصفر اختصارات.">The highest quality Halal ingredients, sauces made from scratch, and zero shortcuts.</div>
       </div>
       <div class="why-card">
         <div class="why-icon">📸</div>
@@ -4161,7 +4169,7 @@ body.spa-account #page-account{padding-top:130px}
     <div class="kitchen-strip reveal" aria-label="Inside the Spudlicious kitchen">
       <figure class="ks-item ks-wide">
         <img src="assets/web/truck/kitchen-baked-potato-oven-02.jpg" alt="The Spudlicious barrel oven where potatoes are baked, inside the truck kitchen" loading="lazy" decoding="async" onerror="this.closest('.ks-item').style.display='none'"/>
-        <figcaption class="ks-cap"><span class="ks-cap-tag" data-ar="الفرن">The oven</span><span class="ks-cap-title" data-ar="مخبوزة على الفحم، ليس بالميكروويف">Charcoal-baked, never microwaved</span></figcaption>
+        <figcaption class="ks-cap"><span class="ks-cap-tag" data-ar="الفرن">The oven</span><span class="sr-only">. </span><span class="ks-cap-title" data-ar="مخبوزة على الفحم، ليس بالميكروويف">Charcoal-baked, never microwaved.</span></figcaption>
       </figure>
       <figure class="ks-item">
         <img src="assets/web/truck/kitchen-oven-hood-01.jpg" alt="The extraction hood and cooking station inside the Spudlicious truck" loading="lazy" decoding="async" onerror="this.closest('.ks-item').style.display='none'"/>
@@ -4195,7 +4203,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="mascot-cameo" style="width:100px;flex-shrink:0;align-self:flex-end;margin-bottom:-12px" aria-hidden="true">
         <span class="mascot-cameo-bubble" data-ar="👈 اختر بطاطسة!">👈 Choose a spud!</span>
-        <img src="assets/web/mascot-web.webp" alt="" style="width:100px;transform:scaleX(-1);opacity:.9"/>
+        <img src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot" style="width:100px;transform:scaleX(-1);opacity:.9"/>
       </div>
     </div>
     </div>
@@ -4234,7 +4242,7 @@ body.spa-account #page-account{padding-top:130px}
         <div class="card-body">
           <div class="card-arabic">لحم بشاميل</div>
           <div class="card-name">Beef Béchamel</div>
-          <div class="card-desc">Seasoned halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.</div>
+          <div class="card-desc">Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.</div>
           <div class="card-footer">
             <div class="card-price">BHD 2.9 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Beef Béchamel',2.9,'🥩')">Add to Order</button>
@@ -4250,7 +4258,7 @@ body.spa-account #page-account{padding-top:130px}
         <div class="card-body">
           <div class="card-arabic">تشيكن رانش</div>
           <div class="card-name">Chicken Ranch</div>
-          <div class="card-desc">Juicy chicken combined with our flavorful ranch sauce — a fresh, satisfying, and totally addictive combo.</div>
+          <div class="card-desc">Juicy chicken combined with our flavourful ranch sauce — a fresh, satisfying, and totally addictive combo.</div>
           <div class="card-footer">
             <div class="card-price">BHD 2.9 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Chicken Ranch',2.9,'🤠')">Add to Order</button>
@@ -4266,7 +4274,7 @@ body.spa-account #page-account{padding-top:130px}
         <div class="card-body">
           <div class="card-arabic">لحم رانش</div>
           <div class="card-name">Beef Ranch</div>
-          <div class="card-desc">Perfectly seasoned halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavor every bite.</div>
+          <div class="card-desc">Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour every bite.</div>
           <div class="card-footer">
             <div class="card-price">BHD 2.9 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Beef Ranch',2.9,'🌶️')">Add to Order</button>
@@ -4277,7 +4285,7 @@ body.spa-account #page-account{padding-top:130px}
     </div>
 
     <div class="addons-section reveal">
-      <div class="addons-title">🧀 Customize Your Spud</div>
+      <div class="addons-title">🧀 Customise Your Spud</div>
       <div class="addons-grid">
         <div class="addon-chip" onclick="addToCart('Extra Cheese',0.3,'🧀')">🧀 Extra Cheese <strong>+ BHD 0.3</strong></div>
         <div class="addon-chip" onclick="addToCart('Jalapeños',0.2,'🌶')">🌶 Jalapeños <strong>+ BHD 0.2</strong></div>
@@ -4285,7 +4293,7 @@ body.spa-account #page-account{padding-top:130px}
     </div>
     <!-- FOUNDER — holds potato, recommends from menu -->
     <div class="spud-founder spud-founder--float" data-pose="holding-potato" aria-hidden="true" style="right:0">
-      <img class="founder-img" alt="" draggable="false" />
+      <img class="founder-img" alt="Illustration of Abdulrahman Alhamad, founder of Spudlicious" draggable="false" />
     </div>
   </div>
 </section>
@@ -4293,7 +4301,7 @@ body.spa-account #page-account{padding-top:130px}
 <!-- MINI-CTA: after menu -->
 <div class="mini-cta-strip" aria-label="Order prompt">
   <p data-ar-html="🥔 <strong>جائع؟</strong> طلبك جاهز في ~8 دقائق. اطلب الآن عبر واتساب.">🥔 <strong>Hungry?</strong> Your order is ready in ~8 minutes. Order now via WhatsApp.</p>
-  <a class="mini-cta-btn" href="https://wa.me/97333260007" target="_blank" data-ar="💬 اطلب عبر واتساب">💬 Order on WhatsApp</a>
+  <a class="mini-cta-btn" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" data-ar="💬 اطلب عبر واتساب">💬 Order on WhatsApp</a>
 </div>
 
 <div class="stripe-divider"></div>
@@ -4362,6 +4370,7 @@ body.spa-account #page-account{padding-top:130px}
       <div class="section-tag" data-ar="⭐ مكافآت البطاطس">⭐ Spud Rewards</div>
       <h2 class="section-title" data-ar="اكسب وأنت تأكل.">Earn While You Eat.</h2>
       <p class="section-sub" data-ar="كل طلب يكسبك XP. ارتقِ في المستويات. افتح امتيازات وعروضاً ومكانة أسطورية.">Every order earns you XP. Climb the tiers. Unlock exclusive perks, deals, and legendary status.</p>
+      <div class="loyalty-soon soon-pill" data-ar="🚧 قريباً — برنامج المكافآت قيد الإطلاق">🚧 Coming soon — Spud Rewards is launching shortly</div>
     </div>
 
     <!-- Loyalty tiers -->
@@ -4432,6 +4441,8 @@ body.spa-account #page-account{padding-top:130px}
     <!-- Current status widget (reads from loyalty system) -->
     <div class="rh-status reveal" id="rh-status-widget">
       <div class="rhs-label" data-ar="مستواك الحالي">Your Current Status</div>
+      <div class="loyalty-soon rhs-soon" data-ar="🚧 قريباً">🚧 Coming soon</div>
+      <p class="loyalty-soon rhs-soon-sub" data-ar="ستظهر نقاطك ومستواك هنا عند إطلاق مكافآت البطاطس.">Your XP and tier will show here once Spud Rewards launches.</p>
       <div class="rhs-tier" id="rhs-tier-display">🥔 Rookie</div>
       <div class="rhs-xp" id="rhs-xp-display">0 XP earned</div>
       <div class="rhs-bar-wrap">
@@ -4443,7 +4454,7 @@ body.spa-account #page-account{padding-top:130px}
 
     <!-- FOUNDER — celebrates with you on rewards page -->
     <div class="spud-founder spud-founder--float" data-pose="celebrating" aria-hidden="true" style="right:24px">
-      <img class="founder-img" alt="" draggable="false" />
+      <img class="founder-img" alt="Illustration of Abdulrahman Alhamad, founder of Spudlicious" draggable="false" />
     </div>
 
   </div>
@@ -4459,7 +4470,7 @@ body.spa-account #page-account{padding-top:130px}
     </div>
     <div class="insta-grid stagger">
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <div class="insta-badge">📱 REEL</div>
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -4489,7 +4500,7 @@ body.spa-account #page-account{padding-top:130px}
         </div>
       </a>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#0D6FBF"/><stop offset="100%" stop-color="#1C91F2"/></linearGradient></defs>
@@ -4512,7 +4523,7 @@ body.spa-account #page-account{padding-top:130px}
         </div>
       </a>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#15803d"/></linearGradient></defs>
@@ -4536,7 +4547,7 @@ body.spa-account #page-account{padding-top:130px}
         </div>
       </a>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <rect width="200" height="356" fill="#FFD5B3"/>
@@ -4557,7 +4568,7 @@ body.spa-account #page-account{padding-top:130px}
         </div>
       </a>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/></linearGradient></defs>
@@ -4577,7 +4588,7 @@ body.spa-account #page-account{padding-top:130px}
         </div>
       </a>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0A2E5C"/><stop offset="100%" stop-color="#1C91F2"/></linearGradient></defs>
@@ -4611,7 +4622,7 @@ body.spa-account #page-account{padding-top:130px}
     </div>
 
     <div class="insta-footer reveal" style="margin-top:36px">
-      <a class="insta-follow-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="insta-follow-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         📸 Follow @spudlicious.bh on Instagram
       </a>
     </div>
@@ -4690,7 +4701,7 @@ body.spa-account #page-account{padding-top:130px}
     <!-- FOUNDER — legacy static float superseded by FounderOS concierge (fo-host) on this page.
          Hidden to prevent two founders showing at once; kept in source per asset-preservation rule. -->
     <div class="spud-founder spud-founder--float" data-pose="open-arms" data-legacy-hidden="fo-host" aria-hidden="true" style="left:0">
-      <img class="founder-img" alt="" draggable="false" />
+      <img class="founder-img" alt="Illustration of Abdulrahman Alhamad, founder of Spudlicious" draggable="false" />
     </div>
   </div>
 </section>
@@ -4731,7 +4742,7 @@ body.spa-account #page-account{padding-top:130px}
         “Every great business begins with a simple idea. Mine started with a passion for creating something that brings people together.”
       </blockquote>
       <div class="fs-story-body reveal">
-        <p>I wanted to take a comfort food that everyone knows and reinvent it — bold flavors, quality ingredients, a real identity of its own. That idea became <strong>Spudlicious</strong>.</p>
+        <p>I wanted to take a comfort food that everyone knows and reinvent it — bold flavours, quality ingredients, a real identity of its own. That idea became <strong>Spudlicious</strong>.</p>
         <p>By profession I'm an engineer, but I've always had an entrepreneurial mind. Engineering taught me to think strategically, solve problems, and obsess over every detail. Entrepreneurship gave me the chance to turn that creativity into something real. I believe success comes from pairing discipline with innovation.</p>
         <p>Spudlicious is more than a loaded-potato concept — it's a reflection of my commitment to quality, consistency, and the people we serve. From the recipes to the brand, every decision is made with one goal: an experience that keeps people coming back. From the first bite to the last, I want every customer to leave with a smile and a reason to return.</p>
         <p>Great brands are never finished. They evolve — through continuous improvement, through listening, and through the will to keep raising the standard.</p>
@@ -4748,7 +4759,7 @@ body.spa-account #page-account{padding-top:130px}
         <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">⚙️</span><div class="fs-tl-body"><span class="fs-tl-step">01</span><h4 data-ar="مهندس">The Engineer</h4><p data-ar="تعلّمت التفكير الاستراتيجي وحل المشكلات والاهتمام بأدق التفاصيل.">Trained to think strategically, solve problems, and sweat every detail.</p></div></li>
         <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">💡</span><div class="fs-tl-body"><span class="fs-tl-step">02</span><h4 data-ar="رائد أعمال">The Entrepreneur</h4><p data-ar="عقليةٌ ريادية حوّلت الإبداع إلى واقع.">An entrepreneurial mind, turning creativity into something real.</p></div></li>
         <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">🥔</span><div class="fs-tl-body"><span class="fs-tl-step">03</span><h4 data-ar="الفكرة">The Idea</h4><p data-ar="إعادة ابتكار طعامٍ يعرفه الجميع بهوية جريئة خاصة.">Reinvent a comfort food everyone knows — with a bold identity of its own.</p></div></li>
-        <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">🧪</span><div class="fs-tl-body"><span class="fs-tl-step">04</span><h4 data-ar="تطوير الوصفات">Recipe Development</h4><p data-ar="كل صلصة، كل نكهة، مصنوعة بدقة الهندسة.">Every sauce, every flavor — developed with an engineer's precision.</p></div></li>
+        <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">🧪</span><div class="fs-tl-body"><span class="fs-tl-step">04</span><h4 data-ar="تطوير الوصفات">Recipe Development</h4><p data-ar="كل صلصة، كل نكهة، مصنوعة بدقة الهندسة.">Every sauce, every flavour — developed with an engineer's precision.</p></div></li>
         <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">🏗️</span><div class="fs-tl-body"><span class="fs-tl-step">05</span><h4 data-ar="بناء سبودلشيس">Building Spudlicious</h4><p data-ar="من الوصفة إلى العلامة — كل قرارٍ بهدفٍ واحد.">From recipe to brand — every decision made with one goal in mind.</p></div></li>
         <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">🎉</span><div class="fs-tl-body"><span class="fs-tl-step">06</span><h4 data-ar="أول العملاء">The First Customers</h4><p data-ar="أول قضمة، أول ابتسامة، أول سبب للعودة.">The first bite. The first smile. The first reason to come back.</p></div></li>
         <li class="fs-tl reveal"><span class="fs-tl-dot" aria-hidden="true">📈</span><div class="fs-tl-body"><span class="fs-tl-step">07</span><h4 data-ar="نمو العلامة">Growing the Brand</h4><p data-ar="نتطوّر بالاستماع والتحسين المستمر ورفع المعايير.">Evolving through listening, improvement, and raising the standard.</p></div></li>
@@ -4775,7 +4786,7 @@ body.spa-account #page-account{padding-top:130px}
     <!-- 6 · VISION -->
     <div class="fs-vision reveal">
       <span class="fs-kicker fs-kicker-light" data-ar="الرؤية">The vision</span>
-      <p class="fs-vision-text" data-ar-html="أن نبني علامةً يعرفها الناس ليس فقط بطعامها الاستثنائي، بل بإبداعها، ومصداقيتها، وضيافتها الصادقة — علامةً تجمع الناس، وتخلق ذكريات، وترفع المعايير باستمرار.">To build a brand people recognize not only for exceptional food, but for creativity, reliability, and genuine hospitality — a brand that brings people together, creates memories, and keeps raising the standard.</p>
+      <p class="fs-vision-text" data-ar-html="أن نبني علامةً يعرفها الناس ليس فقط بطعامها الاستثنائي، بل بإبداعها، ومصداقيتها، وضيافتها الصادقة — علامةً تجمع الناس، وتخلق ذكريات، وترفع المعايير باستمرار.">To build a brand people recognise not only for exceptional food, but for creativity, reliability, and genuine hospitality — a brand that brings people together, creates memories, and keeps raising the standard.</p>
     </div>
 
     <!-- A LETTER FROM THE FOUNDER — his complete words, as premium stationery -->
@@ -4787,11 +4798,11 @@ body.spa-account #page-account{padding-top:130px}
           <span class="fs-letter-chev" aria-hidden="true">▾</span>
         </summary>
         <div class="fs-letter-paper">
-          <p class="fs-letter-p fs-letter-first">Every great business begins with a simple idea. Mine started with a passion for creating something that brings people together through great food and unforgettable experiences. I wanted to take a comfort food that everyone knows and reinvent it with bold flavors, quality ingredients, and a unique identity. That idea became Spudlicious.</p>
+          <p class="fs-letter-p fs-letter-first">Every great business begins with a simple idea. Mine started with a passion for creating something that brings people together through great food and unforgettable experiences. I wanted to take a comfort food that everyone knows and reinvent it with bold flavours, quality ingredients, and a unique identity. That idea became Spudlicious.</p>
           <p class="fs-letter-p">I&rsquo;m Abdulrahman Alhamad, the founder of Spudlicious. By profession, I&rsquo;m an engineer, but I&rsquo;ve always had an entrepreneurial mindset. Engineering taught me to think strategically, solve problems, and pay attention to every detail, while entrepreneurship gave me the opportunity to turn creativity into reality. I&rsquo;ve always believed that success comes from combining discipline with innovation.</p>
           <p class="fs-letter-p">Spudlicious is more than a loaded potato concept &mdash; it&rsquo;s a reflection of my commitment to quality, consistency, and customer satisfaction. From developing our recipes to building our brand, every decision is made with one goal in mind: creating an experience that keeps people coming back. Whether it&rsquo;s the first bite or the last, I want every customer to leave with a smile and a reason to return.</p>
           <p class="fs-letter-p">Outside of business, I&rsquo;m constantly looking for ways to grow. I enjoy learning from successful entrepreneurs, exploring new business ideas, and finding inspiration in everyday experiences. I believe that great brands are never finished &mdash; they evolve through continuous improvement, listening to customers, and always striving to raise the standard.</p>
-          <p class="fs-letter-p">My vision for Spudlicious is to build a brand that people recognize not only for exceptional food but also for creativity, reliability, and genuine hospitality. This is only the beginning of the journey, and I&rsquo;m excited to continue growing Spudlicious into a name that customers trust, recommend, and proudly support for years to come.</p>
+          <p class="fs-letter-p">My vision for Spudlicious is to build a brand that people recognise not only for exceptional food but also for creativity, reliability, and genuine hospitality. This is only the beginning of the journey, and I&rsquo;m excited to continue growing Spudlicious into a name that customers trust, recommend, and proudly support for years to come.</p>
           <div class="fs-letter-sig">
             <span class="fs-letter-signame">Abdulrahman Alhamad</span>
             <span class="fs-letter-sigrole">Founder &middot; Spudlicious</span>
@@ -4802,7 +4813,7 @@ body.spa-account #page-account{padding-top:130px}
 
     <!-- 7 · THE FUTURE / CLOSING -->
     <div class="fs-future reveal">
-      <img class="fs-future-mascot" src="assets/web/mascot-web.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"/>
+      <img class="fs-future-mascot" src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot" aria-hidden="true" loading="lazy" decoding="async"/>
       <h3 class="fs-future-title" data-ar="هذه ليست نهاية القصة. إنها بدايتها.">This isn't the end of the story. It's the beginning.</h3>
       <p class="fs-future-text" data-ar="عندما تطلب من سبودلشيس، أنت لا تشتري طعامًا فحسب — أنت تنضمّ إلى رحلة. وأفضل ما فيها لم يأتِ بعد.">When you order from Spudlicious, you're not just buying food — you're joining a journey. And the best of it is still to come.</p>
       <div class="fs-signature">
@@ -4821,7 +4832,7 @@ body.spa-account #page-account{padding-top:130px}
   <!-- FOUNDER ANIME CHARACTER — appears below bio, above customer voices -->
   <div class="section-inner reveal" style="padding-top:0;padding-bottom:0">
     <div class="spud-founder founder-anime-wrap" data-pose="neutral" aria-hidden="true">
-      <img class="founder-img" alt="" draggable="false" />
+      <img class="founder-img" alt="Illustration of Abdulrahman Alhamad, founder of Spudlicious" draggable="false" />
     </div>
   </div>
 
@@ -4852,7 +4863,7 @@ body.spa-account #page-account{padding-top:130px}
   <div class="section-inner">
     <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px">
       <div>
-        <div class="story-arc-label" data-ar="❤️ الفصل 5 · المجتمع">❤️ Chapter 5 · Community</div>
+        <div class="story-arc-label" data-ar="❤️ الفصل 4 · المجتمع">❤️ Chapter 4 · Community</div>
         <div class="section-tag" data-ar="⭐ التقييمات">⭐ Reviews</div>
         <h2 class="section-title" data-ar-html="البحرين <span class=&quot;accent-word&quot;>مهووسة.</span>">Bahrain is <span class="accent-word">Obsessed.</span></h2>
         <p class="section-sub" data-ar="أحببت تجربتك؟ شارك رأيك الصادق على خرائط Google — هذا يعني لنا الكثير.">Loved your spuds? Share your honest experience on Google — it means the world to us.</p>
@@ -4860,7 +4871,7 @@ body.spa-account #page-account{padding-top:130px}
       <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div class="mascot-cameo" style="width:90px;flex-shrink:0" aria-hidden="true">
           <span class="mascot-cameo-bubble" data-ar="📖 أقرأ التقييمات...">📖 Reading reviews...</span>
-          <img src="assets/web/mascot-web.webp" alt="" style="width:90px;opacity:.92"/>
+          <img src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot waving" style="width:90px;opacity:.92"/>
         </div>
         <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" data-ar="⭐ اكتب تقييماً" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--blue-dark);color:#fff;border-radius:50px;font-weight:800;font-size:.85rem;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='#0a5da8'" onmouseout="this.style.background='var(--blue-dark)'">⭐ Write a Review</a>
       </div>
@@ -4915,14 +4926,14 @@ body.spa-account #page-account{padding-top:130px}
 <!-- MINI-CTA: after reviews -->
 <div class="mini-cta-strip" aria-label="Community prompt">
   <p data-ar-html="🇧🇭 <strong>انضم للمجتمع.</strong> تابعنا على إنستغرام لمحتوى البطاطس اليومي وخلف الكواليس.">🇧🇭 <strong>Join the community.</strong> Follow us on Instagram for daily spud content and behind-the-scenes.</p>
-  <a class="mini-cta-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" data-ar="📸 @spudlicious.bh">📸 @spudlicious.bh</a>
+  <a class="mini-cta-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" data-ar="📸 @spudlicious.bh">📸 @spudlicious.bh</a>
 </div>
 
 <!-- Community Gallery -->
 <section id="community">
   <div class="section-inner">
     <div class="reveal">
-      <span class="story-arc-label" data-ar="الفصل 6 — المجتمع">Chapter 6 — Community</span>
+      <span class="story-arc-label" data-ar="الفصل 5 — المجتمع">Chapter 5 — Community</span>
       <p class="section-tag" data-ar="📸 معرض محبي البطاطس">📸 Spud Fans Gallery</p>
       <h2 class="section-title" data-ar-html="مجتمعنا <span class=&quot;blue-line&quot;>يعشق</span>">Our <span class="blue-line">Community</span> Loves</h2>
       <p class="section-sub" data-ar="لحظات حقيقية من محبي البطاطس الحقيقيين. ضعنا في علامتك @spudlicious.bh لتكون مميزاً.">Real moments from real spud fans. Tag us at @spudlicious.bh to be featured.</p>
@@ -4958,7 +4969,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="mascot-cameo" style="width:82px;flex-shrink:0" aria-hidden="true">
         <span class="mascot-cameo-bubble" data-ar="🤔 اسأل!">🤔 Ask away!</span>
-        <img src="assets/web/mascot-web.webp" alt="" style="width:82px;opacity:.85"/>
+        <img src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot thinking" style="width:82px;opacity:.85"/>
       </div>
     </div>
     <div class="faq-list">
@@ -4976,7 +4987,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="faq-item reveal">
         <div class="faq-q" onclick="toggleFaq(this)"><span data-ar="ما هي ساعات عملكم؟">What are your opening hours?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p data-ar="نعمل عادةً في المساء من الساعة 4 مساءً. تابع @spudlicious.bh على إنستغرام للتحديثات اليومية حول الأوقات والموقع.">We typically operate evenings from 7PM onwards. Follow @spudlicious.bh on Instagram for daily updates on hours and location.</p></div>
+        <div class="faq-a"><p data-ar="ساعات العمل: السبت – الخميس 7:00م – 12:00ص · الجمعة 7:00م – 1:00ص. تابع @spudlicious.bh على إنستغرام لتحديثات الموقع اليومية.">Our hours: Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM. Follow @spudlicious.bh on Instagram for daily location updates.</p></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-q" onclick="toggleFaq(this)"><span data-ar="هل تقدمون خدمة التموين للفعاليات؟">Do you cater for events?</span><div class="faq-icon">+</div></div>
@@ -5018,7 +5029,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="loc-icon">🕓</div>
           <div>
             <div class="loc-label" data-ar="ساعات العمل">Opening Hours</div>
-            <div class="loc-value" data-ar="مساءً من 7م · تابع إنستغرام للتحديثات">Evenings from 7PM · Follow IG for updates</div>
+            <div class="loc-value" data-ar="السبت – الخميس 7:00م – 12:00ص · الجمعة 7:00م – 1:00ص">Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM</div>
           </div>
         </div>
         <div class="loc-card">
@@ -5032,7 +5043,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="loc-icon">📱</div>
           <div>
             <div class="loc-label" data-ar="إنستغرام">Instagram</div>
-            <div class="loc-value"><a href="https://www.instagram.com/spudlicious.bh/" target="_blank" style="color:var(--blue)">@spudlicious.bh</a></div>
+            <div class="loc-value"><a href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" style="color:var(--blue)">@spudlicious.bh</a></div>
           </div>
         </div>
         <div class="loc-card">
@@ -5092,6 +5103,7 @@ body.spa-account #page-account{padding-top:130px}
 <section id="final-cta">
   <div class="final-cta-inner reveal">
     <div class="final-cta-emoji steam-container">🥔<div class="steam-wisp"></div><div class="steam-wisp"></div><div class="steam-wisp"></div></div>
+    <p class="final-cta-tagline" data-ar="محملة. لذيذة. أسطورية.">Loaded. Delicious. Legendary.</p>
     <h2 class="final-cta-title" data-ar-html="جائع الآن؟<br>دعنا نحل ذلك.">Hungry Yet?<br>Let's Fix That.</h2>
     <p class="final-cta-sub" data-ar="أكثر البطاطس المحملة في البحرين على بعد نقرة واحدة. اطلب الآن أو احجزنا لفعاليتك القادمة.">Bahrain's most loaded potatoes are just one tap away. Order now or book us for your next event.</p>
     <div class="final-cta-btns">
@@ -5129,7 +5141,7 @@ body.spa-account #page-account{padding-top:130px}
         <div class="build-step-num">3</div>
         <div>
           <div class="build-step-label" data-ar="اختر صلصتك">Choose Your Sauce</div>
-          <div class="build-step-desc" data-ar="12+ صلصة طازجة يومياً">12+ sauces made fresh daily</div>
+          <div class="build-step-desc" data-ar="4 صلصات طازجة يومياً">4 sauces made fresh daily</div>
         </div>
       </div>
     </div>
@@ -5162,9 +5174,9 @@ body.spa-account #page-account{padding-top:130px}
     <div class="truck-info-grid">
       <div class="truck-info-card">
         <h4 data-ar="ساعات العمل">Opening Hours</h4>
-        <div class="truck-hours-row"><span class="truck-hours-day" data-ar="السبت – الخميس">Sat – Thu</span><span class="truck-hours-time">4:00 PM – 12:00 AM</span></div>
-        <div class="truck-hours-row"><span class="truck-hours-day" data-ar="الجمعة">Friday</span><span class="truck-hours-time">4:00 PM – 1:00 AM</span></div>
-        <div class="truck-hours-row"><span class="truck-hours-day" data-ar="الموقع">Location</span><span class="truck-hours-time" data-ar="البسيتين، البحرين">Busaiteen, Bahrain</span></div>
+        <div class="truck-hours-row"><span class="truck-hours-day" data-ar="السبت – الخميس">Sat – Thu</span><span class="sr-only">: </span><span class="truck-hours-time" dir="ltr">7:00 PM – 12:00 AM</span></div>
+        <div class="truck-hours-row"><span class="truck-hours-day" data-ar="الجمعة">Fri</span><span class="sr-only">: </span><span class="truck-hours-time" dir="ltr">7:00 PM – 1:00 AM</span></div>
+        <div class="truck-hours-row"><span class="truck-hours-day" data-ar="الموقع">Location</span><span class="sr-only">: </span><span class="truck-hours-time" data-ar="البسيتين، البحرين">Busaiteen, Bahrain</span></div>
         <div style="margin-top:16px">
           <a class="btn-primary" href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener" style="font-size:.82rem;padding:8px 18px" data-ar="📍 افتح في خرائط Google">📍 Open in Google Maps</a>
         </div>
@@ -5176,7 +5188,7 @@ body.spa-account #page-account{padding-top:130px}
           <li data-ar="مطبخ طازج يومياً">Fresh kitchen daily</li>
           <li data-ar="متوسط انتظار ~8 دقائق">~8 min average wait</li>
           <li data-ar="يمكن حجزها للفعاليات الخاصة">Available for private events</li>
-          <li data-ar="أكثر من 12 صلصة طازجة">12+ fresh sauces on board</li>
+          <li data-ar="4 صلصات طازجة">4 fresh sauces on board</li>
           <li data-ar="قائمة كاملة متاحة">Full menu available</li>
         </ul>
       </div>
@@ -5202,12 +5214,12 @@ body.spa-account #page-account{padding-top:130px}
     <h2 class="section-title" data-ar="تواصل مع سبودلشيس.">Contact Spudlicious.</h2>
     <p class="section-sub" data-ar="أسئلة، ملاحظات، شراكات، أو استفسارات صحفية — نسعد بسماعك.">Questions, feedback, partnerships, or press enquiries — we'd love to hear from you.</p>
     <div class="placeholder-contact-grid">
-      <a class="ph-contact-card" href="https://wa.me/97333260007" target="_blank">
+      <a class="ph-contact-card" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer">
         <span class="ph-contact-icon">💬</span>
         <span class="ph-contact-label" data-ar="واتساب">WhatsApp</span>
         <span class="ph-contact-val">+973 3326 0007</span>
       </a>
-      <a class="ph-contact-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank">
+      <a class="ph-contact-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
         <span class="ph-contact-icon">📸</span>
         <span class="ph-contact-label" data-ar="إنستغرام">Instagram</span>
         <span class="ph-contact-val">@spudlicious.bh</span>
@@ -5260,40 +5272,36 @@ body.spa-account #page-account{padding-top:130px}
     <h2 class="section-title" data-ar="مكافآت البطاطس.">Spud Rewards.</h2>
     <p class="section-sub" data-ar="اكسب نقاطاً مع كل طلب. افتح صفقات حصرية وإضافات مجانية وحالة البطاطسة الأسطورية.">Earn XP with every order. Unlock exclusive deals, free toppings, and Legendary Spud status.</p>
 
+    <div class="loyalty-soon soon-pill" data-ar="🚧 قريباً — برنامج المكافآت قيد الإطلاق" style="margin-bottom:24px">🚧 Coming soon — Spud Rewards is launching shortly</div>
     <div class="tier-list">
       <div class="tier-card t-sprout">
-        <span class="tier-icon">🌱</span>
-        <div class="tier-name" data-ar="الشتلة">Sprout</div>
-        <div class="tier-xp">0–99 XP</div>
-      </div>
-      <div class="tier-card t-crispy">
         <span class="tier-icon">🥔</span>
-        <div class="tier-name" data-ar="المقرمش">Crispy</div>
-        <div class="tier-xp">100–299 XP</div>
+        <div class="tier-name" data-ar="مبتدئ">Rookie</div>
+        <div class="tier-xp">0–199 XP</div>
       </div>
       <div class="tier-card t-loaded">
         <span class="tier-icon">🔥</span>
-        <div class="tier-name" data-ar="المحمل">Loaded</div>
-        <div class="tier-xp">300–599 XP</div>
+        <div class="tier-name" data-ar="منتظم">Regular</div>
+        <div class="tier-xp">200–499 XP</div>
       </div>
       <div class="tier-card t-golden">
         <span class="tier-icon">⭐</span>
-        <div class="tier-name" data-ar="الذهبي">Golden</div>
-        <div class="tier-xp">600–999 XP</div>
+        <div class="tier-name" data-ar="محترف">Veteran</div>
+        <div class="tier-xp">500–999 XP</div>
       </div>
       <div class="tier-card t-legend">
-        <span class="tier-icon">👑</span>
-        <div class="tier-name" data-ar="الأسطوري">Legend</div>
+        <span class="tier-icon">💎</span>
+        <div class="tier-name" data-ar="أسطوري">Legendary</div>
         <div class="tier-xp">1000+ XP</div>
       </div>
     </div>
 
     <div class="placeholder-actions">
       <button class="btn-primary" onclick="if(window.toggleLoyaltyPanel)window.toggleLoyaltyPanel();else spudNavigate('rewards')" data-ar="⭐ عرض مكافآتي">⭐ View My Rewards</button>
-      <button class="btn-secondary" data-sp="rewards" data-ar="برنامج المكافآت">Rewards Program</button>
+      <button class="btn-secondary" data-sp="rewards" data-ar="برنامج المكافآت">Rewards Programme</button>
     </div>
     <div class="placeholder-stats">
-      <div class="ph-stat"><span class="ph-stat-n">5</span><span class="ph-stat-l" data-ar="مستويات المكافآت">Reward Tiers</span></div>
+      <div class="ph-stat"><span class="ph-stat-n">4</span><span class="ph-stat-l" data-ar="مستويات المكافآت">Reward Tiers</span></div>
       <div class="ph-stat"><span class="ph-stat-n">XP</span><span class="ph-stat-l" data-ar="لكل طلب">Per Order</span></div>
       <div class="ph-stat"><span class="ph-stat-n" data-ar="مجاني">Free</span><span class="ph-stat-l" data-ar="امتيازات وعروض">Perks & Deals</span></div>
     </div>
@@ -5306,11 +5314,11 @@ body.spa-account #page-account{padding-top:130px}
     <div class="footer-grid">
       <div>
         <div class="footer-brand-name">🥔 Spudlicious</div>
-        <p class="footer-tagline" data-ar="موطن البطاطس المحملة في البحرين. حيث كل بطاطسة تصبح تحفة فنية. حلال 100%، طازج في كل طلب. بفخر بحريني.">Bahrain's Home of Loaded Potatoes. Where Every Potato Becomes a Masterpiece. 100% Halal, made fresh every order. Proudly Bahraini.</p>
+        <p class="footer-tagline" data-ar="محملة. لذيذة. أسطورية. موطن البطاطس المحملة في البحرين. حيث كل بطاطسة تصبح تحفة فنية. حلال 100%، طازج في كل طلب. بفخر بحريني.">Loaded. Delicious. Legendary. Bahrain's Home of Loaded Potatoes. Where Every Potato Becomes a Masterpiece. 100% Halal, made fresh every order. Proudly Bahraini.</p>
         <div class="footer-socials">
-          <a class="social-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" title="Instagram">📸</a>
-          <a class="social-btn" href="https://www.tiktok.com/@spudlicious.bh" target="_blank" title="TikTok">🎵</a>
-          <a class="social-btn" href="https://wa.me/97333260007" target="_blank" title="WhatsApp">💬</a>
+          <a class="social-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" title="Instagram">📸</a>
+          <a class="social-btn" href="https://www.tiktok.com/@spudlicious.bh" target="_blank" rel="noopener noreferrer" title="TikTok">🎵</a>
+          <a class="social-btn" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬</a>
         </div>
       </div>
       <div class="footer-col">
@@ -5332,7 +5340,7 @@ body.spa-account #page-account{padding-top:130px}
         <h4 data-ar="الطلبات والتواصل">Order & Contact</h4>
         <ul class="footer-links">
           <li><a class="footer-link" data-sp="order" href="#/order" data-ar="اطلب أونلاين">Order Online</a></li>
-          <li><a href="https://wa.me/97333260007" target="_blank" data-ar="اطلب عبر واتساب">Order via WhatsApp</a></li>
+          <li><a href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" data-ar="اطلب عبر واتساب">Order via WhatsApp</a></li>
           <li><a class="footer-link" data-sp="catering" href="#/catering" data-ar="احجز تموين">Book Catering</a></li>
           <li><a class="footer-link" data-sp="contact" href="#/contact" data-ar="تواصل معنا">Contact Us</a></li>
         </ul>
@@ -5355,17 +5363,40 @@ body.spa-account #page-account{padding-top:130px}
    OWNER: this is the one place to edit prices/items going forward.
    Prices in BHD. `id` is stable; `tags` power the menu filter + AI matching.
    ══════════════════════════════════════════════════════════════════════════ */
+/* SPUD_HOURS — SINGLE SOURCE OF TRUTH for opening hours (Asia/Bahrain, UTC+3, no DST).
+   Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM. The visible hours copy and the JSON-LD
+   openingHoursSpecification in <head> must match this. */
+window.SPUD_HOURS = {
+  summary: 'Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM',
+  opensLabel: '7:00 PM',
+  /* hour 0–23 in Bahrain, regardless of the visitor's own time zone */
+  hour: function(d){ return new Date((d||new Date()).getTime()+3*36e5).getUTCHours(); },
+  isOpen: function(d){
+    var b=new Date((d||new Date()).getTime()+3*36e5), h=b.getUTCHours();
+    /* open from 19:00; Sat–Thu close at midnight; Friday runs to 01:00 (= Saturday 00:xx) */
+    return h>=19 || (h<1 && b.getUTCDay()===6);
+  }
+};
+/* SPUD_FEATURES — switch a feature on only once its backend exists. */
+window.SPUD_FEATURES = { loyalty:false, orderTracking:false };
+/* SPUD_TIERS — the one canonical rewards tier set (Rewards page, account page, loyalty engine). */
+window.SPUD_TIERS = [
+  {name:'Rookie',    icon:'🥔', min:0,    color:'#94a3b8'},
+  {name:'Regular',   icon:'🔥', min:200,  color:'#cd7f32'},
+  {name:'Veteran',   icon:'⭐', min:500,  color:'#FFD700'},
+  {name:'Legendary', icon:'💎', min:1000, color:'#FFD5B3'}
+];
 window.SPUD_MENU = {
   currency: 'BHD',
   items: [
     { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', emoji:'🍗', price:2.9, badge:'🔥 Best Seller',
       desc:'Tender chicken smothered in a rich, creamy homemade béchamel sauce. Loaded over a perfectly baked potato.', tags:['chicken','bechamel'] },
     { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', emoji:'🥩', price:2.9, badge:'⭐ Signature',
-      desc:'Seasoned halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.', tags:['beef','bechamel'] },
+      desc:'Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.', tags:['beef','bechamel'] },
     { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', emoji:'🤠', price:2.9, badge:'🌿 Fresh Pick',
-      desc:'Juicy chicken combined with our flavorful ranch sauce — a fresh, satisfying, and totally addictive combo.', tags:['chicken','ranch'] },
+      desc:'Juicy chicken combined with our flavourful ranch sauce — a fresh, satisfying, and totally addictive combo.', tags:['chicken','ranch'] },
     { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', emoji:'🌶️', price:2.9, badge:'💥 Bold',
-      desc:'Perfectly seasoned halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavor every bite.', tags:['beef','ranch'] }
+      desc:'Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour every bite.', tags:['beef','ranch'] }
   ],
   addons: [
     { id:'extra-cheese', name:'Extra Cheese', emoji:'🧀', price:0.3 },
@@ -5479,9 +5510,8 @@ function scrollToSection(id){var el=document.getElementById(id);if(el)el.scrollI
 // STATUS
 (function(){
   var badge=document.getElementById('status-badge');
-  var h=new Date().getHours();
-  var open=(h>=19);
-  badge.innerHTML=open?'🟢 Open Now':'🔴 Closed · Opens 7PM';
+  var open=SPUD_HOURS.isOpen();
+  badge.innerHTML=open?'🟢 Open Now':'🔴 Closed · Opens '+SPUD_HOURS.opensLabel;
   badge.className=open?'open':'closed';
 })();
 
@@ -6621,8 +6651,8 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 
 // ══ LIVE KITCHEN ══════════════════════════════════════════════
 (function(){
-  var h=new Date().getHours();
-  var isOpen=(h>=19);
+  var h=SPUD_HOURS.hour();
+  var isOpen=SPUD_HOURS.isOpen();
   var statusEl=document.getElementById('lk-status');
   var statusText=document.getElementById('lk-status-text');
   var ordersEl=document.getElementById('lk-orders');
@@ -6631,10 +6661,10 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   if(!statusEl)return;
 
   statusEl.classList.add(isOpen?'open':'closed');
-  if(statusText)statusText.textContent=isOpen?'Open · Kitchen Active':'Closed · Opens 7PM';
+  if(statusText)statusText.textContent=isOpen?'Open · Kitchen Active':'Closed · Opens '+SPUD_HOURS.opensLabel;
 
   if(countEl){
-    var hoursOpen=isOpen?Math.max(1,h-16):0;
+    var hoursOpen=isOpen?Math.max(1,(h+24-19)%24+1):0;
     countEl.textContent=isOpen?(hoursOpen*7+12).toString():'—';
   }
 
@@ -6654,7 +6684,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
         '</div>';
       }).join('');
     } else {
-      ordersEl.innerHTML='<div class="lk-closed-state">Kitchen opens at 7PM.<br>Come back for fresh spuds! 🥔</div>';
+      ordersEl.innerHTML='<div class="lk-closed-state">Kitchen opens at '+SPUD_HOURS.opensLabel+'.<br>Come back for fresh spuds! 🥔</div>';
     }
   }
 
@@ -6728,15 +6758,8 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   'use strict';
 
   /* ── LOYALTY SYSTEM ────────────────────────────────────────── */
-  var LEVELS=[
-    {name:'Rookie',    icon:'🥔', min:0,   max:100,  color:'#94a3b8'},
-    {name:'Bronze',    icon:'🏅', min:100,  max:250,  color:'#cd7f32'},
-    {name:'Silver',    icon:'🥈', min:250,  max:500,  color:'#c0c0c0'},
-    {name:'Gold',      icon:'🥇', min:500,  max:900,  color:'#FFD700'},
-    {name:'Platinum',  icon:'💎', min:900,  max:1500, color:'#a5f3fc'},
-    {name:'Diamond',   icon:'🔷', min:1500, max:2500, color:'#7BC3FF'},
-    {name:'Legendary', icon:'👑', min:2500, max:9999, color:'#FFD5B3'},
-  ];
+  var LEVELS=window.SPUD_TIERS;
+  var LOYALTY_LIVE=!!(window.SPUD_FEATURES&&window.SPUD_FEATURES.loyalty);
   var ALL_ACHIEVEMENTS=[
     {id:'first_spud',  icon:'🥔', name:'First Spud',       desc:'Add your first item',  xp:25},
     {id:'builder',     icon:'🛠️', name:'Spud Builder',     desc:'Use the Potato Builder', xp:40},
@@ -6756,6 +6779,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     return 0;
   }
   function addXP(amount,reason){
+    if(!LOYALTY_LIVE)return getLoyalty(); /* no XP until the rewards backend exists */
     var d=getLoyalty();
     var prevLvl=getCurrentLevel(d.xp);
     d.xp+=amount;
@@ -6777,7 +6801,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     d.achievements.push(id);
     saveLoyalty(d);
     addXP(ach.xp,'achievement');
-    window.showAchievement&&window.showAchievement(ach.icon,ach.name,'+'+ach.xp+' XP — '+ach.desc);
+    window.showAchievement&&window.showAchievement(ach.icon,ach.name,(LOYALTY_LIVE?'+'+ach.xp+' XP — ':'')+ach.desc);
     updateLoyaltyUI();
   }
   function updateLoyaltyUI(){
@@ -6882,7 +6906,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   var AI_KNOWLEDGE={
     menu: _SM.items.map(function(it){ return { name:it.name, emoji:it.emoji, price:it.price, desc:it.desc, tags:it.tags }; }),
     extras: _SM.addons.map(function(a){ return a.name; }),
-    hours:'Open daily 7pm – 12am',
+    hours:'Our hours: '+SPUD_HOURS.summary,
     location:'Busaiteen, Bahrain — follow @spudlicious.bh for today\'s spot',
     instagram:'@spudlicious.bh',
   };
@@ -6925,7 +6949,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       (window.spudNavigate?spudNavigate('find-us'):(location.hash='#find-us'));
       setTimeout(function(){var l=document.getElementById('location')||document.getElementById('find-us');l&&l.scrollIntoView({behavior:'smooth',block:'start'});},650);
     }else if(kind==='hours'){
-      addBubble("We fire up the oven every night, 7PM till midnight. Come hungry! 🕖",'bot');
+      addBubble("We fire up the oven every night — "+SPUD_HOURS.summary+". Come hungry! 🕖",'bot');
     }else if(kind==='founder'){
       addBubble("\"This is only the beginning of the journey.\" Taking you to his story — it's a good one. 📖",'bot');
       (window.spudNavigate?spudNavigate('founder'):(location.hash='#founder'));
@@ -7050,8 +7074,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 
   function getAIResponse(msg){
     var lower=msg.toLowerCase();
-    var h=new Date().getHours();
-    var isOpen=(h>=19);
+    var isOpen=SPUD_HOURS.isOpen();
 
     if(/menu|what.*have|food|spud|potato/.test(lower)){
       renderQRs([["Recommend for me","✨"],["Something spicy","🌶️"],["Vegetarian?","🥗"]]);
@@ -7072,7 +7095,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     }
     if(/time|hour|open|close|when/.test(lower)){
       renderQRs([["Location?","📍"],["Order now","🛒"]]);
-      return AI_KNOWLEDGE.hours+(isOpen?' — We\'re OPEN right now! 🟢':' — We\'re closed at the moment, but come back from 7pm! 🔴');
+      return AI_KNOWLEDGE.hours+(isOpen?' — We\'re OPEN right now! 🟢':' — We\'re closed at the moment, but come back from '+SPUD_HOURS.opensLabel+'! 🔴');
     }
     if(/where|location|find|map|spot/.test(lower)){
       renderQRs([["Follow on Instagram","📱"],["See menu","🍽️"]]);
@@ -7205,6 +7228,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     var etaEl=document.getElementById('ot-eta-time');
     if(!tracker)return;
     buildOrderStages();
+    if(!(window.SPUD_FEATURES&&window.SPUD_FEATURES.orderTracking))return; /* no live order data yet */
     var orderId='SPD-'+Math.floor(1000+Math.random()*9000);
     if(idEl)idEl.textContent='#'+orderId;
     tracker.classList.add('open');
@@ -7364,8 +7388,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     lkGrid.parentNode.insertBefore(widget,lkGrid.nextSibling);
 
     /* Simulate realistic queue data */
-    var h=new Date().getHours();
-    var isOpen=(h>=19);
+    var isOpen=SPUD_HOURS.isOpen();
     var busyness=isOpen?Math.floor(30+Math.random()*55):0;
 
     function updateQueue(){
@@ -7865,12 +7888,12 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 
 <!-- AI Food Assistant -->
 <button id="ai-fab" aria-label="Chat with The Spud Guy" title="Chat with The Spud Guy — tap and I'll talk!">
-  <img class="ai-fab-avatar" src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.insertBefore(document.createTextNode('🥔'),this)}"/>
+  <img class="ai-fab-avatar" src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="The Spud Guy, smiling" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.insertBefore(document.createTextNode('🥔'),this)}"/>
   <span class="ai-fab-badge" id="ai-fab-badge" aria-hidden="true">AI</span>
 </button>
 <div id="ai-panel" role="dialog" aria-label="The Spud Guy — Spudlicious assistant" aria-modal="true">
   <div class="ai-panel-header">
-    <div class="ai-avatar"><img src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.textContent='🥔'}"/></div>
+    <div class="ai-avatar"><img src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="The Spud Guy, smiling" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.textContent='🥔'}"/></div>
     <div>
       <div class="ai-name">The Spud Guy</div>
       <div class="ai-status">Online — ask me anything 🥔</div>
@@ -7916,7 +7939,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 <div id="order-tracker" role="dialog" aria-label="Order status" aria-modal="true">
   <div class="ot-panel">
     <div class="ot-title">Your Order Status</div>
-    <div class="ot-order-id" id="ot-order-id">#SPD-0000</div>
+    <div class="ot-order-id" id="ot-order-id"></div>
     <div class="ot-stages" id="ot-stages">
       <!-- filled by JS -->
     </div>
@@ -7939,7 +7962,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       <span class="np-icon">🎉</span>
       <div class="np-content">
         <div class="np-notif-title">Welcome to Spudlicious!</div>
-        <div class="np-notif-sub">Build your first spud and earn 50 XP</div>
+        <div class="np-notif-sub">Build your first spud in the Potato Builder</div>
       </div>
     </div>
     <div class="np-item unread">
@@ -8512,19 +8535,17 @@ function updateScrollStory(page){
 /* ── REWARDS WIDGET SYNC ── */
 function syncRewardsWidget(){
   try {
-    var xp = parseInt(localStorage.getItem('spud_xp') || '0');
+    var xp = 0;
+    try { xp = (JSON.parse(localStorage.getItem('spud_loyalty')) || {}).xp || 0; } catch(e){}
     var tierEl = document.getElementById('rhs-tier-display');
     var xpEl = document.getElementById('rhs-xp-display');
     var barEl = document.getElementById('rhs-xp-bar');
     var nextEl = document.getElementById('rhs-next-display');
     if(!tierEl) return;
 
-    var tiers = [
-      {name:'🥔 Rookie',min:0,max:200},
-      {name:'🔥 Regular',min:200,max:500},
-      {name:'⭐ Veteran',min:500,max:1000},
-      {name:'💎 Legendary',min:1000,max:Infinity}
-    ];
+    var tiers = window.SPUD_TIERS.map(function(t,i,a){
+      return {name:t.icon+' '+t.name, min:t.min, max:a[i+1]?a[i+1].min:Infinity};
+    });
     var tier = tiers[0];
     for(var i=0;i<tiers.length;i++){if(xp>=tiers[i].min)tier=tiers[i];}
     tierEl.textContent = tier.name;
@@ -9443,7 +9464,7 @@ PngFounderRenderer.prototype.mount = function(stageEl){
   this.stage = stageEl;
   this.img = document.createElement('img');
   this.img.className = 'fo-img';
-  this.img.setAttribute('alt', '');
+  this.img.setAttribute('alt', 'Illustration of Abdulrahman Alhamad, founder of Spudlicious');
   this.img.setAttribute('draggable', 'false');
   this.img.setAttribute('loading', 'lazy');
   this.img.decoding = 'async';

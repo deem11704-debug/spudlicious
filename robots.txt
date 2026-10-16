@@ -1,5 +1,4 @@
 # Spudlicious — robots.txt
-# OWNER TODO: replace spudlicious.bh with your real domain before launch.
 
 User-agent: *
 Allow: /
