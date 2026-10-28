@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <title>Spudlicious — Bahrain's Home of Loaded Potatoes | Busaiteen Food Truck</title>
-<meta name="description" content="Loaded. Delicious. Legendary. Bahrain's first dedicated loaded baked potato food truck — 100% Halal, open from 7 PM in Busaiteen. Build your spud and order on WhatsApp.">
+<meta name="description" content="Loaded. Delicious. Legendary. Bahrain's first loaded baked potato food truck: 4 spuds at BHD 2.000, oven-baked and never microwaved, 100% Halal, open from 7 PM in Busaiteen. Build your spud and order on WhatsApp.">
 <link rel="canonical" href="https://spudlicious.bh/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#081324">
@@ -19,7 +19,7 @@
 <meta name="ICBM" content="26.2686034, 50.5932179">
 <meta property="og:site_name" content="Spudlicious">
 <meta property="og:title" content="Spudlicious — Bahrain's Home of Loaded Potatoes">
-<meta property="og:description" content="Loaded. Delicious. Legendary. 100% Halal loaded potatoes, made fresh in Busaiteen. Order on WhatsApp.">
+<meta property="og:description" content="Loaded. Delicious. Legendary. 4 loaded spuds at BHD 2.000, 100% Halal, made fresh in Busaiteen. Order on WhatsApp.">
 <meta property="og:type" content="restaurant.restaurant">
 <meta property="og:url" content="https://spudlicious.bh/">
 <meta property="og:locale" content="en_US">
@@ -34,15 +34,27 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
+<!-- Fredoka (display) is self-hosted: one 30 KB Latin file, so the intro wordmark never waits on a third party.
+     Inter (body) and the Arabic faces load after the load event with display=optional: first paint never
+     waits on Google and text never re-flows. Google splits Arabic by unicode-range, so only the Arabic
+     subset downloads, and only when Arabic is on screen. -->
+<link rel="preload" href="assets/fonts/fredoka-latin-500-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Fonts are requested after the load event with display=optional: first paint never waits on Google,
-     text never re-flows (no CLS), and returning visitors get the brand fonts from cache. Google serves Cairo split by
-     unicode-range, so only its Arabic subset downloads, and only when Arabic is on screen. -->
-<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Cairo:wght@400;700;800&display=optional" rel="stylesheet"></noscript>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Cairo:wght@400;700&family=Baloo+Bhaijaan+2:wght@600..800&display=optional" rel="stylesheet"></noscript>
 <script>
-/* Apply a saved Arabic choice before first paint (no layout flip after load). */
-var d=document.documentElement;d.className='js';try{if(localStorage.getItem('spud-lang')==='ar'){d.lang='ar';d.dir='rtl';d.className='js ar-pending';}}catch(e){}
+/* Before first paint: JS flag, saved Arabic (no layout flip), and whether the intro plays.
+   The intro plays once per session; Save-Data / prefers-reduced-data skip it entirely. */
+(function(){
+  var d = document.documentElement, c = 'js';
+  try { if (localStorage.getItem('spud-lang') === 'ar') { d.lang = 'ar'; d.dir = 'rtl'; c += ' ar-pending'; } } catch(e){}
+  var skip = true;
+  try {
+    var n = navigator.connection, data = (n && n.saveData) || matchMedia('(prefers-reduced-data: reduce)').matches;
+    skip = data || sessionStorage.getItem('spud-intro') === '1';
+  } catch(e){}
+  d.className = c + (skip ? ' no-intro' : ' intro-on');
+})();
 </script>
 
 <!-- STRUCTURED DATA — keep in sync with SPUD_MENU and SPUD_HOURS below -->
@@ -55,7 +67,7 @@ var d=document.documentElement;d.className='js';try{if(localStorage.getItem('spu
       "@id": "https://spudlicious.bh/#restaurant",
       "name": "Spudlicious",
       "alternateName": "سبودلشيس",
-      "description": "Bahrain's first dedicated loaded baked potato food truck. Crispy outside, fluffy inside, loaded to the max. 100% Halal.",
+      "description": "Bahrain's first dedicated loaded baked potato food truck. Oven-baked, never microwaved, loaded to the max. 100% Halal.",
       "url": "https://spudlicious.bh/",
       "image": "https://spudlicious.bh/assets/social/og-image.jpg",
       "logo": "https://spudlicious.bh/assets/logo/spudlicious-logo.png",
@@ -103,17 +115,17 @@ var d=document.documentElement;d.className='js';try{if(localStorage.getItem('spu
           "@type": "MenuSection",
           "name": "Loaded Baked Potatoes",
           "hasMenuItem": [
-            { "@type": "MenuItem", "name": "Chicken Béchamel", "description": "Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Beef Béchamel", "description": "Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Chicken Ranch", "description": "Juicy chicken combined with our flavourful ranch sauce — fresh, satisfying, and totally addictive.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Beef Ranch", "description": "Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } }
+            { "@type": "MenuItem", "name": "Chicken Béchamel", "description": "Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Beef Béchamel", "description": "Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Chicken Ranch", "description": "Juicy chicken combined with our flavourful ranch sauce — fresh, satisfying, and totally addictive.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Beef Ranch", "description": "Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } }
           ]
         },
         {
           "@type": "MenuSection",
           "name": "Add-ons",
           "hasMenuItem": [
-            { "@type": "MenuItem", "name": "Extra Cheese", "offers": { "@type": "Offer", "price": "0.300", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Extra Cheese", "offers": { "@type": "Offer", "price": "0.200", "priceCurrency": "BHD" } },
             { "@type": "MenuItem", "name": "Jalapeños", "offers": { "@type": "Offer", "price": "0.200", "priceCurrency": "BHD" } }
           ]
         }
@@ -143,14 +155,18 @@ var d=document.documentElement;d.className='js';try{if(localStorage.getItem('spu
 }
 </script>
 <style>
+@font-face{font-family:'Fredoka';src:url(assets/fonts/fredoka-latin-500-700.woff2) format('woff2');font-weight:500 700;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 :root{
-  --blue:#1C91F2;--blue-dark:#0D6FBF;--gold:#FFC107;--cream:#FFF6E6;--navy:#081324;--navy-2:#0A2E5C;
+  --blue:#1C91F2;--blue-dark:#0D6FBF;--blue-soft:#E3F1FE;--gold:#FFC107;--cream:#FFF6E6;--navy:#081324;
   --ink:#081324;--muted:#3C4A5E;--line:#E7DCC8;--card:#FFFFFF;
-  --r:16px;--r-sm:10px;--wrap:1120px;--head:64px;
-  --font:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:20px;--r-sm:12px;--wrap:1120px;--head:64px;
+  --bd:2px solid var(--navy);--pop:4px 4px 0 var(--navy);--pop-sm:3px 3px 0 var(--navy);
+  --display:'Fredoka','Arial Rounded MT Bold','Trebuchet MS',system-ui,sans-serif;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --display-ar:'Baloo Bhaijaan 2','Cairo','Geeza Pro',Tahoma,sans-serif;
   --font-ar:'Cairo','Geeza Pro','Noto Sans Arabic',Tahoma,sans-serif;
-  /* Motion: playful brand → spring tokens from code-deem-nature Law 15 */
-  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  /* Motion tokens (code-deem-nature Law 15; playful brand) */
+  --ease-out:cubic-bezier(0.16,1,0.3,1);--ease-in:cubic-bezier(0.3,0,0.8,0.15);
   --spring-snappy:var(--ease-out);--spring-playful:var(--ease-out);
 }
 @supports (transition-timing-function:linear(0,1)){:root{
@@ -159,208 +175,252 @@ var d=document.documentElement;d.className='js';try{if(localStorage.getItem('spu
 }}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--head) + 8px);-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{font:400 1rem/1.6 var(--font);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased}
+.ar-pending body{visibility:hidden}
 html[lang="ar"] body{font-family:var(--font-ar);font-size:1.075rem;line-height:1.8}
-html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3{line-height:1.35;letter-spacing:0}
 img,video,iframe{display:block;max-width:100%}
 a{color:var(--blue-dark);text-underline-offset:3px}
 button{font:inherit;color:inherit;cursor:pointer}
-h1,h2,h3{font-weight:800;line-height:1.12;letter-spacing:-.02em}
-h2{font-size:clamp(1.75rem,4.5vw,2.5rem)}
-:focus-visible{outline:3px solid var(--blue-dark);outline-offset:3px;border-radius:6px}
-.dark :focus-visible{outline-color:var(--cream)}
-video:focus-within{outline:3px solid var(--blue-dark);outline-offset:3px}
-.ar-pending body{visibility:hidden}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;letter-spacing:-.01em}
+html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3{font-family:var(--display-ar);line-height:1.35;letter-spacing:0}
+h2{font-size:clamp(2rem,5vw,2.75rem)}
 p{max-width:62ch}
+:focus-visible{outline:3px solid var(--blue-dark);outline-offset:3px;border-radius:6px}
+.dark :focus-visible,.intro :focus-visible{outline-color:var(--cream)}
+video:focus-within{outline:3px solid var(--blue-dark);outline-offset:3px}
 .wrap{width:min(100% - 32px,var(--wrap));margin-inline:auto}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;inset-inline-start:12px;top:-60px;background:var(--navy);color:var(--cream);padding:12px 16px;border-radius:var(--r-sm);z-index:60;font-weight:700}
 .skip:focus{top:12px}
 section{padding-block:64px}
-.eyebrow{font-size:1rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:8px}
-html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:1.0625rem}
-.lead{font-size:1.0625rem;color:var(--muted);max-width:60ch;margin-top:12px}
+.eyebrow{display:inline-block;font-family:var(--display);font-size:1rem;font-weight:600;color:var(--blue-dark);margin-bottom:8px}
+html[lang="ar"] .eyebrow{font-family:var(--font-ar);font-weight:700;font-size:1.0625rem}
+.lead{font-size:1.0625rem;color:var(--muted);margin-top:12px}
 .bhd{white-space:nowrap;font-variant-numeric:tabular-nums}
 
-/* Header */
-.site-head{position:sticky;top:0;z-index:50;background:rgba(255,246,230,.96);border-bottom:1px solid var(--line)}
+/* ── INTRO (once per session; CSS transforms only) ── */
+.intro{position:fixed;inset:0;z-index:100;background:var(--navy);color:var(--cream);overflow:hidden;animation:intro-out 400ms var(--ease-in) 3000ms forwards}
+.no-intro .intro{display:none}
+.intro-fly{position:absolute;top:18vh;left:50%;width:150px;height:218px;margin-left:-75px;perspective:700px;animation:fly 2200ms cubic-bezier(.2,.75,.25,1) both,settle 420ms var(--spring-playful) 2200ms}
+[dir="rtl"] .intro-fly{animation-name:fly-rtl,settle}
+.intro-spud{width:150px;height:218px;animation:flip 2200ms cubic-bezier(.2,.75,.25,1) both}
+.intro-word{position:absolute;left:0;right:0;top:calc(18vh + 240px);text-align:center;font:700 clamp(2.5rem,11vw,5.5rem)/1 var(--display);letter-spacing:.04em;color:var(--gold);opacity:0;animation:word 480ms var(--spring-playful) 2250ms forwards;max-width:none}
+.intro-tag{position:absolute;left:0;right:0;top:calc(18vh + 240px + clamp(3.25rem,13vw,6.5rem));text-align:center;font:600 clamp(1rem,3.6vw,1.375rem)/1.4 var(--display);letter-spacing:.06em;color:var(--cream);opacity:0;animation:rise 350ms var(--ease-out) 2500ms forwards;max-width:none}
+html[lang="ar"] .intro-tag{font-family:var(--display-ar);letter-spacing:0}
+.intro-skip{position:absolute;top:16px;inset-inline-end:16px;min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--cream);background:transparent;color:var(--cream);font-weight:700}
+.intro-skip:hover{background:var(--cream);color:var(--navy)}
+.intro.skip{animation:intro-fade 200ms ease-out forwards}
+@keyframes fly{from{transform:translateX(-75vw)}to{transform:none}}
+@keyframes fly-rtl{from{transform:translateX(75vw)}to{transform:none}}
+@keyframes flip{from{transform:rotateY(0)}to{transform:rotateY(2520deg)}}
+@keyframes settle{0%{transform:none}35%{transform:translateY(-14px) scale(1.04)}70%{transform:translateY(3px) scale(.99)}100%{transform:none}}
+@keyframes word{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes intro-out{to{transform:translateY(-100%);visibility:hidden}}
+@keyframes intro-fade{to{opacity:0;visibility:hidden}}
+
+/* ── Header ── */
+.site-head{position:sticky;top:0;z-index:50;background:rgba(255,246,230,.96);border-bottom:var(--bd)}
 .site-head .wrap{display:flex;align-items:center;gap:16px;height:var(--head)}
-.logo{display:flex;align-items:center;min-height:44px;margin-inline-end:auto}
-.logo img{width:72px;height:48px}
+.logo{display:flex;align-items:center;gap:8px;min-height:44px;margin-inline-end:auto;color:var(--navy);text-decoration:none;font:700 1.375rem/1 var(--display)}
+.logo img{width:30px;height:44px}
 .nav{display:none;gap:4px}
-.nav a{display:flex;align-items:center;min-height:44px;padding-inline:12px;color:var(--ink);font-weight:700;text-decoration:none;border-radius:999px}
-.nav a:hover{background:#F3E6CC}
-.lang{min-height:44px;min-width:44px;padding-inline:16px;border:1.5px solid var(--navy);border-radius:999px;background:transparent;font-weight:700;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.nav a{display:flex;align-items:center;min-height:44px;padding-inline:12px;color:var(--ink);font-weight:600;text-decoration:none;border-radius:999px}
+.nav a:hover{background:var(--blue-soft)}
+.lang{min-height:44px;min-width:44px;padding-inline:16px;border:var(--bd);border-radius:999px;background:#fff;font-weight:700;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
 .lang:hover{background:var(--navy);color:var(--cream)}
-@media (min-width:860px){.nav{display:flex}}
+@media (min-width:900px){.nav{display:flex}}
 
-/* Buttons */
-.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:12px 24px;border-radius:999px;background:var(--gold);color:var(--navy);font-weight:800;font-size:1.0625rem;text-decoration:none;border:0}
-.btn-gold,.btn-line,.spud,.opt,.qty button,.lang,.nav a,.add-more,.rm,.quiet,.site-foot a,.honest a,input{transition:transform 150ms var(--spring-snappy),background-color 150ms ease-out,border-color 150ms ease-out,color 150ms ease-out,box-shadow 150ms ease-out}
-.btn-gold:hover{background:#FFB300;transform:scale(1.03)}
-.btn-gold:active,.btn-line:active,.lang:active,.qty button:active,.opt:active{transform:scale(.96)}
+/* ── Buttons (sticker style) ── */
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:12px 24px;border-radius:999px;background:var(--gold);color:var(--navy);font:700 1.125rem/1.2 var(--display);text-decoration:none;border:var(--bd);box-shadow:var(--pop)}
+html[lang="ar"] .btn-gold{font-family:var(--font-ar)}
+.btn-gold:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--navy)}
+.btn-gold:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--navy)}
 .btn-gold svg{width:22px;height:22px;flex:none}
-.btn-line{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 24px;border-radius:999px;border:1.5px solid currentColor;color:var(--navy);background:transparent;font-weight:700;text-decoration:none}
-.btn-line:hover{background:var(--navy);color:var(--cream)}
+.btn-line{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 24px;border-radius:999px;border:var(--bd);color:var(--navy);background:#fff;font-weight:700;text-decoration:none;box-shadow:var(--pop-sm)}
+.btn-line:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--navy)}
+.btn-line:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--navy)}
+.btn-gold,.btn-line,.spud,.opt,.qty button,.lang,.nav a,.add-more,.rm,.quiet,.site-foot a,.honest a,.intro-skip,input{transition:transform 150ms var(--spring-snappy),box-shadow 150ms var(--spring-snappy),background-color 150ms ease-out,border-color 150ms ease-out,color 150ms ease-out}
+.lang:active,.qty button:active,.opt:active{transform:scale(.96)}
 
-/* 1 Hero */
-.hero{background:var(--navy);color:var(--cream);padding-block:32px 48px;overflow:hidden}
-.hero .wrap{display:grid;gap:8px;align-items:center}
-.hero-media{position:relative;margin-top:24px;max-width:420px}
-.hero-food{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 62%;border-radius:20px;box-shadow:0 0 0 4px rgba(255,246,230,.12)}
-.hero-spud{position:absolute;width:96px;height:144px;bottom:-20px;inset-inline-end:-6px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));animation:spud-bob 1.6s ease-in-out .5s 3}
-.hero-media figcaption{font-size:.875rem;color:#B9C4D2;margin-top:12px;padding-inline-end:96px}
+/* ── 1 Hero ── */
+.hero{padding-block:32px 64px;overflow:hidden;background:radial-gradient(60% 70% at 85% 30%,#D3E9FD 0,rgba(211,233,253,0) 70%),var(--cream)}
+.hero .wrap{display:grid;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.75rem,9vw,4.75rem);max-width:12ch}
+.hero h1 em{font-style:normal;color:var(--blue-dark)}
+.hero p.sub{font-size:1.125rem;color:var(--muted);max-width:40ch;margin-top:16px}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:24px}
+.hero-actions .quiet{display:inline-flex;align-items:center;min-height:48px;color:var(--navy);font-weight:700}
+.badges{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.badges li{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 16px;border:var(--bd);border-radius:999px;background:#fff;font-weight:700;font-size:.9375rem}
+.badges .dot{width:10px;height:10px;border-radius:50%;background:#8A96A6;flex:none}
+.badges .dot.on{background:#16A34A}
+.hero-media{position:relative;max-width:460px;width:100%;justify-self:center}
+.hero-frame{border:3px solid var(--navy);border-radius:28px;box-shadow:8px 8px 0 var(--navy);overflow:hidden;transform:rotate(-2deg);background:var(--blue-soft)}
+[dir="rtl"] .hero-frame{transform:rotate(2deg)}
+.hero-food{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 62%}
+.hero-spud{position:absolute;width:104px;height:152px;bottom:-30px;inset-inline-start:-14px;filter:drop-shadow(0 6px 8px rgba(8,19,36,.3))}
+.intro-done .hero-spud,.no-intro .hero-spud{animation:spud-bob 1.6s ease-in-out .3s 3}
+.hero-media figcaption{font-size:.875rem;color:var(--muted);margin-top:16px;padding-inline-start:100px}
 @keyframes spud-bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(-3deg)}}
 .hero .btn-gold.nudge{animation:cta-nudge 700ms var(--spring-playful) 300ms 1}
-@keyframes cta-nudge{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,193,7,.5)}35%{transform:scale(1.06);box-shadow:0 0 0 10px rgba(255,193,7,0)}}
-.hero .eyebrow{color:#7CC3FF}
-.hero h1{font-size:clamp(2.1rem,7vw,3.6rem);max-width:16ch}
-.hero p.sub{font-size:1.0625rem;color:#D6DEE8;max-width:46ch;margin-top:12px}
-.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;margin-top:24px}
-.hero-actions .quiet{display:inline-flex;align-items:center;min-height:48px;color:var(--cream);font-weight:700}
-.open-line{display:flex;align-items:center;gap:8px;margin-top:16px;min-height:3em;font-size:.9375rem;color:#D6DEE8}
-.dot{width:10px;height:10px;border-radius:50%;background:#9AA6B6;flex:none}
-.dot.on{background:#3DDC84}
-@media (min-width:860px){
-  .hero{padding-block:64px}
-  .hero .wrap{grid-template-columns:62fr 38fr;gap:48px}
-  .hero-media{margin-top:0}
-  .hero-spud{width:120px;height:180px;bottom:-28px;inset-inline-end:-28px}
-  .hero-media figcaption{padding-inline-end:104px}
+@keyframes cta-nudge{0%,100%{transform:none}35%{transform:scale(1.06) rotate(-1deg)}}
+@media (min-width:900px){
+  .hero{padding-block:64px 96px}
+  .hero .wrap{grid-template-columns:55fr 45fr;gap:64px}
+  .hero-spud{width:136px;height:198px;bottom:-40px;inset-inline-start:-48px}
+  .hero-media figcaption{padding-inline-start:104px}
 }
 
-/* 2 Menu */
-.menu-grid{display:grid;gap:16px;margin-top:32px}
+/* ── 2 Menu ── */
+.menu-grid{display:grid;gap:24px;margin-top:32px}
 @media (min-width:640px){.menu-grid{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1024px){.menu-grid{grid-template-columns:repeat(4,1fr)}}
-.spud{display:flex;flex-direction:column;gap:8px;text-align:start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-height:100%}
-.spud:hover{border-color:var(--blue-dark);transform:translateY(-4px);box-shadow:0 10px 24px -12px rgba(8,19,36,.35)}
-.spud:active{transform:scale(.98)}
-.spud:hover .choose .flip{transform:translateX(3px)}
-[dir="rtl"] .spud:hover .choose .flip{transform:scaleX(-1) translateX(3px)}
-.choose .flip{transition:transform 150ms var(--spring-snappy)}
-.real{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:32px;max-width:720px}
-.real figure{margin:0}
-.real img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
-.real figcaption{grid-column:1/-1;font-size:.875rem;color:var(--muted)}
-.spud h3{font-size:1.25rem}
+.spud{display:flex;flex-direction:column;gap:8px;text-align:start;background:var(--card);border:var(--bd);border-radius:var(--r);padding:12px 12px 24px;min-height:100%;box-shadow:var(--pop);overflow:hidden}
+.spud:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--navy)}
+.spud:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--navy)}
+.spud .ph,.spud .photo{width:100%;aspect-ratio:4/3;border-radius:12px;object-fit:cover}
+.spud .ph{display:grid;place-items:center;align-content:center;gap:4px;background:repeating-linear-gradient(45deg,#FFF0D1 0 12px,#FFE9BD 12px 24px);border:2px dashed #D9B76A;color:#6B5320;font-size:.8125rem;font-weight:700}
+.spud .ph span:first-child{font-size:2.5rem;line-height:1}
+.spud .body{display:flex;flex-direction:column;gap:8px;flex:1;padding-inline:8px}
+.spud h3{font-size:1.375rem;margin-top:4px}
 .spud p{color:var(--muted);flex:1}
-.spud .row{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:8px}
+.spud .row{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:4px}
 .spud .row>span:first-child{display:flex;flex-direction:column}
-.price{font-weight:800;font-size:1.125rem;color:var(--navy)}
+.price{font:700 1.25rem/1.2 var(--display);color:var(--navy)}
 .vat-note{font-size:.8125rem;color:var(--muted)}
 .choose{font-weight:700;color:var(--blue-dark);white-space:nowrap}
-.tag-slot{min-height:26px;display:flex}
-.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:4px 12px;border-radius:999px;background:#E3F1FE;color:#0A4F8A}
-.addons-line{margin-top:24px;color:var(--muted)}
+.choose .flip{transition:transform 150ms var(--spring-snappy)}
+.spud:hover .choose .flip{transform:translateX(3px)}
+[dir="rtl"] .spud:hover .choose .flip{transform:scaleX(-1) translateX(3px)}
+.tag{position:absolute;margin:8px;padding:4px 12px;border-radius:999px;background:var(--navy);color:var(--cream);font-size:.8125rem;font-weight:700}
+.spud{position:relative}
+.addons-line{margin-top:32px;color:var(--muted)}
 .addons-line strong{color:var(--ink)}
+.real{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:32px;max-width:640px}
+.real img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-sm);border:var(--bd)}
+.real figcaption{grid-column:1/-1;font-size:.875rem;color:var(--muted)}
 
-/* 3 Build */
-.build{background:#fff;border-block:1px solid var(--line)}
+/* ── 3 Build ── */
+.build{background:var(--blue-soft);border-block:var(--bd)}
 .build-grid{display:grid;gap:32px;margin-top:32px}
 @media (min-width:900px){.build-grid{grid-template-columns:1.2fr 1fr;align-items:start}.summary{position:sticky;top:calc(var(--head) + 16px)}}
 fieldset{border:0;margin-bottom:24px}
-legend{font-weight:800;font-size:1.0625rem;margin-bottom:12px}
-legend .step{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--cream);font-size:.875rem;margin-inline-end:8px}
+legend{font-family:var(--display);font-weight:600;font-size:1.1875rem;margin-bottom:12px}
+html[lang="ar"] legend{font-family:var(--font-ar);font-weight:700}
+legend .step{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--cream);font-size:.9375rem;margin-inline-end:8px}
 .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.opt{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:56px;padding:12px 16px;border:1.5px solid #CFC3AE;border-radius:var(--r-sm);background:var(--cream);cursor:pointer;font-weight:700}
+.opt{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:56px;padding:12px 16px;border:var(--bd);border-radius:var(--r-sm);background:#fff;cursor:pointer;font-weight:700;box-shadow:var(--pop-sm)}
 .opt small{font-weight:400;color:var(--muted);font-size:.875rem}
 .opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.opt:has(input:checked){border-color:var(--blue-dark);background:#E3F1FE;box-shadow:inset 0 0 0 1.5px var(--blue-dark)}
-.opt:has(input:focus-visible){outline:3px solid var(--blue-dark);outline-offset:3px}
+.opt:has(input:checked){background:#fff;border-color:var(--blue-dark);box-shadow:3px 3px 0 var(--blue-dark),inset 0 0 0 1.5px var(--blue-dark);color:var(--blue-dark)}
+.opt:has(input:focus-visible){outline:3px solid var(--navy);outline-offset:3px}
 .opt:has(input:checked)::after{content:"✓";position:absolute;top:8px;inset-inline-end:12px;color:var(--blue-dark);font-weight:800;animation:pop 320ms var(--spring-playful)}
-@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
-@keyframes enter{0%{transform:translateX(-12px);opacity:0}100%{transform:none;opacity:1}}
-@keyframes enter-rtl{0%{transform:translateX(12px);opacity:0}100%{transform:none;opacity:1}}
-.enter{animation:enter 320ms var(--spring-playful)}
-[dir="rtl"] .enter{animation-name:enter-rtl}
-.summary{position:relative}
-.loaded{position:absolute;inset-inline-end:16px;top:-16px;padding:4px 12px;border-radius:999px;background:var(--navy);color:var(--cream);font-size:.875rem;font-weight:800;opacity:0;pointer-events:none}
-.loaded.go{animation:loaded 1400ms var(--spring-playful)}
-@keyframes loaded{0%{opacity:0;transform:translateY(6px) scale(.8)}15%{opacity:1;transform:translateY(0) scale(1.06)}25%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(-4px)}}
-.tick{display:inline-block;animation:tick 320ms var(--spring-playful)}
-@keyframes tick{0%{transform:translateY(-3px)}100%{transform:none}}
-.qty{display:inline-flex;align-items:center;gap:8px;border:1.5px solid #CFC3AE;border-radius:999px;padding:4px;background:var(--cream)}
-.qty button{width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:1.25rem;font-weight:800}
+.qty{display:inline-flex;align-items:center;gap:8px;border:var(--bd);border-radius:999px;padding:4px;background:#fff}
+.qty button{width:44px;height:44px;border-radius:50%;border:0;background:var(--blue-soft);font-size:1.25rem;font-weight:800}
 .qty button:disabled{opacity:.4;cursor:not-allowed}
-.qty output{min-width:2ch;text-align:center;font-weight:800;font-size:1.125rem}
-.summary{background:var(--cream);border:1px solid var(--line);border-radius:var(--r);padding:24px}
-.summary h3{font-size:1.25rem;margin-bottom:12px}
+.qty output{min-width:2ch;text-align:center;font:700 1.25rem/1 var(--display)}
+.summary{position:relative;background:#fff;border:var(--bd);border-radius:var(--r);padding:24px;box-shadow:var(--pop)}
+.summary h3{font-size:1.375rem;margin-bottom:12px}
 .lines{list-style:none;display:grid;gap:12px}
-.line{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-bottom:12px;border-bottom:1px dashed #D9CBB2}
+.line{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-bottom:12px;border-bottom:2px dashed #D9CBB2}
 .line .addon{grid-column:1/-1;display:flex;justify-content:space-between;font-size:.9375rem;color:var(--muted)}
 .line .rm{grid-column:1/-1;justify-self:start;min-height:44px;background:none;border:0;color:var(--blue-dark);text-decoration:underline;font-weight:700;padding:0}
 .line.current{font-weight:700}
 .totals{display:grid;gap:4px;margin-top:12px}
 .totals div{display:flex;justify-content:space-between;gap:12px}
 .totals .vat{color:var(--muted);font-size:.9375rem}
-.totals .grand{font-size:1.25rem;font-weight:800;margin-top:4px}
-.summary .btn-gold{margin-top:24px;min-height:48px;padding:8px 20px;font-size:1rem;white-space:nowrap}
+.totals .grand{font:700 1.375rem/1.3 var(--display);margin-top:4px}
+html[lang="ar"] .totals .grand{font-family:var(--font-ar)}
+.summary .btn-gold{margin-top:24px;min-height:48px;padding:8px 24px;font-size:1.0625rem;white-space:nowrap}
 @media (max-width:379px){.summary{padding:16px}.summary .btn-gold{white-space:normal;width:100%}}
-.add-more{display:block;margin-top:8px;min-height:44px;background:none;border:0;color:var(--blue-dark);font-weight:700;text-decoration:underline}
+.add-more{display:block;margin-top:12px;min-height:44px;background:none;border:0;color:var(--blue-dark);font-weight:700;text-decoration:underline}
 .fine{color:var(--muted);margin-top:8px}
+.loaded{position:absolute;inset-inline-end:16px;top:-18px;padding:4px 12px;border-radius:999px;background:var(--navy);color:var(--cream);font-size:.875rem;font-weight:800;opacity:0;pointer-events:none}
+.loaded.go{animation:loaded 1400ms var(--spring-playful)}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes enter{0%{transform:translateX(-12px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes enter-rtl{0%{transform:translateX(12px);opacity:0}100%{transform:none;opacity:1}}
+.enter{animation:enter 320ms var(--spring-playful)}
+[dir="rtl"] .enter{animation-name:enter-rtl}
+@keyframes loaded{0%{opacity:0;transform:translateY(6px) scale(.8)}15%{opacity:1;transform:translateY(0) scale(1.06)}25%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(-4px)}}
+.tick{display:inline-block;animation:tick 320ms var(--spring-playful)}
+@keyframes tick{0%{transform:translateY(-3px)}100%{transform:none}}
 
-/* 4 Story */
-.story-grid{display:grid;gap:32px;align-items:center}
-@media (min-width:860px){.story-grid{grid-template-columns:1fr 1.1fr}}
-.story figure img{width:100%;height:auto;aspect-ratio:640/631;object-fit:cover;border-radius:var(--r)}
-.story figcaption{font-size:.875rem;color:var(--muted);margin-top:8px}
-.story blockquote{margin-top:24px;padding-inline-start:16px;border-inline-start:4px solid var(--blue);font-size:1.1875rem;font-weight:700}
-.story blockquote footer{font-size:.9375rem;font-weight:400;color:var(--muted);margin-top:8px}
-.story p+p{margin-top:12px}
+/* ── 4 Story ── */
+.story-grid{display:grid;gap:48px;align-items:center}
+@media (min-width:900px){.story-grid{grid-template-columns:1fr 1.1fr}}
+.story figure img{width:100%;height:auto;aspect-ratio:640/631;object-fit:cover;border-radius:var(--r);border:var(--bd);box-shadow:var(--pop)}
+.story figcaption{font-size:.875rem;color:var(--muted);margin-top:12px}
+.story blockquote{margin-top:24px;padding:16px 24px;border:var(--bd);border-radius:var(--r-sm);background:#fff;font:600 1.25rem/1.4 var(--display)}
+html[lang="ar"] .story blockquote{font-family:var(--font-ar);font-weight:700}
+.story blockquote footer{font:400 .9375rem/1.5 var(--font);color:var(--muted);margin-top:8px}
+html[lang="ar"] .story blockquote footer{font-family:var(--font-ar)}
 
-/* 5 Reviews */
-.reviews{background:#fff;border-block:1px solid var(--line)}
-.honest{margin-top:24px;padding:24px;border:1px solid var(--line);border-radius:var(--r);background:var(--cream);max-width:720px}
-.honest h3{font-size:1.125rem}
+/* ── 5 Reviews ── */
+.reviews{background:#fff;border-block:var(--bd)}
+.honest{display:grid;grid-template-columns:1fr auto;gap:0 16px;align-items:start;margin-top:24px;padding:24px;border:var(--bd);border-radius:var(--r);background:var(--cream);max-width:720px;box-shadow:var(--pop)}
+.honest .spud-still{width:64px;height:93px;grid-row:1/4;grid-column:2}
+.honest h3{font-size:1.25rem}
 .honest p{color:var(--muted);margin-top:8px}
 .honest a{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-weight:700}
 .clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:32px;max-width:720px}
-.clips figure{margin:0}
-.clips video{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r-sm);background:var(--navy)}
+.clips video{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r-sm);background:var(--navy);border:var(--bd)}
 .clips figcaption{font-size:.8125rem;color:var(--muted);margin-top:4px}
 
-/* 6 Find us */
+/* ── 6 Find us ── */
 .find-grid{display:grid;gap:32px;margin-top:32px}
-@media (min-width:860px){.find-grid{grid-template-columns:1fr 1fr}}
+@media (min-width:900px){.find-grid{grid-template-columns:1fr 1fr}}
 .facts{display:grid;gap:16px}
-.facts dt{font-weight:800}
+.facts dt{font-family:var(--display);font-weight:600;font-size:1.0625rem}
+html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
 .facts dd{color:var(--muted)}
 .find-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
-.map{width:100%;aspect-ratio:4/3;border:0;border-radius:var(--r);background:#E9E0CF}
-.truck img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r);max-height:420px}
-.truck figcaption{font-size:.875rem;color:var(--muted);margin-top:8px}
+.map{width:100%;aspect-ratio:4/3;border:var(--bd);border-radius:var(--r);background:#E9E0CF}
+.truck img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r);border:var(--bd);max-height:420px}
 .find-media{display:grid;gap:16px}
 @media (min-width:600px){.find-media{grid-template-columns:1fr 1fr}.map{aspect-ratio:auto;height:100%;min-height:280px}}
 
-/* 7 Footer */
+/* ── 7 Footer ── */
 .site-foot{background:var(--navy);color:#D6DEE8;padding-block:48px 32px}
-.site-foot nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:4px 8px}
-.site-foot a{display:inline-flex;align-items:center;min-height:44px;padding-inline:8px;color:var(--cream);font-weight:700}
+.site-foot .brand{font:700 1.75rem/1 var(--display);color:var(--cream);margin-bottom:16px}
+.site-foot nav ul,.site-foot .social{list-style:none;display:flex;flex-wrap:wrap;gap:4px 8px}
 .site-foot .social{margin-top:16px}
+.site-foot a{display:inline-flex;align-items:center;min-height:44px;padding-inline:8px;color:var(--cream);font-weight:700}
 .site-foot small{display:block;margin-top:24px;font-size:.875rem}
 
 .flip{display:inline-block}
 [dir="rtl"] .flip{transform:scaleX(-1)}
-.honest{display:grid;grid-template-columns:1fr auto;gap:0 16px;align-items:start}
-.honest .spud-still{width:72px;height:108px;grid-row:1/4;grid-column:2}
-/* Scroll reveals: first view only, transform + opacity, never on the hero */
+/* Scroll reveals: first view only, transform + opacity, never the hero */
 .js .reveal{opacity:0;transform:translateY(16px);transition:opacity 450ms ease-out,transform 450ms var(--ease-out)}
 .js .reveal.in{opacity:1;transform:none}
+
+/* Reduced motion: no flight, no bob, no reveals. The intro shows its finished frame, then fades. */
 @media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition-duration:1ms!important}
   .js .reveal{opacity:1;transform:none}
+  .intro-word,.intro-tag{opacity:1}
+  .intro{animation:intro-fade 200ms linear 1200ms forwards!important}
+  .intro.skip{animation:intro-fade 1ms linear forwards!important}
 }
 </style>
 </head>
 <body>
+<!-- INTRO — decorative splash; plays once per session (sessionStorage), skippable, removed from the DOM when done -->
+<div class="intro" id="intro">
+  <div class="intro-fly" aria-hidden="true"><img class="intro-spud" src="assets/mascot/mrspud-intro.webp" alt="" width="302" height="440"></div>
+  <p class="intro-word" aria-hidden="true">SPUDLICIOUS</p>
+  <p class="intro-tag" aria-hidden="true" data-ar="محمّلة · لذيذة · أسطورية">Loaded · Delicious · Legendary</p>
+  <button type="button" class="intro-skip" id="intro-skip" data-ar="تخطَّ المقدمة">Skip intro</button>
+</div>
+
 <a class="skip" href="#main" data-ar="تخطَّ إلى المحتوى">Skip to content</a>
 
 <header class="site-head">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Spudlicious home" data-ar-label="سبودلشيس، الصفحة الرئيسية">
-      <img src="assets/web/spudlicious-logo-web.webp" alt="" width="72" height="48">
+      <img src="assets/mascot/mrspud-nav.webp" alt="" width="30" height="44"><span aria-hidden="true">Spudlicious</span>
     </a>
     <nav class="nav" aria-label="Main" data-ar-label="الرئيسية">
       <a href="#menu" data-ar="القائمة">Menu</a>
@@ -376,12 +436,11 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
 <main id="main">
 
 <!-- 1 · HERO -->
-<section class="hero dark" id="top" aria-labelledby="hero-h">
+<section class="hero" id="top" aria-labelledby="hero-h">
   <div class="wrap">
     <div>
-      <p class="eyebrow" data-ar="البسيتين · أول شاحنة بطاطس محمّلة في البحرين">Busaiteen · Bahrain's first loaded-potato truck</p>
-      <h1 id="hero-h" data-ar="حيث تُصبح كل بطاطس تحفةً فنية.">Where every potato becomes a masterpiece.</h1>
-      <p class="sub" data-ar="مقرمشة من الخارج، هشّة من الداخل، ومحشوّة حتى الآخر. حلال 100%.">Crispy outside, fluffy inside, loaded to the max. 100% Halal.</p>
+      <h1 id="hero-h" data-ar="كل بطاطس، تحفة فنية.">Every potato, a masterpiece.</h1>
+      <p class="sub" data-ar="مخبوزة في الفرن، لا ميكروويف أبداً. محمّلة حتى الآخر في شاحنتنا في البسيتين.">Oven-baked, never microwaved. Loaded to the max at our truck in Busaiteen.</p>
       <div class="hero-actions">
         <a class="btn-gold" id="hero-wa" href="https://wa.me/97333260007?text=Hi%20Spudlicious!%20I'd%20like%20to%20order." target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg>
@@ -389,11 +448,20 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
         </a>
         <a class="quiet" href="#menu" data-ar="شاهد القائمة ↓">See menu ↓</a>
       </div>
-      <p class="open-line" id="open-line"><span class="dot" id="open-dot" aria-hidden="true"></span><span id="open-text">Open daily from 7 PM, until late</span></p>
+      <ul class="badges" aria-label="At a glance" data-ar-label="لمحة سريعة">
+        <li><span aria-hidden="true">🥔</span> <span id="b-count">4 Spuds</span></li>
+        <li id="b-price">BHD 2.000</li>
+        <li data-ar="حلال 100%">100% Halal</li>
+        <li><span class="dot" id="open-dot" aria-hidden="true"></span><span id="open-text">Open till late</span></li>
+      </ul>
     </div>
     <figure class="hero-media">
-      <img class="hero-food" src="assets/web/lean/closeup-topping.jpg" alt="A spoon digging into a Spudlicious bowl loaded with golden cheese" data-ar-alt="ملعقة في وعاء سبودلشيس محمّل بالجبن الذهبي" width="400" height="440">
-      <img class="hero-spud" src="assets/web/lean/mr-spud-200.webp" alt="Mr. Spud, the Spudlicious mascot" data-ar-alt="مستر سبود، تميمة سبودلشيس" width="200" height="300">
+      <!-- SLOT: HERO FOOD — replace src with the hyper-real food render/photo (4:3, ≥ 1200×900, warm grade).
+           Interim: a real bowl cropped from a customer clip. Keep width/height (CLS) and no lazy-loading (LCP). -->
+      <div class="hero-frame" data-slot="hero-food">
+        <img class="hero-food" src="assets/web/lean/closeup-topping.jpg" alt="A spoon digging into a Spudlicious bowl loaded with golden cheese" data-ar-alt="ملعقة في وعاء سبودلشيس محمّل بالجبن الذهبي" width="400" height="440">
+      </div>
+      <img class="hero-spud" src="assets/mascot/mrspud-intro.webp" alt="Mr. Spud, the Spudlicious mascot" data-ar-alt="مستر سبود، تميمة سبودلشيس" width="302" height="440">
       <figcaption data-ar="وعاء حقيقي من الشاحنة، كما صوّره أحد عملائنا.">A real bowl from the truck, filmed by one of our customers.</figcaption>
     </figure>
   </div>
@@ -404,7 +472,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
   <div class="wrap">
     <p class="eyebrow" data-ar="القائمة">Menu</p>
     <h2 id="menu-h" data-ar="أربع بطاطس محمّلة. سعر واحد.">Four loaded spuds. One price.</h2>
-    <p class="lead" data-ar="كل البطاطس بسعر 2.900 د.ب شاملة ضريبة القيمة المضافة. اختر واحدة لتبدأ طلبك.">Every spud is BHD 2.900, VAT included. Tap one to start your order.</p>
+    <p class="lead" id="menu-lead">Every spud is BHD 2.000, VAT included. Tap one to start your order.</p>
     <div class="menu-grid" id="menu-grid"></div>
     <p class="addons-line" id="addons-line"></p>
     <div class="real">
@@ -412,7 +480,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
       <figure><img src="assets/web/lean/closeup-sauce.jpg" alt="A loaded bowl finished with a drizzle of sauce" data-ar-alt="وعاء محمّل مع لمسة من الصلصة" width="290" height="240" loading="lazy" decoding="async"></figure>
       <figcaption data-ar="أوعية حقيقية، من مقاطع صوّرها عملاؤنا عند الشاحنة.">Real bowls, from clips our customers filmed at the truck.</figcaption>
     </div>
-    <noscript><p class="addons-line">Chicken Béchamel · Beef Béchamel · Chicken Ranch · Beef Ranch — BHD 2.900 each. Extra Cheese +BHD 0.300 · Jalapeños +BHD 0.200. Order on WhatsApp: +973 3326 0007.</p></noscript>
+    <noscript><p class="addons-line">Chicken Béchamel · Beef Béchamel · Chicken Ranch · Beef Ranch — BHD 2.000 each. Extra Cheese +BHD 0.200 · Jalapeños +BHD 0.200. Order on WhatsApp: +973 3326 0007.</p></noscript>
   </div>
 </section>
 
@@ -488,7 +556,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
     <p class="eyebrow" data-ar="التقييمات">Reviews</p>
     <h2 id="reviews-h" data-ar="ما يقوله عملاؤنا.">What our customers say.</h2>
     <div class="honest">
-      <img class="spud-still" src="assets/web/lean/mr-spud-200.webp" alt="" width="200" height="300" loading="lazy" decoding="async">
+      <img class="spud-still" src="assets/mascot/mrspud-nav.webp" alt="" width="64" height="93" loading="lazy" decoding="async">
       <h3 data-ar="مستر سبود لا يعرض إلا الأرقام التي يستطيع إثباتها.">Mr. Spud only shows stars he can prove.</h3>
       <p data-ar="ننشر فقط الأرقام التي يمكن التحقق منها. حتى نربط تقييمنا على Google بمتوسطه وعدده وتاريخ آخر مراجعة، تبقى كل المراجعات، الجيدة والسيئة، على Google.">We only publish numbers that can be checked. Until our Google rating is linked here with its average, count and latest date, every review, good or bad, lives on Google.</p>
       <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener" data-ar="اقرأ أو اكتب تقييماً على Google ←">Read or write a review on Google →</a>
@@ -545,6 +613,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
 <!-- 7 · FOOTER -->
 <footer class="site-foot dark">
   <div class="wrap">
+    <p class="brand" aria-hidden="true">Spudlicious</p>
     <nav aria-label="Site map" data-ar-label="خريطة الموقع">
       <ul>
         <li><a href="#menu" data-ar="القائمة">Menu</a></li>
@@ -554,7 +623,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
         <li><a href="#find-us" data-ar="موقعنا">Find us</a></li>
       </ul>
     </nav>
-    <ul class="social" style="list-style:none;display:flex;flex-wrap:wrap;gap:4px 8px">
+    <ul class="social">
       <li><a href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener">Instagram @spudlicious.bh</a></li>
       <li><a href="https://www.tiktok.com/@spudlicious.bh" target="_blank" rel="noopener">TikTok @spudlicious.bh</a></li>
     </ul>
@@ -580,22 +649,23 @@ window.SPUD_HOURS = {
 window.SPUD_VAT = { rate:0.10, inclusive:true };
 window.SPUD_MENU = {
   currency: 'BHD',
+  /* photo: set to an image path (4:3, e.g. 'assets/web/menu/chicken-bechamel.jpg') to replace the card placeholder. */
   items: [
-    { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', price:2.9, best:true, protein:'chicken', sauce:'bechamel',
+    { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', price:2.0, photo:null, best:true, protein:'chicken', sauce:'bechamel',
       desc:'Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.',
       desc_ar:'دجاج طري مغطّى بصلصة بشاميل منزلية غنية وكريمية، فوق بطاطس مخبوزة بإتقان.' },
-    { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', price:2.9, protein:'beef', sauce:'bechamel',
+    { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', price:2.0, photo:null, protein:'beef', sauce:'bechamel',
       desc:'Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.',
       desc_ar:'لحم بقري حلال متبّل مع صلصة البشاميل الكريمية المميزة لدينا. دافئ وغني.' },
-    { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', price:2.9, protein:'chicken', sauce:'ranch',
+    { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', price:2.0, photo:null, protein:'chicken', sauce:'ranch',
       desc:'Juicy chicken combined with our flavourful ranch sauce. Fresh, satisfying and totally addictive.',
       desc_ar:'دجاج طري مع صلصة الرانش المميزة. طازج ومُشبع ولا يُقاوَم.' },
-    { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', price:2.9, protein:'beef', sauce:'ranch',
+    { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', price:2.0, photo:null, protein:'beef', sauce:'ranch',
       desc:'Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty and packed with flavour.',
       desc_ar:'لحم بقري حلال متبّل بإتقان مع صلصة رانش كريمية. جريء ومُشبع ومليء بالنكهة.' }
   ],
   addons: [
-    { id:'extra-cheese', name:'Extra Cheese', name_ar:'جبنة إضافية', price:0.3 },
+    { id:'extra-cheese', name:'Extra Cheese', name_ar:'جبنة إضافية', price:0.2 },
     { id:'jalapenos',    name:'Jalapeños',    name_ar:'هالبينو',     price:0.2 }
   ],
   proteins: [ { id:'chicken', name:'Chicken', name_ar:'دجاج' }, { id:'beef', name:'Beef', name_ar:'لحم' } ],
@@ -616,14 +686,18 @@ window.SPUD_MENU = {
     en:{ best:'Best seller', choose:'Load it up', incl:'incl. VAT', addons:'Add-ons', each:'each', vat:'VAT ' + Math.round(VAT.rate*100) + '% (included)',
          order:'Order on WhatsApp', remove:'Remove', removed:'Removed from your order', added:'Spud loaded! Build the next one.', loaded:'🥔 Loaded!',
          hi:"Hi Spudlicious! I'd like to order:", total:'Total', inclVat:'incl. ' + Math.round(VAT.rate*100) + '% VAT', name:'Name:', pickup:'Pickup time:',
-         openNow:function(c){ return 'Open now · until ' + (c ? '1 AM' : 'midnight'); },
-         opens:function(c){ return 'Opens tonight at 7 PM · until ' + (c ? '1 AM' : 'midnight'); },
+         openNow:function(c){ return 'Open now · till ' + (c ? '1 AM' : 'late'); },
+         opens:function(){ return 'Opens 7 PM · till late'; },
+         spuds:function(n){ return n + ' Spuds'; }, soon:'Photo coming soon',
+         lead:function(p){ return 'Every spud is ' + p + ', VAT included. Tap one to start your order.'; },
          heroMsg:"Hi Spudlicious! I'd like to order.", picked:function(n){ return n + ' selected in Build your spud'; } },
     ar:{ best:'الأكثر طلباً', choose:'حمّلها', incl:'شامل الضريبة', addons:'الإضافات', each:'للواحدة', vat:'ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '% (مشمولة)',
          order:'اطلب عبر واتساب', remove:'إزالة', removed:'تمت الإزالة من طلبك', added:'تم تحميل البطاطس! اصنع التالية.', loaded:'🥔 محمّلة!',
          hi:'مرحباً سبودلشيس! أود أن أطلب:', total:'المجموع', inclVat:'شامل ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '%', name:'الاسم:', pickup:'وقت الاستلام:',
-         openNow:function(c){ return 'مفتوح الآن · حتى ' + (c ? '1 صباحاً' : 'منتصف الليل'); },
-         opens:function(c){ return 'نفتح الليلة الساعة 7 مساءً · حتى ' + (c ? '1 صباحاً' : 'منتصف الليل'); },
+         openNow:function(c){ return 'مفتوح الآن · حتى ' + (c ? '1 صباحاً' : 'وقت متأخر'); },
+         opens:function(){ return 'نفتح 7 مساءً · حتى وقت متأخر'; },
+         spuds:function(n){ return n + ' بطاطس'; }, soon:'الصورة قريباً',
+         lead:function(p){ return 'كل البطاطس بسعر ' + p + ' شاملة ضريبة القيمة المضافة. اختر واحدة لتبدأ طلبك.'; },
          heroMsg:'مرحباً سبودلشيس! أود أن أطلب.', picked:function(n){ return 'تم اختيار ' + n + ' في اصنع بطاطستك'; } }
   };
   var t = function(k){ return T[ar() ? 'ar' : 'en'][k]; };
@@ -632,12 +706,18 @@ window.SPUD_MENU = {
   /* ── Menu cards (from SPUD_MENU) ── */
   function renderMenu(){
     $('menu-grid').innerHTML = M.items.map(function(it){
-      return '<button type="button" class="spud" data-pick="' + it.id + '">' +
-        '<span class="tag-slot">' + (it.best ? '<span class="tag">' + t('best') + '</span>' : '') + '</span>' +
-        '<h3>' + esc(nm(it)) + '</h3><p>' + esc(ar() ? it.desc_ar : it.desc) + '</p>' +
+      var pic = it.photo ? '<img class="photo" src="' + esc(it.photo) + '" alt="" width="400" height="300" loading="lazy" decoding="async">'
+                         : '<span class="ph" aria-hidden="true"><span>🥔</span><span>' + t('soon') + '</span></span>';
+      return '<button type="button" class="spud" data-pick="' + it.id + '">' + pic +
+        (it.best ? '<span class="tag">' + t('best') + '</span>' : '') +
+        '<span class="body"><h3>' + esc(nm(it)) + '</h3><p>' + esc(ar() ? it.desc_ar : it.desc) + '</p>' +
         '<span class="row"><span><span class="price">' + bhdHtml(it.price) + '</span><span class="vat-note">' + t('incl') + '</span></span>' +
-        '<span class="choose" aria-hidden="true">' + t('choose') + ' <span class="flip">→</span></span></span></button>';
+        '<span class="choose" aria-hidden="true">' + t('choose') + ' <span class="flip">→</span></span></span></span></button>';
     }).join('');
+    var low = Math.min.apply(null, M.items.map(function(i){ return i.price; }));
+    $('menu-lead').textContent = T[ar() ? 'ar' : 'en'].lead(bhd(low));
+    $('b-count').textContent = T[ar() ? 'ar' : 'en'].spuds(M.items.length);
+    $('b-price').innerHTML = bhdHtml(low);
     $('addons-line').innerHTML = '<strong>' + t('addons') + ':</strong> ' + M.addons.map(function(a){
       return esc(nm(a)) + ' +' + bhdHtml(a.price); }).join(' · ');
   }
@@ -791,6 +871,21 @@ window.SPUD_MENU = {
     window.dataLayer.push({ event:'whatsapp_order_click', source:a.id || 'find-us' });
   });
 
+  /* ── INTRO: once per session; Skip / Esc end it; it removes itself when its last animation ends. ── */
+  var intro = $('intro');
+  if (intro && doc.classList.contains('intro-on')) {
+    try { sessionStorage.setItem('spud-intro', '1'); } catch(e){}
+    var endIntro = function(){
+      if (!intro.parentNode) return;
+      var hadFocus = intro.contains(document.activeElement);
+      intro.remove(); doc.classList.add('intro-done');
+      if (hadFocus) document.querySelector('.logo').focus();
+    };
+    intro.addEventListener('animationend', function(e){ if (e.target === intro) endIntro(); });
+    $('intro-skip').addEventListener('click', function(){ intro.classList.add('skip'); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && intro.parentNode) intro.classList.add('skip'); });
+  } else if (intro) intro.remove();
+
   /* Hero: Mr. Spud bobs three times, then the order button nudges once. One motion at a time, then rest. */
   var spud = document.querySelector('.hero-spud');
   if (spud) spud.addEventListener('animationend', function(){ $('hero-wa').classList.add('nudge'); }, { once:true });
@@ -812,7 +907,7 @@ window.SPUD_MENU = {
 
   addEventListener('load', function(){
     var f = document.createElement('link'); f.rel = 'stylesheet';
-    f.href = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Cairo:wght@400;700;800&display=optional';
+    f.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Cairo:wght@400;700&family=Baloo+Bhaijaan+2:wght@600..800&display=optional';
     document.head.appendChild(f);
   });
   if ('serviceWorker' in navigator) addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });

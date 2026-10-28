@@ -6,7 +6,7 @@
      • Fonts / static       → cache-first.
    Bump CACHE_VERSION on every deploy to invalidate old caches cleanly.
    ══════════════════════════════════════════════════════════════════════════ */
-const CACHE_VERSION = 'spud-v19';
+const CACHE_VERSION = 'spud-v20';
 const SHELL_CACHE   = `${CACHE_VERSION}-shell`;
 const ASSET_CACHE   = `${CACHE_VERSION}-assets`;
 
@@ -18,7 +18,9 @@ const PRECACHE = [
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/web/spudlicious-logo-web.webp',
-  './assets/web/lean/mr-spud-200.webp',
+  './assets/mascot/mrspud-intro.webp',
+  './assets/mascot/mrspud-nav.webp',
+  './assets/fonts/fredoka-latin-500-700.woff2',
   './assets/web/lean/closeup-topping.jpg'
 ];
 
