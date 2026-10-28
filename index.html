@@ -3650,20 +3650,20 @@ body.spa-account #page-account{padding-top:130px}
 
 <!-- FLOAT -->
 <div id="float-cta">
-  <a class="float-btn float-wa" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer">
-    <span>💬</span><span class="float-label" data-ar="واتساب">WhatsApp</span>
+  <a class="float-btn float-wa" id="float-wa" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" aria-label="Order on WhatsApp">
+    <span aria-hidden="true">💬</span><span class="float-label">Order on WhatsApp</span>
   </a>
-  <button class="float-btn float-order" onclick="document.getElementById('cart-open-btn').click()">
-    <span>🛒</span><span class="float-label" data-ar="طلبي">My Order</span>
+  <button type="button" class="float-btn float-order" onclick="document.getElementById('cart-open-btn').click()" aria-label="My order">
+    <span aria-hidden="true">🛒</span><span class="float-label" data-ar="طلبي">My Order</span>
   </button>
 </div>
 
 <!-- CART -->
 <div id="cart-overlay" onclick="closeCart()"></div>
-<div id="cart-drawer">
+<div id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
   <div class="cart-header">
-    <h3>🛒 Your Order</h3>
-    <button class="cart-close" onclick="closeCart()">✕</button>
+    <h3 id="cart-title">🛒 Your Order</h3>
+    <button type="button" class="cart-close" onclick="closeCart()" aria-label="Close order">✕</button>
   </div>
   <div class="cart-items" id="cart-items">
     <div class="cart-empty">
@@ -3673,13 +3673,9 @@ body.spa-account #page-account{padding-top:130px}
     </div>
   </div>
   <div class="cart-footer" id="cart-footer" style="display:none">
-    <div class="cart-total">
-      <span>Total</span>
-      <span id="cart-total-price">BHD 0.000</span>
-    </div>
-    <button class="cart-wa-btn" onclick="orderViaWhatsApp()">
-      💬 Send Order via WhatsApp
-    </button>
+    <div class="cart-summary" id="cart-summary" aria-live="polite"></div>
+    <button type="button" class="cart-wa-btn" id="cart-wa-btn" onclick="orderViaWhatsApp()">💬 Order on WhatsApp</button>
+    <p class="cart-wa-hint" id="cart-wa-hint">Your order is pre-filled in WhatsApp — just press send.</p>
   </div>
 </div>
 
@@ -3888,15 +3884,15 @@ body.spa-account #page-account{padding-top:130px}
         <p class="about-story" data-ar="من الرغبات الليلية إلى تموين الشركات — سبودلشيس هي حيث تتحول كل بطاطسة إلى تحفة فنية. ونحن بدأنا للتو.">From late-night cravings to corporate catering — Spudlicious is where every potato becomes a masterpiece. And we're just getting started.</p>
         <div class="stats-grid stagger">
           <div class="stat-card">
-            <div><span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span></div>
+            <div><span class="stat-number">100</span><span class="stat-suffix">%</span></div>
             <div class="stat-label" data-ar="حلال معتمد">Halal Certified</div>
           </div>
           <div class="stat-card">
-            <div><span class="stat-number" data-target="4">0</span><span class="stat-suffix">+</span></div>
+            <div><span class="stat-number" data-menu-count="items">4</span></div>
             <div class="stat-label" data-ar="بطاطس مميزة">Signature Spuds</div>
           </div>
           <div class="stat-card">
-            <div><span class="stat-number" data-target="1">1</span><span class="stat-suffix">st</span></div>
+            <div><span class="stat-number">1</span><span class="stat-suffix">st</span></div>
             <div class="stat-label" data-ar="الأول في البحرين">In Bahrain</div>
           </div>
         </div>
@@ -4230,7 +4226,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Chicken Béchamel</div>
           <div class="card-desc">Tender chicken smothered in a rich, creamy homemade béchamel sauce. Loaded over a perfectly baked potato.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
+            <div class="card-price">BHD 2.900 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Chicken Béchamel',2.9,'🍗')">Add to Order</button>
           </div>
         </div>
@@ -4246,7 +4242,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Beef Béchamel</div>
           <div class="card-desc">Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
+            <div class="card-price">BHD 2.900 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Beef Béchamel',2.9,'🥩')">Add to Order</button>
           </div>
         </div>
@@ -4262,7 +4258,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Chicken Ranch</div>
           <div class="card-desc">Juicy chicken combined with our flavourful ranch sauce — a fresh, satisfying, and totally addictive combo.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
+            <div class="card-price">BHD 2.900 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Chicken Ranch',2.9,'🤠')">Add to Order</button>
           </div>
         </div>
@@ -4278,7 +4274,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Beef Ranch</div>
           <div class="card-desc">Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour every bite.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
+            <div class="card-price">BHD 2.900 <span>/ spud</span></div>
             <button class="card-btn" onclick="addToCart('Beef Ranch',2.9,'🌶️')">Add to Order</button>
           </div>
         </div>
@@ -4289,8 +4285,8 @@ body.spa-account #page-account{padding-top:130px}
     <div class="addons-section reveal">
       <div class="addons-title">🧀 Customise Your Spud</div>
       <div class="addons-grid">
-        <div class="addon-chip" onclick="addToCart('Extra Cheese',0.3,'🧀')">🧀 Extra Cheese <strong>+ BHD 0.3</strong></div>
-        <div class="addon-chip" onclick="addToCart('Jalapeños',0.2,'🌶')">🌶 Jalapeños <strong>+ BHD 0.2</strong></div>
+        <button type="button" class="addon-chip" onclick="openBuilder(['extra-cheese'])">🧀 Extra Cheese <strong dir="ltr">+ BHD 0.300</strong></button>
+        <button type="button" class="addon-chip" onclick="openBuilder(['jalapenos'])">🌶 Jalapeños <strong dir="ltr">+ BHD 0.200</strong></button>
       </div>
     </div>
     <!-- FOUNDER — holds potato, recommends from menu -->
@@ -4309,55 +4305,19 @@ body.spa-account #page-account{padding-top:130px}
 <div class="stripe-divider"></div>
 
 <!-- LIVE KITCHEN -->
-<section id="live-kitchen" aria-label="Live kitchen status">
+<section id="live-kitchen" aria-label="Live kitchen — coming soon">
   <div class="lk-inner">
     <div class="lk-head">
       <div>
         <div class="section-tag" style="background:rgba(28,145,242,0.14);border-color:rgba(28,145,242,0.35);color:rgba(200,220,255,0.9);border-bottom-color:rgba(10,60,140,0.3)" data-ar="🍳 المطبخ المباشر">🍳 Live Kitchen</div>
-        <h2 class="lk-title" data-ar-html="نحن نطبخ<br>الآن.">We're Cooking<br>Right Now.</h2>
-        <p class="lk-sub" data-ar="طلبات حقيقية. مطبخ حقيقي. كل بطاطسة تُصنع طازجة عند الطلب.">Real orders. Real kitchen. Every spud made fresh to order.</p>
+        <h2 class="lk-title" data-ar-html="المطبخ المباشر<br>قريباً.">Live Kitchen<br>Coming Soon.</h2>
+        <p class="lk-sub" data-ar="قريباً ستتابع طلبك من المطبخ لحظة بلحظة. حتى ذلك الحين، كل بطاطسة تُصنع طازجة عند الطلب.">Soon you'll follow your order from our kitchen in real time. Until then, every spud is made fresh to order.</p>
+        <!-- No live numbers until a real order backend exists (Law 48: no fabricated activity). -->
+        <div class="soon-pill soon-pill-sm" data-ar="🚧 قريباً">🚧 Coming soon</div>
       </div>
       <div class="lk-status-pill" id="lk-status" role="status">
         <div class="lk-status-dot" aria-hidden="true"></div>
-        <span id="lk-status-text">Checking…</span>
-      </div>
-    </div>
-    <div class="lk-grid">
-      <!-- Left: Order Queue -->
-      <div class="lk-panel">
-        <div class="lk-panel-title" aria-hidden="true">Live Order Queue</div>
-        <div class="lk-steam-row" aria-hidden="true">
-          <div class="lk-s"></div><div class="lk-s"></div>
-          <div class="lk-s"></div><div class="lk-s"></div>
-        </div>
-        <div id="lk-orders" aria-live="polite"></div>
-      </div>
-      <!-- Right column: Timer + Stats -->
-      <div>
-        <div class="lk-panel">
-          <div class="lk-panel-title" aria-hidden="true">Average Prep Time</div>
-          <div class="lk-timer-center">
-            <div class="lk-timer-big" id="lk-timer" aria-label="Prep timer">08:00</div>
-            <div class="lk-timer-lbl">minutes from order to ready</div>
-          </div>
-        </div>
-        <div class="lk-panel">
-          <div class="lk-panel-title" aria-hidden="true">Kitchen Stats</div>
-          <div class="lk-stats">
-            <div class="lk-stat">
-              <div class="lk-stat-num" id="lk-count">—</div>
-              <div class="lk-stat-label">Orders Today</div>
-            </div>
-            <div class="lk-stat">
-              <div class="lk-stat-num">4</div>
-              <div class="lk-stat-label">Menu Items</div>
-            </div>
-            <div class="lk-stat">
-              <div class="lk-stat-num">8<span class="lk-stat-unit">m</span></div>
-              <div class="lk-stat-label">Avg Prep</div>
-            </div>
-          </div>
-        </div>
+        <span id="lk-status-text">Opens 7:00 PM</span>
       </div>
     </div>
   </div>
@@ -4445,12 +4405,13 @@ body.spa-account #page-account{padding-top:130px}
       <div class="rhs-label" data-ar="مستواك الحالي">Your Current Status</div>
       <div class="loyalty-soon rhs-soon" data-ar="🚧 قريباً">🚧 Coming soon</div>
       <p class="loyalty-soon rhs-soon-sub" data-ar="ستظهر نقاطك ومستواك هنا عند إطلاق مكافآت البطاطس.">Your XP and tier will show here once Spud Rewards launches.</p>
-      <div class="rhs-tier" id="rhs-tier-display">🥔 Rookie</div>
-      <div class="rhs-xp" id="rhs-xp-display">0 XP earned</div>
-      <div class="rhs-bar-wrap">
+      <!-- Live status: empty + hidden until SPUD_FEATURES.loyalty (no XP numbers without a backend) -->
+      <div class="rhs-tier" id="rhs-tier-display" data-loyalty-live hidden></div>
+      <div class="rhs-xp" id="rhs-xp-display" data-loyalty-live hidden></div>
+      <div class="rhs-bar-wrap" data-loyalty-live hidden>
         <div class="rhs-bar" id="rhs-xp-bar"></div>
       </div>
-      <div class="rhs-next" id="rhs-next-display">200 XP to Regular</div>
+      <div class="rhs-next" id="rhs-next-display" data-loyalty-live hidden></div>
       <button class="btn-primary" onclick="spudNavigate('menu')" data-ar="🥔 ابدأ الكسب — اطلب الآن">🥔 Start Earning — Order Now</button>
     </div>
 
@@ -4662,12 +4623,12 @@ body.spa-account #page-account{padding-top:130px}
       <div class="form-title" data-ar="📋 احجز فعاليتك">📋 Book Your Event</div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" data-ar="اسمك *">Your Name *</label>
-          <input class="form-input" type="text" id="form-name" placeholder="Ahmed Al-Mansoor" data-ar-placeholder="أحمد الكريم">
+          <label class="form-label" for="form-name" data-ar="اسمك *">Your Name *</label>
+          <input class="form-input" type="text" id="form-name" autocomplete="name" dir="auto" placeholder="Ahmed Al-Mansoor" data-ar-placeholder="أحمد الكريم">
         </div>
         <div class="form-group">
-          <label class="form-label" data-ar="رقم واتساب *">WhatsApp Number *</label>
-          <input class="form-input" type="tel" id="form-phone" placeholder="+973 3XXX XXXX" data-ar-placeholder="+973 3XXX XXXX">
+          <label class="form-label" for="form-phone" data-ar="رقم واتساب *">WhatsApp Number *</label>
+          <input class="form-input" type="tel" id="form-phone" autocomplete="tel" dir="ltr" placeholder="+973 3XXX XXXX" data-ar-placeholder="+973 3XXX XXXX">
         </div>
       </div>
       <div class="form-row">
@@ -4684,17 +4645,17 @@ body.spa-account #page-account{padding-top:130px}
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label" data-ar="عدد الضيوف المتوقع">Expected Guests</label>
+          <label class="form-label" for="form-guests" data-ar="عدد الضيوف المتوقع">Expected Guests</label>
           <input class="form-input" type="number" id="form-guests" placeholder="50">
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label" data-ar="تاريخ ومكان الفعالية">Event Date & Location</label>
-        <input class="form-input" type="text" id="form-details" placeholder="e.g. March 15, Manama" data-ar-placeholder="مثال: 15 مارس، المنامة">
+        <label class="form-label" for="form-details" data-ar="تاريخ ومكان الفعالية">Event Date & Location</label>
+        <input class="form-input" type="text" id="form-details" dir="auto" placeholder="e.g. March 15, Manama" data-ar-placeholder="مثال: 15 مارس، المنامة">
       </div>
       <div class="form-group">
-        <label class="form-label" data-ar="ملاحظات إضافية">Additional Notes</label>
-        <textarea class="form-textarea" id="form-notes" placeholder="Any special requirements?" data-ar-placeholder="أي متطلبات خاصة؟"></textarea>
+        <label class="form-label" for="form-notes" data-ar="ملاحظات إضافية">Additional Notes</label>
+        <textarea class="form-textarea" id="form-notes" dir="auto" placeholder="Any special requirements?" data-ar-placeholder="أي متطلبات خاصة؟"></textarea>
       </div>
       <button class="form-submit" onclick="submitCatering()" data-ar="💬 أرسل الحجز عبر واتساب">
         💬 Send Booking via WhatsApp
@@ -4872,7 +4833,6 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div class="mascot-cameo" style="width:90px;flex-shrink:0" aria-hidden="true">
-          <span class="mascot-cameo-bubble" data-ar="📖 أقرأ التقييمات...">📖 Reading reviews...</span>
           <img src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot waving" style="width:90px;opacity:.92"/>
         </div>
         <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" data-ar="⭐ اكتب تقييماً" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--blue-dark);color:#fff;border-radius:50px;font-weight:800;font-size:.85rem;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='#0a5da8'" onmouseout="this.style.background='var(--blue-dark)'">⭐ Write a Review</a>
@@ -5401,10 +5361,17 @@ window.SPUD_MENU = {
       desc:'Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour every bite.', tags:['beef','ranch'] }
   ],
   addons: [
-    { id:'extra-cheese', name:'Extra Cheese', emoji:'🧀', price:0.3 },
-    { id:'jalapenos',    name:'Jalapeños',    emoji:'🌶',  price:0.2 }
+    { id:'extra-cheese', name:'Extra Cheese', name_ar:'جبنة إضافية', emoji:'🧀', price:0.3 },
+    { id:'jalapenos',    name:'Jalapeños',    name_ar:'هالبينو',     emoji:'🌶',  price:0.2 }
   ]
 };
+
+/* Real-data counts: any [data-menu-count="items"|"addons"] shows the live length
+   of SPUD_MENU, so the stats row can never drift from the menu. */
+document.querySelectorAll('[data-menu-count]').forEach(function(el){
+  var list=window.SPUD_MENU[el.getAttribute('data-menu-count')];
+  if(list&&list.length)el.textContent=list.length;
+});
 
 // ══ CINEMATIC LOADER ══════════════════════════════════════════
 (function(){
@@ -5567,60 +5534,143 @@ function applyLang(){
   });
 }
 
-langBtn.addEventListener('click',function(){ar=!ar;applyLang();});
+langBtn.addEventListener('click',function(){ar=!ar;applyLang();if(window.renderCart)renderCart();});
 
 // CART STATE
+/* VAT — OWNER: confirm Spudlicious' VAT registration with the NBR. Bahrain requires
+   consumer prices to include VAT, so menu prices are treated as VAT-inclusive and the
+   order summary shows the VAT share inside the total. Not VAT-registered? set rate:0. */
+window.SPUD_VAT={rate:0.10,inclusive:true};
+var SPUD_WA='97333260007';
 var cart=[];
+function bhd(n){return ar?n.toFixed(3)+' د.ب':'BHD '+n.toFixed(3);}
+/* Price markup: only the digits are isolated LTR, so Arabic reads "9.000 د.ب" naturally (Law 50). */
+function bhdHtml(n){return '<span class="bhd">'+(ar?'<bdi dir="ltr">'+n.toFixed(3)+'</bdi> د.ب':'<bdi dir="ltr">BHD '+n.toFixed(3)+'</bdi>')+'</span>';}
+function bhdEn(n){return 'BHD '+n.toFixed(3);}
+function lineUnit(i){return i.price+i.addons.reduce(function(s,a){return s+a.price;},0);}
+function cartTotals(){
+  var sub=cart.reduce(function(s,i){return s+lineUnit(i)*i.qty;},0);
+  var r=window.SPUD_VAT.rate||0, inc=window.SPUD_VAT.inclusive;
+  var vat=Math.round((inc?sub*r/(1+r):sub*r)*1000)/1000;
+  return {sub:sub, vat:vat, total:inc?sub:sub+vat, count:cart.reduce(function(s,i){return s+i.qty;},0)};
+}
+function cartT(){
+  var pct=Math.round((window.SPUD_VAT.rate||0)*100);
+  return ar?{title:'🛒 طلبك',empty:'سلتك فارغة!',emptySub:'أضف شيئاً لذيذاً 👆',sub:'المجموع الفرعي',vat:pct?'ضريبة القيمة المضافة '+pct+'٪ (مشمولة)':'ضريبة القيمة المضافة',vatNone:'غير مطبّقة',total:'الإجمالي',btn:'اطلب عبر واتساب',hint:'طلبك مكتوب مسبقاً في واتساب — فقط اضغط إرسال.',close:'إغلاق الطلب',less:'إنقاص',more:'زيادة',each:'للواحدة'}
+            :{title:'🛒 Your Order',empty:'Your spud cart is empty!',emptySub:'Add something delicious 👆',sub:'Subtotal',vat:pct?'VAT '+pct+'% (included)':'VAT',vatNone:'not charged',total:'Total',btn:'Order on WhatsApp',hint:'Your order is pre-filled in WhatsApp — just press send.',close:'Close order',less:'Remove one',more:'Add one',each:'each'};
+}
 document.getElementById('cart-open-btn').addEventListener('click',openCart);
-function openCart(){document.getElementById('cart-overlay').classList.add('open');document.getElementById('cart-drawer').classList.add('open');}
-function closeCart(){document.getElementById('cart-overlay').classList.remove('open');document.getElementById('cart-drawer').classList.remove('open');}
+var cartLastFocus=null;
+function openCart(){
+  cartLastFocus=document.activeElement;
+  document.getElementById('cart-overlay').classList.add('open');document.getElementById('cart-drawer').classList.add('open');
+  setTimeout(function(){var c=document.querySelector('#cart-drawer .cart-close');if(c)c.focus();},60);
+}
+function closeCart(){
+  document.getElementById('cart-overlay').classList.remove('open');document.getElementById('cart-drawer').classList.remove('open');
+  if(cartLastFocus&&cartLastFocus.focus)cartLastFocus.focus();
+}
 /* Escape closes the cart drawer (parity with X + overlay click). */
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){var d=document.getElementById('cart-drawer');if(d&&d.classList.contains('open'))closeCart();}
 });
 
-function addToCart(name,price,emoji){
-  var existing=cart.find(function(i){return i.name===name;});
-  if(existing){existing.qty++;}else{cart.push({name:name,price:parseFloat(price),emoji:emoji,qty:1});}
+/* addToCart(name, unitPrice, emoji[, addons]) — addons: [{name,price,emoji}] attach to the spud line. */
+function addToCart(name,price,emoji,addons){
+  addons=addons||[];
+  var key=name+'|'+addons.map(function(a){return a.name;}).join('+');
+  var existing=cart.find(function(i){return i.key===key;});
+  if(existing){existing.qty++;}else{cart.push({key:key,name:name,price:parseFloat(price),emoji:emoji,addons:addons,qty:1});}
   renderCart();
-  showToast(emoji+' '+name+' added!');
+  showToast(emoji+' '+name+(ar?' أُضيفت!':' added!'));
   confettiBurst();
   document.dispatchEvent(new CustomEvent('cart-item-added'));
 }
-function changeQty(name,delta){
-  var idx=cart.findIndex(function(i){return i.name===name;});
-  if(idx<0)return;
+function changeQty(idx,delta){
+  if(!cart[idx])return;
   cart[idx].qty+=delta;
   if(cart[idx].qty<=0){cart.splice(idx,1);}
   renderCart();
   if(delta<0)document.dispatchEvent(new CustomEvent('cart-item-removed'));
 }
+/* Arabic display names come from SPUD_MENU (the WhatsApp message stays in English for the kitchen). */
+function menuName(n){
+  if(!ar)return n;
+  var M=window.SPUD_MENU, hit=M.items.concat(M.addons).find(function(x){return x.name===n;});
+  return hit&&hit.name_ar?hit.name_ar:n;
+}
+function escHtml(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function renderCart(){
-  var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  var count=cart.reduce(function(s,i){return s+i.qty;},0);
-  document.getElementById('cart-count').textContent=count;
+  var T=cartT(), t=cartTotals();
+  document.getElementById('cart-count').textContent=t.count;
+  var h3=document.querySelector('#cart-drawer .cart-header h3'); if(h3)h3.textContent=T.title;
+  var cl=document.querySelector('#cart-drawer .cart-close'); if(cl)cl.setAttribute('aria-label',T.close);
   var itemsEl=document.getElementById('cart-items');
   var footerEl=document.getElementById('cart-footer');
+  updateOrderFloat(t);
   if(cart.length===0){
-    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🥔</div><p style="font-weight:700;color:var(--text-muted)">Your spud cart is empty!</p><p style="font-size:.85rem;color:var(--text-muted);margin-top:6px">Add something delicious 👆</p></div>';
+    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🥔</div><p style="font-weight:700;color:var(--text-muted)">'+T.empty+'</p><p style="font-size:.85rem;color:var(--text-muted);margin-top:6px">'+T.emptySub+'</p></div>';
     footerEl.style.display='none';
     return;
   }
   footerEl.style.display='block';
-  document.getElementById('cart-total-price').textContent='BHD '+total.toFixed(3);
-  itemsEl.innerHTML=cart.map(function(i){
-    return '<div class="cart-item"><div class="cart-item-icon">'+i.emoji+'</div><div class="cart-item-info"><div class="cart-item-name">'+i.name+'</div><div class="cart-item-price">BHD '+(i.price*i.qty).toFixed(3)+'</div></div><div class="cart-item-qty"><button class="qty-btn" onclick="changeQty(\''+i.name+'\',-1)">−</button><span>'+i.qty+'</span><button class="qty-btn" onclick="changeQty(\''+i.name+'\',1)">+</button></div></div>';
+  itemsEl.innerHTML=cart.map(function(i,idx){
+    var adds=i.addons.map(function(a){return '<li><span>+ '+a.emoji+' '+escHtml(menuName(a.name))+'</span>'+bhdHtml(a.price)+'</li>';}).join('');
+    return '<div class="cart-item"><div class="cart-item-icon" aria-hidden="true">'+i.emoji+'</div><div class="cart-item-info">'+
+      '<div class="cart-item-name">'+escHtml(menuName(i.name))+'</div>'+
+      '<div class="cart-item-unit">'+bhdHtml(i.price)+'</div>'+
+      (adds?'<ul class="cart-item-addons">'+adds+'</ul>':'')+
+      '<div class="cart-item-price">'+bhdHtml(lineUnit(i)*i.qty)+''+(i.qty>1?' <small>('+i.qty+' × '+bhdHtml(lineUnit(i))+')</small>':'')+'</div></div>'+
+      '<div class="cart-item-qty"><button type="button" class="qty-btn" data-idx="'+idx+'" data-d="-1" aria-label="'+T.less+': '+escHtml(i.name)+'">−</button><span aria-live="polite">'+i.qty+'</span><button type="button" class="qty-btn" data-idx="'+idx+'" data-d="1" aria-label="'+T.more+': '+escHtml(i.name)+'">+</button></div></div>';
   }).join('');
+  var sum=document.getElementById('cart-summary');
+  if(sum)sum.innerHTML=
+    '<div class="cs-row"><span>'+T.sub+'</span>'+bhdHtml(t.sub)+'</div>'+
+    '<div class="cs-row cs-vat"><span>'+T.vat+'</span><span>'+(window.SPUD_VAT.rate?bhdHtml(t.vat):T.vatNone)+'</span></div>'+
+    '<div class="cs-row cs-total"><span>'+T.total+'</span>'+bhdHtml(t.total)+'</div>';
+  var btn=document.getElementById('cart-wa-btn');
+  if(btn)btn.innerHTML='<span aria-hidden="true">💬</span> '+T.btn+' · '+bhdHtml(t.total)+'';
+  var hint=document.getElementById('cart-wa-hint'); if(hint)hint.textContent=T.hint;
 }
+document.getElementById('cart-items').addEventListener('click',function(e){
+  var b=e.target.closest('.qty-btn'); if(!b)return;
+  var idx=+b.dataset.idx, d=+b.dataset.d;
+  changeQty(idx,d);
+  /* keep keyboard focus on the same control after re-render */
+  var again=document.querySelector('#cart-items .qty-btn[data-idx="'+idx+'"][data-d="'+d+'"]');
+  (again||document.getElementById('cart-wa-btn')||document.querySelector('#cart-drawer .cart-close')).focus();
+});
 
+/* The built order, ready for WhatsApp — the customer never retypes it. */
+function buildOrderMessage(){
+  var t=cartTotals(), pct=Math.round((window.SPUD_VAT.rate||0)*100);
+  var msg='🥔 *Spudlicious Order*\n\n';
+  cart.forEach(function(i){
+    msg+=i.qty+'× '+i.emoji+' '+i.name+' — '+bhdEn(i.price*i.qty)+'\n';
+    i.addons.forEach(function(a){msg+='   + '+a.emoji+' '+a.name+' — '+bhdEn(a.price*i.qty)+'\n';});
+  });
+  msg+='\nSubtotal: '+bhdEn(t.sub)+'\n';
+  msg+=pct?'VAT '+pct+'% (included): '+bhdEn(t.vat)+'\n':'';
+  msg+='*Total: '+bhdEn(t.total)+'*\n\nPlease confirm my order!';
+  return msg;
+}
 function orderViaWhatsApp(){
   if(cart.length===0)return;
-  var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  var msg='🥔 *Spudlicious Order*\n\n';
-  cart.forEach(function(i){msg+=i.emoji+' '+i.name+' x'+i.qty+' — BHD '+(i.price*i.qty).toFixed(3)+'\n';});
-  msg+='\n💰 *Total: BHD '+total.toFixed(3)+'*\n\nPlease confirm my order!';
-  window.open('https://wa.me/97333260007?text='+encodeURIComponent(msg),'_blank');
+  window.open('https://wa.me/'+SPUD_WA+'?text='+encodeURIComponent(buildOrderMessage()),'_blank','noopener');
 }
+/* The one gold action: "Order on WhatsApp". With items in the cart it opens the order
+   summary first (line items, add-ons, VAT, total), so the handoff is never blind. */
+function updateOrderFloat(t){
+  var a=document.getElementById('float-wa'); if(!a)return;
+  var lbl=a.querySelector('.float-label');
+  if(lbl)lbl.innerHTML=(ar?'اطلب عبر واتساب':'Order on WhatsApp')+(t.count?' · '+bhdHtml(t.total)+'':'');
+  a.setAttribute('aria-label',(ar?'اطلب عبر واتساب':'Order on WhatsApp')+(t.count?' — '+bhd(t.total):''));
+}
+(function(){
+  var a=document.getElementById('float-wa'); if(!a)return;
+  a.href='https://wa.me/'+SPUD_WA+'?text='+encodeURIComponent("Hi Spudlicious! 🥔 I'd like to order.");
+  a.addEventListener('click',function(e){ if(cart.length){ e.preventDefault(); openCart(); } });
+})();
 
 // CATERING FORM
 function submitCatering(){
@@ -5661,7 +5711,7 @@ function toggleFaq(el){
       });
     });
     /* Keyboard-operable addon chips (div+onclick add-to-cart) */
-    document.querySelectorAll('.addon-chip[onclick]').forEach(function(c){
+    document.querySelectorAll('div.addon-chip[onclick]').forEach(function(c){
       if(c.dataset.a11y) return; c.dataset.a11y='1';
       c.setAttribute('role','button'); c.setAttribute('tabindex','0');
       c.addEventListener('keydown',function(e){
@@ -6133,22 +6183,53 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 })();
 
 // ══ BUILD YOUR POTATO ═════════════════════════════════════════
+/* Built from window.SPUD_MENU only: protein + sauce pick one of the real menu items
+   (its real price), extras are the real add-ons. Defaults: the best seller
+   (first menu item) with no add-ons — so "Add to Order" always works in one tap.
+   Options are rendered on open and clicks are delegated, so binding never depends
+   on markup order (the old per-button binding ran before the markup existed). */
 (function(){
-  var BASE_PRICE=2.9;
-  var BASE_KCAL=430;
-  var BASE_PREP=8;
-  var state={size:'Regular',protein:null,sauce:null,extras:[]};
+  var M=window.SPUD_MENU;
+  var PROTEINS=[{v:'chicken',en:'Chicken',ar:'دجاج',emoji:'🍗'},{v:'beef',en:'Beef',ar:'لحم',emoji:'🥩'}];
+  var SAUCES=[{v:'bechamel',en:'Béchamel',ar:'بشاميل',emoji:'🫙'},{v:'ranch',en:'Ranch',ar:'رانش',emoji:'🤠'}];
+  function has(list,v){return M.items.some(function(it){return it.tags.indexOf(v)>-1;});}
+  PROTEINS=PROTEINS.filter(function(p){return has(M.items,p.v);});
+  SAUCES=SAUCES.filter(function(p){return has(M.items,p.v);});
+  var DEFAULT={protein:M.items[0].tags[0],sauce:M.items[0].tags[1],extras:[]};
+  var state=null, lastFocus=null;
 
-  var lastFocus=null;
+  function item(){
+    return M.items.find(function(it){return it.tags.indexOf(state.protein)>-1&&it.tags.indexOf(state.sauce)>-1;})||M.items[0];
+  }
+  function addon(id){return M.addons.find(function(a){return a.id===id;});}
+  function price(){return item().price+state.extras.reduce(function(s,id){return s+addon(id).price;},0);}
 
-  function openBuilder(){
-    state={size:'Regular',protein:null,sauce:null,extras:[]};
-    document.querySelectorAll('.builder-opt').forEach(function(b){b.classList.remove('selected');});
-    // Pre-select Regular size
-    var reg=document.querySelector('.builder-opt[data-val="Regular"]');
-    if(reg)reg.classList.add('selected');
-    updatePreview();
-    updateProgress();
+  function opt(step,v,label,emoji,extra,multi){
+    var on=multi?state.extras.indexOf(v)>-1:state[step]===v;
+    return '<button type="button" class="builder-opt'+(on?' selected':'')+'" data-step="'+step+'" data-val="'+v+'"'+(multi?' data-multi="1"':'')+' aria-pressed="'+on+'">'+emoji+' '+label+(extra?' <small>'+extra+'</small>':'')+'</button>';
+  }
+  function render(){
+    var L=ar?{p:'🥩 1 · البروتين',s:'🫙 2 · الصلصة',e:'✨ 3 · الإضافات',opt:'(اختياري)'}:{p:'🥩 1 · Protein',s:'🫙 2 · Sauce',e:'✨ 3 · Add-ons',opt:'(optional)'};
+    var el=document.getElementById('builder-steps'); if(!el)return;
+    el.innerHTML=
+      '<div class="builder-step" role="group" aria-label="'+L.p+'"><div class="builder-step-label">'+L.p+'</div><div class="builder-options">'+PROTEINS.map(function(p){return opt('protein',p.v,ar?p.ar:p.en,p.emoji);}).join('')+'</div></div>'+
+      '<div class="builder-step" role="group" aria-label="'+L.s+'"><div class="builder-step-label">'+L.s+'</div><div class="builder-options">'+SAUCES.map(function(p){return opt('sauce',p.v,ar?p.ar:p.en,p.emoji);}).join('')+'</div></div>'+
+      '<div class="builder-step" role="group" aria-label="'+L.e+'"><div class="builder-step-label">'+L.e+' <em style="font-style:normal;color:var(--text-muted);font-size:.7rem">'+L.opt+'</em></div><div class="builder-options">'+M.addons.map(function(a){return opt('extras',a.id,ar&&a.name_ar?a.name_ar:a.name,a.emoji,'+'+bhdHtml(a.price),true);}).join('')+'</div></div>';
+    update();
+  }
+  function update(){
+    var it=item();
+    var td=document.getElementById('spud-toppings-display');
+    if(td)td.textContent=it.emoji+' '+(ar&&it.name_ar?it.name_ar:it.name)+state.extras.map(function(id){return ' + '+addon(id).emoji;}).join('');
+    var pd=document.getElementById('builder-price-display');
+    if(pd)pd.innerHTML=bhdHtml(price())+'<span>'+(ar?'سعرك':'Your price')+'</span>';
+    var ab=document.getElementById('builder-add-btn');
+    if(ab)ab.textContent=ar?'أضف إلى الطلب':'Add to Order →';
+  }
+
+  function openBuilder(preExtras){
+    state={protein:DEFAULT.protein,sauce:DEFAULT.sauce,extras:(preExtras||[]).slice()};
+    render();
     var el=document.getElementById('potato-builder');
     if(el){
       lastFocus=document.activeElement;
@@ -6157,10 +6238,9 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       setTimeout(function(){var cb=document.querySelector('.builder-close-btn');if(cb)cb.focus();},520);
     }
   }
-
   function closeBuilder(){
     var el=document.getElementById('potato-builder');
-    if(el){el.classList.remove('open');document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+    if(el&&el.classList.contains('open')){el.classList.remove('open');document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}
   }
   /* Escape closes the builder (parity with the X + backdrop; a11y for modals). */
   document.addEventListener('keydown',function(e){
@@ -6169,128 +6249,29 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       if(el&&el.classList.contains('open')){e.preventDefault();closeBuilder();}
     }
   });
-
-  function updateProgress(){
-    var dots=document.querySelectorAll('.bp-dot');
-    var seps=document.querySelectorAll('.bp-sep');
-    var filled=[!!state.size,!!state.protein,!!state.sauce,state.extras.length>0];
-    dots.forEach(function(d,i){d.classList.toggle('filled',filled[i]===true);});
-    seps.forEach(function(s,i){s.classList.toggle('filled',filled[i]&&filled[i+1]);});
-  }
-
-  function updatePreview(){
-    var top='';
-    var price=BASE_PRICE;
-    var kcal=BASE_KCAL;
-    var prep=BASE_PREP;
-
-    // Size
-    if(state.size==='Large'){price+=0.5;kcal+=180;prep+=2;}
-
-    // Protein emoji
-    if(state.protein){
-      var ep=document.querySelector('.builder-opt[data-val="'+state.protein+'"]');
-      if(ep)top+=ep.dataset.emoji;
-    }
-    // Sauce emoji
-    if(state.sauce){
-      var es=document.querySelector('.builder-opt[data-val="'+state.sauce+'"]');
-      if(es)top+=es.dataset.emoji;
-    }
-    // Extras
-    state.extras.forEach(function(e){
-      var ex=document.querySelector('.builder-opt[data-val="'+e+'"]');
-      if(ex){
-        top+=ex.dataset.emoji;
-        price+=parseFloat(ex.dataset.price||0);
-        kcal+=parseInt(ex.dataset.kcal||0);
-        prep+=1;
-      }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('#potato-builder .builder-opt'); if(!b||!state)return;
+    var step=b.dataset.step, v=b.dataset.val;
+    if(b.dataset.multi){
+      var i=state.extras.indexOf(v);
+      if(i>-1)state.extras.splice(i,1);else state.extras.push(v);
+    } else state[step]=v;
+    document.querySelectorAll('#potato-builder .builder-opt[data-step="'+step+'"]').forEach(function(o){
+      var on=o.dataset.multi?state.extras.indexOf(o.dataset.val)>-1:state[step]===o.dataset.val;
+      o.classList.toggle('selected',on); o.setAttribute('aria-pressed',on);
     });
-
-    var td=document.getElementById('spud-toppings-display');
-    if(td)td.textContent=top;
-
-    var pd=document.getElementById('builder-price-display');
-    if(pd){
-      var isBase=state.size==='Regular'&&state.extras.length===0;
-      pd.innerHTML='BHD '+price.toFixed(3)+'<span>'+(isBase?'Base price':'Your price')+'</span>';
-    }
-
-    var pt=document.getElementById('builder-prep-time');
-    if(pt)pt.textContent='~'+prep+' mins';
-
-    var kc=document.getElementById('builder-kcal');
-    if(kc)kc.textContent='~'+kcal+' kcal';
-
-    updateProgress();
-  }
-
-  document.querySelectorAll('.builder-opt').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var step=this.dataset.step;
-      var val=this.dataset.val;
-      if(this.dataset.multi){
-        var idx=state.extras.indexOf(val);
-        if(idx>-1){state.extras.splice(idx,1);this.classList.remove('selected');}
-        else{state.extras.push(val);this.classList.add('selected');}
-      } else {
-        document.querySelectorAll('.builder-opt[data-step="'+step+'"]').forEach(function(b){b.classList.remove('selected');});
-        this.classList.add('selected');
-        state[step]=val;
-      }
-      updatePreview();
-    });
+    update();
   });
 
-  function showOrderTimeline(){
-    var tl=document.getElementById('order-timeline');
-    if(!tl)return;
-    // Reset
-    [0,1,2,3].forEach(function(i){
-      document.getElementById('otl-'+i).classList.remove('done');
-      var c=document.getElementById('otl-c'+i);
-      if(c)c.classList.remove('done');
-    });
-    tl.classList.add('show');
-    var delays=[0,600,1200,1900];
-    delays.forEach(function(d,i){
-      setTimeout(function(){
-        document.getElementById('otl-'+i).classList.add('done');
-        var c=document.getElementById('otl-c'+i);
-        if(c)c.classList.add('done');
-      },d);
-    });
-    setTimeout(function(){tl.classList.remove('show');},4200);
-  }
-
   function builderAddToCart(){
-    if(!state.protein||!state.sauce){
-      showToast('⚠️ Choose a protein and sauce first!');
-      return;
-    }
-    var sizeLabel=state.size==='Large'?' (Large)':'';
-    var extrasLabel=state.extras.length?' + '+state.extras.join(', '):'';
-    var name=state.protein+' & '+state.sauce+sizeLabel+extrasLabel;
-    var price=BASE_PRICE+(state.size==='Large'?0.5:0);
-    state.extras.forEach(function(e){
-      var el=document.querySelector('.builder-opt[data-val="'+e+'"]');
-      if(el)price+=parseFloat(el.dataset.price||0);
-    });
-    addToCart(name,price,'🥔');
+    var it=item();
+    addToCart(it.name,it.price,it.emoji,state.extras.map(function(id){var a=addon(id);return {name:a.name,price:a.price,emoji:a.emoji};}));
     closeBuilder();
-    setTimeout(showOrderTimeline,500);
   }
 
   window.openBuilder=openBuilder;
   window.closeBuilder=closeBuilder;
   window.builderAddToCart=builderAddToCart;
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){
-      var el=document.getElementById('potato-builder');
-      if(el&&el.classList.contains('open'))closeBuilder();
-    }
-  });
 })();
 
 // ══ PHASE 7: MICRO DETAILS ══════════════════════════════════
@@ -6652,53 +6633,15 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 })();
 
 // ══ LIVE KITCHEN ══════════════════════════════════════════════
+/* "Coming soon": only the open/closed pill is shown, and it is real — derived from
+   SPUD_HOURS. No order queue, order count or prep timer until a backend exists. */
 (function(){
-  var h=SPUD_HOURS.hour();
-  var isOpen=SPUD_HOURS.isOpen();
   var statusEl=document.getElementById('lk-status');
   var statusText=document.getElementById('lk-status-text');
-  var ordersEl=document.getElementById('lk-orders');
-  var timerEl=document.getElementById('lk-timer');
-  var countEl=document.getElementById('lk-count');
   if(!statusEl)return;
-
+  var isOpen=SPUD_HOURS.isOpen();
   statusEl.classList.add(isOpen?'open':'closed');
-  if(statusText)statusText.textContent=isOpen?'Open · Kitchen Active':'Closed · Opens '+SPUD_HOURS.opensLabel;
-
-  if(countEl){
-    var hoursOpen=isOpen?Math.max(1,(h+24-19)%24+1):0;
-    countEl.textContent=isOpen?(hoursOpen*7+12).toString():'—';
-  }
-
-  var queueData=[
-    {icon:'🍗',name:'Chicken Béchamel',stage:'Cooking · 3 min left',dur:'14s',delay:'0s',num:1},
-    {icon:'🥩',name:'Beef Ranch',stage:'Loading toppings…',dur:'9s',delay:'3s',num:2},
-    {icon:'🤠',name:'Chicken Ranch',stage:'Almost ready! 🎉',dur:'18s',delay:'6s',num:3},
-  ];
-  if(ordersEl){
-    if(isOpen){
-      ordersEl.innerHTML=queueData.map(function(o){
-        return '<div class="lk-order">'+
-          '<div class="lk-order-num">'+o.num+'</div>'+
-          '<div class="lk-order-icon">'+o.icon+'</div>'+
-          '<div class="lk-order-info"><div class="lk-order-name">'+o.name+'</div><div class="lk-order-stage">'+o.stage+'</div></div>'+
-          '<div class="lk-bar-wrap"><div class="lk-bar-track"><div class="lk-bar-fill" style="animation-duration:'+o.dur+';animation-delay:-'+o.delay+'"></div></div></div>'+
-        '</div>';
-      }).join('');
-    } else {
-      ordersEl.innerHTML='<div class="lk-closed-state">Kitchen opens at '+SPUD_HOURS.opensLabel+'.<br>Come back for fresh spuds! 🥔</div>';
-    }
-  }
-
-  // Prep timer countdown: 8:00 → 0:00 → repeat
-  if(timerEl){
-    var sec=480;
-    setInterval(function(){
-      sec=sec>0?sec-1:480;
-      var m=Math.floor(sec/60),s=sec%60;
-      timerEl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-    },1000);
-  }
+  if(statusText)statusText.textContent=isOpen?'Open now':'Closed · Opens '+SPUD_HOURS.opensLabel;
 })();
 
 // ══ TRUCK INTERACTIVE PARALLAX ════════════════════════════════
@@ -6762,6 +6705,8 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   /* ── LOYALTY SYSTEM ────────────────────────────────────────── */
   var LEVELS=window.SPUD_TIERS;
   var LOYALTY_LIVE=!!(window.SPUD_FEATURES&&window.SPUD_FEATURES.loyalty);
+  /* Live-only loyalty UI ships with the `hidden` attribute; reveal it only once the backend is on. */
+  if(LOYALTY_LIVE)document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-loyalty-live]').forEach(function(el){el.hidden=false;});});
   var ALL_ACHIEVEMENTS=[
     {id:'first_spud',  icon:'🥔', name:'First Spud',       desc:'Add your first item',  xp:25},
     {id:'builder',     icon:'🛠️', name:'Spud Builder',     desc:'Use the Potato Builder', xp:40},
@@ -6807,6 +6752,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     updateLoyaltyUI();
   }
   function updateLoyaltyUI(){
+    if(!LOYALTY_LIVE)return; /* no XP numbers anywhere until the rewards backend exists */
     var d=getLoyalty();
     var li=getCurrentLevel(d.xp);
     var lv=LEVELS[li];
@@ -7074,6 +7020,26 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     return el;
   }
 
+  function streamReply(paras){
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var full=paras.join('\n\n');
+    aiMessages.setAttribute('aria-busy','true');
+    var done=function(){ aiMessages.removeAttribute('aria-busy'); speakOwner(full,0); };
+    (function next(pi){
+      if(pi>=paras.length){ done(); return; }
+      var el=document.createElement('div');
+      el.className='ai-bubble bot';
+      aiMessages.appendChild(el);
+      var words=paras[pi].split(/(\s+)/), wi=0;
+      if(reduce){ el.textContent=paras[pi]; aiMessages.scrollTop=aiMessages.scrollHeight; next(pi+1); return; }
+      (function tick(){
+        el.textContent+=words.slice(wi,wi+3).join(''); wi+=3;
+        aiMessages.scrollTop=aiMessages.scrollHeight;
+        if(wi<words.length) setTimeout(tick,28); else next(pi+1);
+      })();
+    })(0);
+  }
+
   function getAIResponse(msg){
     var lower=msg.toLowerCase();
     var isOpen=SPUD_HOURS.isOpen();
@@ -7083,17 +7049,18 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       return AI_KNOWLEDGE.menu.map(function(m){return m.emoji+' '+m.name+' — BD '+m.price.toFixed(3)+'\n'+m.desc;}).join('\n\n');
     }
     if(/recommend|suggest|best|popular/.test(lower)){
-      var pick=h<20?AI_KNOWLEDGE.menu[0]:AI_KNOWLEDGE.menu[1];
-      renderQRs([["Add it to cart","🛒"],["What else?","🤔"],["Vegetarian option","🥗"]]);
-      return "For "+getTimeGreeting().toLowerCase()+"s, I'd recommend our "+pick.emoji+" "+pick.name+"! It's got "+pick.desc+". Just BD "+pick.price.toFixed(3)+" — absolute value.";
+      var pick=AI_KNOWLEDGE.menu[0]; /* the menu's Best Seller (first item in SPUD_MENU) */
+      renderQRs([["Build my spud","🛠️"],["What's on the menu?","🍽️"]]);
+      return "Go for our best seller: "+pick.emoji+" "+pick.name+". "+pick.desc+" BHD "+pick.price.toFixed(3)+".";
     }
     if(/spicy|hot|heat|jalap/.test(lower)){
-      renderQRs([["Add jalapeños","🌶️"],["Bahrain Spice","🌶️"],["Something milder","😊"]]);
-      return "For heat lovers: our Bahrain Spice 🌶️ is the boldest — harissa, local spices, serious kick. Want to cool down? Garlic Aioli sauce + Sour Cream extras will balance it perfectly.";
+      renderQRs([["Build my spud","🛠️"],["What's on the menu?","🍽️"]]);
+      var jal=(_SM.addons.filter(function(a){return a.id==='jalapenos';})[0]);
+      return "Want heat? Add "+(jal?jal.emoji+" "+jal.name+" (+BHD "+jal.price.toFixed(3)+")":"jalapeños")+" to any spud. Prefer it mild? Just leave them off.";
     }
     if(/veg|no meat|meatless/.test(lower)){
-      renderQRs([["Cheese Overload","🧀"],["Add sauces","🥄"],["Build my own","🛠️"]]);
-      return "Great choice! Our Cheese Overload 🧀 is vegetarian — triple cheese, caramelised onions, and garlic sauce. Add Guacamole and Coleslaw for the full experience!";
+      renderQRs([["Order on WhatsApp","💬","whatsapp"],["What's on the menu?","🍽️"]]);
+      return "Honest answer: every signature spud on our menu comes with chicken or beef, so there's no vegetarian spud yet. Message us on WhatsApp and the team will tell you what they can do. 💙";
     }
     if(/time|hour|open|close|when/.test(lower)){
       renderQRs([["Location?","📍"],["Order now","🛒"]]);
@@ -7105,11 +7072,12 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     }
     if(/price|cost|how much|bd/.test(lower)){
       renderQRs([["What's on menu","🍽️"],["Order now","🛒"]]);
-      return "Spuds start at BD 3.500 and go up to BD 4.200 for specials. Extras are 0.3–0.5 BD each. Great value for premium loaded potatoes!";
+      var ps=AI_KNOWLEDGE.menu.map(function(m){return m.price;}), lo=Math.min.apply(null,ps), hi=Math.max.apply(null,ps);
+      return (lo===hi?"Every signature spud is BHD "+lo.toFixed(3)+".":"Spuds are BHD "+lo.toFixed(3)+"–"+hi.toFixed(3)+".")+" Add-ons: "+_SM.addons.map(function(a){return a.name+" +BHD "+a.price.toFixed(3);}).join(", ")+".";
     }
     if(/build|custom|make my own/.test(lower)){
       renderQRs([["Open Builder","🛠️"]]);
-      return "Love the DIY spirit! 🛠️ Hit the 'Build Your Spud' button in the menu section — choose your size, protein, sauce, and extras. Fully customisable!";
+      return "Love the DIY spirit! 🛠️ Hit 'Build Your Own' in the menu — pick chicken or beef, béchamel or ranch, then any add-ons. It starts on our best seller, so one tap adds it.";
     }
     if(/instagram|social|follow/.test(lower)){
       renderQRs([["See community","📸"],["Follow now","💙"]]);
@@ -7169,12 +7137,11 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     addBubble(t,'user');
     if(aiInput)aiInput.value='';
     aiQR&&(aiQR.innerHTML='');
+    /* Typing indicator appears at once (< 200 ms); the reply then streams in word by
+       word so the first words land well under 1 s (Law 09). */
     showTyping(function(){
-      var resp=getAIResponse(t);
-      resp.split('\n\n').forEach(function(para,i){
-        setTimeout(function(){addBubble(para,'bot');},i*80);
-      });
-    },Math.min(800+t.length*8,1400));
+      streamReply(getAIResponse(t).split('\n\n'));
+    },250);
   }
 
   function wireAI(){
@@ -7227,23 +7194,13 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   window.openOrderTracker=function(){
     var tracker=document.getElementById('order-tracker');
     var idEl=document.getElementById('ot-order-id');
-    var etaEl=document.getElementById('ot-eta-time');
     if(!tracker)return;
     buildOrderStages();
     if(!(window.SPUD_FEATURES&&window.SPUD_FEATURES.orderTracking))return; /* no live order data yet */
     var orderId='SPD-'+Math.floor(1000+Math.random()*9000);
     if(idEl)idEl.textContent='#'+orderId;
     tracker.classList.add('open');
-    /* Animate stages */
-    var totalSec=720;
-    if(etaEl){
-      var etaInt=setInterval(function(){
-        totalSec--;
-        if(totalSec<=0){clearInterval(etaInt);}
-        var m=Math.floor(totalSec/60),s=totalSec%60;
-        etaEl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-      },1000);
-    }
+    /* Stages advance only from real order data (no placeholder ETA countdown). */
     var delays=[0,4000,10000,18000,26000,32000,38000];
     delays.forEach(function(d,i){
       setTimeout(function(){
@@ -7810,89 +7767,28 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 </script>
 
 <!-- ══ POTATO BUILDER MODAL ══════════════════════════════════ -->
-<div id="potato-builder" role="dialog" aria-modal="true" aria-label="Build Your Potato">
+<div id="potato-builder" role="dialog" aria-modal="true" aria-labelledby="builder-title">
   <div class="builder-backdrop" onclick="closeBuilder()"></div>
   <div class="builder-panel">
     <div class="builder-handle" aria-hidden="true"></div>
     <div class="builder-header">
-      <h3>🥔 Build Your Spud</h3>
-      <button class="builder-close-btn" onclick="closeBuilder()" aria-label="Close builder">✕</button>
-    </div>
-    <!-- Progress indicator -->
-    <div class="builder-progress" id="builder-progress" aria-hidden="true">
-      <div class="bp-dot" data-prog="size"></div>
-      <div class="bp-sep"></div>
-      <div class="bp-dot" data-prog="protein"></div>
-      <div class="bp-sep"></div>
-      <div class="bp-dot" data-prog="sauce"></div>
-      <div class="bp-sep"></div>
-      <div class="bp-dot" data-prog="extras"></div>
+      <h3 id="builder-title" data-ar="🥔 ابنِ بطاطستك">🥔 Build Your Spud</h3>
+      <button type="button" class="builder-close-btn" onclick="closeBuilder()" aria-label="Close builder">✕</button>
     </div>
     <div class="builder-preview-area">
-      <div class="spud-preview" id="spud-preview-emoji">🥔</div>
+      <div class="spud-preview" id="spud-preview-emoji" aria-hidden="true">🥔</div>
       <div class="spud-toppings-display" id="spud-toppings-display" aria-live="polite"></div>
     </div>
-    <!-- Prep time + nutrition -->
-    <div class="builder-meta">
-      <div class="builder-meta-item">⏱️ Ready in <span id="builder-prep-time">~8 mins</span></div>
-      <div class="builder-meta-item">🔥 Est. <span id="builder-kcal">~480 kcal</span></div>
-    </div>
-    <div class="builder-steps">
-      <div class="builder-step">
-        <div class="builder-step-label">📏 Choose Your Size</div>
-        <div class="builder-options">
-          <button class="builder-opt selected" data-step="size" data-val="Regular" data-emoji="" data-price="0">🥔 Regular</button>
-          <button class="builder-opt" data-step="size" data-val="Large" data-emoji="" data-price="0.500">🥔 Large <small>+BHD 0.500</small></button>
-        </div>
-      </div>
-      <div class="builder-step">
-        <div class="builder-step-label">🥩 Choose Your Protein</div>
-        <div class="builder-options">
-          <button class="builder-opt" data-step="protein" data-val="Chicken" data-emoji="🍗" data-price="0">🍗 Chicken</button>
-          <button class="builder-opt" data-step="protein" data-val="Beef" data-emoji="🥩" data-price="0">🥩 Beef</button>
-          <button class="builder-opt" data-step="protein" data-val="Falafel" data-emoji="🧆" data-price="0">🧆 Falafel</button>
-        </div>
-      </div>
-      <div class="builder-step">
-        <div class="builder-step-label">🫙 Choose Your Sauce</div>
-        <div class="builder-options">
-          <button class="builder-opt" data-step="sauce" data-val="Bechamel" data-emoji="🫙" data-price="0">🫙 Béchamel</button>
-          <button class="builder-opt" data-step="sauce" data-val="Ranch" data-emoji="🤠" data-price="0">🤠 Ranch</button>
-          <button class="builder-opt" data-step="sauce" data-val="BBQ" data-emoji="🍖" data-price="0">🍖 BBQ</button>
-          <button class="builder-opt" data-step="sauce" data-val="Special Sauce" data-emoji="⭐" data-price="0">⭐ Special</button>
-        </div>
-      </div>
-      <div class="builder-step">
-        <div class="builder-step-label">✨ Extras <em style="font-style:normal;color:var(--text-muted);font-size:.7rem">(Optional)</em></div>
-        <div class="builder-options">
-          <button class="builder-opt" data-step="extras" data-val="Extra Cheese" data-emoji="🧀" data-price="0.300" data-kcal="90" data-multi="1">🧀 Extra Cheese <small>+BHD 0.300</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Jalapeños" data-emoji="🌶" data-price="0.200" data-kcal="5" data-multi="1">🌶 Jalapeños <small>+BHD 0.200</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Crispy Onions" data-emoji="🧅" data-price="0.200" data-kcal="40" data-multi="1">🧅 Crispy Onions <small>+BHD 0.200</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Mushrooms" data-emoji="🍄" data-price="0.200" data-kcal="15" data-multi="1">🍄 Mushrooms <small>+BHD 0.200</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Corn" data-emoji="🌽" data-price="0.150" data-kcal="30" data-multi="1">🌽 Corn <small>+BHD 0.150</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Green Onions" data-emoji="🌿" data-price="0" data-kcal="5" data-multi="1">🌿 Green Onions</button>
-        </div>
-      </div>
-    </div>
+    <!-- Steps are rendered from window.SPUD_MENU (protein × sauce = the real menu items,
+         extras = the real add-ons). Every step starts on a sensible default. -->
+    <div class="builder-steps" id="builder-steps"></div>
     <div class="builder-footer">
-      <div class="builder-price" id="builder-price-display">BHD 2.900<span>Base price</span></div>
-      <button class="builder-add-btn" onclick="builderAddToCart()">Add to Order →</button>
+      <div class="builder-price" id="builder-price-display" aria-live="polite">BHD 2.900<span>Your price</span></div>
+      <button type="button" class="builder-add-btn" id="builder-add-btn" onclick="builderAddToCart()">Add to Order →</button>
     </div>
   </div>
 </div>
-<!-- Order Timeline Toast -->
-<div class="order-timeline" id="order-timeline" aria-live="polite" aria-atomic="true">
-  <div class="otl-title">Your Spud is Being Made</div>
-  <div class="otl-steps">
-    <div class="otl-step" id="otl-0"><div class="otl-step-icon">👨‍🍳</div><div class="otl-step-label">Prepping</div></div>
-    <div class="otl-connector" id="otl-c0"></div>
-    <div class="otl-step" id="otl-1"><div class="otl-step-icon">🔥</div><div class="otl-step-label">Cooking</div></div>
-    <div class="otl-connector" id="otl-c1"></div>
-    <div class="otl-step" id="otl-2"><div class="otl-step-icon">🥔</div><div class="otl-step-label">Loading</div></div>
-    <div class="otl-connector" id="otl-c2"></div>
-    <div class="otl-step" id="otl-3"><div class="otl-step-icon">🎉</div><div class="otl-step-label">Ready!</div></div>
-  </div>
-</div>
+<!-- (Removed: the "Your Spud is Being Made" timeline — it animated after Add-to-cart, before any order existed.) -->
 
 <!-- ═══════════════════════════════════════════════════════════
      PHASE 9: AI, REAL-TIME & NEXT-GEN FEATURES
@@ -7916,27 +7812,28 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   <div id="ai-messages" role="log" aria-live="polite"></div>
   <div class="ai-quick-replies" id="ai-quick-replies"></div>
   <div class="ai-input-wrap">
-    <input type="text" id="ai-input" placeholder="Ask me anything..." autocomplete="off" aria-label="Message The Spud Guy"/>
+    <label for="ai-input" class="sr-only">Message The Spud Guy</label>
+    <input type="text" id="ai-input" placeholder="Ask me anything..." autocomplete="off" dir="auto"/>
     <button id="ai-send" aria-label="Send message">➤</button>
   </div>
 </div>
 
 <!-- Loyalty Panel -->
-<div id="loyalty-badge" role="button" aria-label="View loyalty rewards" tabindex="0">
+<div id="loyalty-badge" role="button" aria-label="View loyalty rewards" tabindex="0" data-loyalty-live hidden>
   <span class="lb-icon" id="lb-icon">🥔</span>
   <div class="lb-info">
     <span class="lb-level" id="lb-level-name">Rookie</span>
-    <span class="lb-xp" id="lb-xp-text">0 XP</span>
+    <span class="lb-xp" id="lb-xp-text"></span>
     <div class="lb-bar"><div class="lb-bar-fill" id="lb-bar-fill" style="width:0%"></div></div>
   </div>
 </div>
-<div id="loyalty-panel" aria-label="Loyalty status">
+<div id="loyalty-panel" aria-label="Loyalty status" data-loyalty-live hidden>
   <div class="lp-header">
     <div class="lp-user-level" id="lp-level-display">🥔 Rookie</div>
     <div class="lp-subtitle">Keep ordering to level up</div>
     <div class="lp-xp-row">
-      <span id="lp-xp-current">0 XP</span>
-      <span id="lp-xp-next">Next: 100 XP</span>
+      <span id="lp-xp-current"></span>
+      <span id="lp-xp-next"></span>
     </div>
     <div class="lp-xp-bar-wrap"><div class="lp-xp-bar" id="lp-xp-bar" style="width:0%"></div></div>
   </div>
@@ -7954,10 +7851,6 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     <div class="ot-order-id" id="ot-order-id"></div>
     <div class="ot-stages" id="ot-stages">
       <!-- filled by JS -->
-    </div>
-    <div class="ot-eta">
-      <div class="ot-eta-label">Estimated Ready In</div>
-      <div class="ot-eta-time" id="ot-eta-time">12:00</div>
     </div>
     <button class="ot-close-btn" id="ot-close">Close Tracker</button>
   </div>
@@ -8546,6 +8439,7 @@ function updateScrollStory(page){
 
 /* ── REWARDS WIDGET SYNC ── */
 function syncRewardsWidget(){
+  if(!(window.SPUD_FEATURES&&window.SPUD_FEATURES.loyalty)) return; /* "Coming soon" — show no XP */
   try {
     var xp = 0;
     try { xp = (JSON.parse(localStorage.getItem('spud_loyalty')) || {}).xp || 0; } catch(e){}
@@ -9227,6 +9121,93 @@ if(document.readyState === 'loading'){
      the action pills so ordering/AI never disappear. */
   .cd-founder{display:none!important}
 }
+
+/* ══ v-NEXT LAW PASS ═════════════════════════════════════════════════════════
+   Law 01/06 one gold action · Law 02 targets ≥ 44px · Law 49 focus + contrast ·
+   Law 50 RTL mirroring of the builder + order summary. Last in the cascade on purpose. */
+
+/* Visible focus on every control, on any surface: navy ring + white halo
+   (navy 4.1:1 on the Spud Blue nav, 13.5:1 on white; the halo separates it on navy). */
+*:focus-visible{outline:3px solid #0A2E5C!important;outline-offset:2px!important;box-shadow:0 0 0 5px #fff!important;border-radius:6px}
+[data-theme="dark"] *:focus-visible{outline-color:#fff!important;box-shadow:0 0 0 5px #081324!important}
+
+/* ONE GOLD ACTION — "Order on WhatsApp" is the only gold fill on screen (< 3% of a
+   phone viewport). Navy label on gold = 11.4:1. No idle motion on it. */
+.float-wa{background:#FFC107;color:#081324;min-height:48px;padding:12px 20px;box-shadow:0 6px 20px rgba(8,19,36,.28)}
+.float-wa:hover{background:#FFB300;transform:translateY(-2px);box-shadow:0 10px 26px rgba(8,19,36,.32)}
+.float-wa .float-label{display:inline!important;font-weight:800}
+/* Secondary: My Order + Spud Guy become quiet outline controls. */
+.float-order{background:rgba(255,255,255,.96);color:#0A2E5C;border:1.5px solid rgba(10,46,92,.45);box-shadow:0 3px 12px rgba(10,46,92,.14);min-height:48px;min-width:48px;justify-content:center}
+.float-order:hover{background:#fff;transform:translateY(-2px);box-shadow:0 6px 16px rgba(10,46,92,.18)}
+[data-theme="dark"] .float-order{background:rgba(8,19,36,.94);color:#fff;border-color:rgba(255,255,255,.45)}
+#ai-fab{animation:none;background:#fff;border:1.5px solid rgba(10,46,92,.45);box-shadow:0 3px 12px rgba(10,46,92,.16)}
+#ai-fab:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(10,46,92,.2)}
+#ai-fab .ai-fab-avatar{animation:none}
+.ai-fab-badge{background:#0A2E5C}
+@media(max-width:480px){
+  .float-wa{padding:12px 16px;font-size:.8rem}
+  .float-order .float-label{display:none}
+}
+
+/* Order summary (cart drawer) */
+.cart-close,.builder-close-btn{width:44px;height:44px}
+.qty-btn{width:44px;height:44px;font-size:1.1rem}
+.cart-item{align-items:flex-start}
+.cart-item-name{white-space:normal}
+.cart-item-unit{font-size:.78rem;color:var(--text-muted);font-weight:600}
+.cart-item-addons{list-style:none;margin:4px 0 2px;padding:0;font-size:.78rem;color:var(--text-muted);font-weight:600}
+.cart-item-addons li{display:flex;justify-content:space-between;gap:8px}
+.cart-item-price{color:var(--blue-dark);margin-top:2px}
+.cart-item-price small{color:var(--text-muted);font-weight:600}
+[data-theme="dark"] .cart-item-price{color:#7BC3FF}
+.cart-summary{margin-bottom:14px;font-variant-numeric:tabular-nums}
+.cs-row{display:flex;justify-content:space-between;gap:12px;padding:3px 0;font-size:.88rem;color:var(--text-muted);font-weight:600}
+.cs-total{border-top:1.5px solid var(--border);margin-top:6px;padding-top:9px;font-size:1.05rem;font-weight:800;color:var(--text)}
+.cart-wa-btn{background:#FFC107;color:#081324;min-height:52px;gap:6px;font-variant-numeric:tabular-nums}
+.cart-wa-btn:hover{background:#FFB300}
+.cart-wa-hint{margin-top:8px;font-size:.76rem;color:var(--text-muted);text-align:center}
+.addon-chip{min-height:44px;font-family:inherit}
+.builder-opt{min-height:44px}
+.builder-opt small{margin-left:0;margin-inline-start:4px}
+.builder-price span{color:var(--text-muted)}
+.builder-price{color:var(--blue-dark)}
+[data-theme="dark"] .builder-price{color:#7BC3FF}
+
+/* RTL — the drawer enters from the reading edge; rows and steps follow dir. */
+[dir="rtl"] #cart-drawer{right:auto;left:0;transform:translateX(-100%)}
+[dir="rtl"] #cart-drawer.open{transform:translateX(0)}
+[dir="rtl"] .cart-item-info,[dir="rtl"] .builder-step-label,[dir="rtl"] .cs-row{text-align:right}
+[dir="rtl"] .builder-step-label{letter-spacing:0;text-transform:none}
+
+/* Closed overlays leave the accessibility tree (they were opacity-0 dialogs). */
+#order-tracker:not(.open){visibility:hidden}
+#cart-drawer{transition:transform .35s cubic-bezier(.4,0,.2,1),visibility 0s linear .35s}
+#cart-drawer.open{transition:transform .35s cubic-bezier(.4,0,.2,1),visibility 0s}
+#cart-drawer:not(.open){visibility:hidden}
+#potato-builder{transition:visibility 0s linear .45s}
+#potato-builder.open{transition:visibility 0s}
+#potato-builder:not(.open){visibility:hidden}
+.spud-toppings-display{letter-spacing:normal}
+.builder-price .bhd{display:inline;font:inherit;color:inherit;margin:0}
+.bhd{white-space:nowrap}
+/* While the order summary is open its button is the gold action — the dock steps back. */
+body:has(#cart-drawer.open) #concierge-dock{visibility:hidden}
+
+/* Law 02 / WCAG 2.5.8 — 44px targets for header, footer and social controls. */
+.nav-btn{width:44px;height:44px}
+.social-btn{width:44px;height:44px}
+.footer-links a{display:inline-flex;align-items:center;min-height:44px}
+.fw-cta{min-height:44px}
+.nav-link{min-height:44px;display:inline-flex;align-items:center}
+.nav-dd-item{min-height:44px}
+.fw-cta{min-height:46px}
+.footer-link{min-width:44px}
+.mobile-menu-btn{width:44px;height:44px}
+.ai-voice-btn,.ai-close-btn,#ai-send,.vid-lb-close{min-width:44px;min-height:44px}
+#ai-input{min-height:44px}
+.np-clear{min-height:44px;padding-inline:8px}
+/* WCAG 2.4.11 — anchors and focused controls never land under the fixed nav. */
+html{scroll-padding-top:104px}
 </style>
 
 <script>
