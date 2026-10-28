@@ -36,13 +36,13 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Fonts load async with display=optional: text paints at once and never re-flows (no CLS). Google serves Cairo split by
+<!-- Fonts are requested after the load event with display=optional: first paint never waits on Google,
+     text never re-flows (no CLS), and returning visitors get the brand fonts from cache. Google serves Cairo split by
      unicode-range, so only its Arabic subset downloads, and only when Arabic is on screen. -->
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Cairo:wght@400;700;800&display=optional" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Cairo:wght@400;700;800&display=optional" rel="stylesheet"></noscript>
 <script>
 /* Apply a saved Arabic choice before first paint (no layout flip after load). */
-try{if(localStorage.getItem('spud-lang')==='ar'){var d=document.documentElement;d.lang='ar';d.dir='rtl';d.className='ar-pending';}}catch(e){}
+var d=document.documentElement;d.className='js';try{if(localStorage.getItem('spud-lang')==='ar'){d.lang='ar';d.dir='rtl';d.className='js ar-pending';}}catch(e){}
 </script>
 
 <!-- STRUCTURED DATA — keep in sync with SPUD_MENU and SPUD_HOURS below -->
@@ -149,7 +149,14 @@ try{if(localStorage.getItem('spud-lang')==='ar'){var d=document.documentElement;
   --r:16px;--r-sm:10px;--wrap:1120px;--head:64px;
   --font:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-ar:'Cairo','Geeza Pro','Noto Sans Arabic',Tahoma,sans-serif;
+  /* Motion: playful brand → spring tokens from code-deem-nature Law 15 */
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --spring-snappy:var(--ease-out);--spring-playful:var(--ease-out);
 }
+@supports (transition-timing-function:linear(0,1)){:root{
+  --spring-snappy:linear(0,0.057,0.18,0.321,0.455,0.573,0.671,0.75,0.812,0.86,0.896,0.924,0.944,0.96,0.971,0.979,0.985,0.989,0.992,0.994,0.996,0.997,0.998,0.999,1);
+  --spring-playful:linear(0,0.116,0.372,0.656,0.897,1.06,1.144,1.163,1.139,1.096,1.05,1.012,0.987,0.976,0.974,0.978,0.986,0.993,0.999,1.002,1.004,1.004,1.003,1.002,1);
+}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--head) + 8px);-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -190,7 +197,9 @@ html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:1.0625re
 
 /* Buttons */
 .btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:12px 24px;border-radius:999px;background:var(--gold);color:var(--navy);font-weight:800;font-size:1.0625rem;text-decoration:none;border:0}
-.btn-gold:hover{background:#FFB300}
+.btn-gold,.btn-line,.spud,.opt,.qty button,.lang,.nav a,.add-more,.rm,.quiet,.site-foot a,.honest a,input{transition:transform 150ms var(--spring-snappy),background-color 150ms ease-out,border-color 150ms ease-out,color 150ms ease-out,box-shadow 150ms ease-out}
+.btn-gold:hover{background:#FFB300;transform:scale(1.03)}
+.btn-gold:active,.btn-line:active,.lang:active,.qty button:active,.opt:active{transform:scale(.96)}
 .btn-gold svg{width:22px;height:22px;flex:none}
 .btn-line{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 24px;border-radius:999px;border:1.5px solid currentColor;color:var(--navy);background:transparent;font-weight:700;text-decoration:none}
 .btn-line:hover{background:var(--navy);color:var(--cream)}
@@ -198,7 +207,13 @@ html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:1.0625re
 /* 1 Hero */
 .hero{background:var(--navy);color:var(--cream);padding-block:32px 48px;overflow:hidden}
 .hero .wrap{display:grid;gap:8px;align-items:center}
-.hero-art{width:180px;height:120px;margin-inline:auto}
+.hero-media{position:relative;margin-top:24px;max-width:420px}
+.hero-food{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 62%;border-radius:20px;box-shadow:0 0 0 4px rgba(255,246,230,.12)}
+.hero-spud{position:absolute;width:96px;height:144px;bottom:-20px;inset-inline-end:-6px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));animation:spud-bob 1.6s ease-in-out .5s 3}
+.hero-media figcaption{font-size:.875rem;color:#B9C4D2;margin-top:12px;padding-inline-end:96px}
+@keyframes spud-bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(-3deg)}}
+.hero .btn-gold.nudge{animation:cta-nudge 700ms var(--spring-playful) 300ms 1}
+@keyframes cta-nudge{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,193,7,.5)}35%{transform:scale(1.06);box-shadow:0 0 0 10px rgba(255,193,7,0)}}
 .hero .eyebrow{color:#7CC3FF}
 .hero h1{font-size:clamp(2.1rem,7vw,3.6rem);max-width:16ch}
 .hero p.sub{font-size:1.0625rem;color:#D6DEE8;max-width:46ch;margin-top:12px}
@@ -209,8 +224,10 @@ html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:1.0625re
 .dot.on{background:#3DDC84}
 @media (min-width:860px){
   .hero{padding-block:64px}
-  .hero .wrap{grid-template-columns:1.4fr 1fr}
-  .hero-art{width:min(100%,420px);height:auto;aspect-ratio:3/2;order:2}
+  .hero .wrap{grid-template-columns:62fr 38fr;gap:48px}
+  .hero-media{margin-top:0}
+  .hero-spud{width:120px;height:180px;bottom:-28px;inset-inline-end:-28px}
+  .hero-media figcaption{padding-inline-end:104px}
 }
 
 /* 2 Menu */
@@ -218,7 +235,15 @@ html[lang="ar"] .eyebrow{letter-spacing:0;text-transform:none;font-size:1.0625re
 @media (min-width:640px){.menu-grid{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1024px){.menu-grid{grid-template-columns:repeat(4,1fr)}}
 .spud{display:flex;flex-direction:column;gap:8px;text-align:start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-height:100%}
-.spud:hover{border-color:var(--blue-dark)}
+.spud:hover{border-color:var(--blue-dark);transform:translateY(-4px);box-shadow:0 10px 24px -12px rgba(8,19,36,.35)}
+.spud:active{transform:scale(.98)}
+.spud:hover .choose .flip{transform:translateX(3px)}
+[dir="rtl"] .spud:hover .choose .flip{transform:scaleX(-1) translateX(3px)}
+.choose .flip{transition:transform 150ms var(--spring-snappy)}
+.real{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:32px;max-width:720px}
+.real figure{margin:0}
+.real img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.real figcaption{grid-column:1/-1;font-size:.875rem;color:var(--muted)}
 .spud h3{font-size:1.25rem}
 .spud p{color:var(--muted);flex:1}
 .spud .row{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:8px}
@@ -244,7 +269,18 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
 .opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
 .opt:has(input:checked){border-color:var(--blue-dark);background:#E3F1FE;box-shadow:inset 0 0 0 1.5px var(--blue-dark)}
 .opt:has(input:focus-visible){outline:3px solid var(--blue-dark);outline-offset:3px}
-.opt:has(input:checked)::after{content:"✓";position:absolute;top:8px;inset-inline-end:12px;color:var(--blue-dark);font-weight:800}
+.opt:has(input:checked)::after{content:"✓";position:absolute;top:8px;inset-inline-end:12px;color:var(--blue-dark);font-weight:800;animation:pop 320ms var(--spring-playful)}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes enter{0%{transform:translateX(-12px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes enter-rtl{0%{transform:translateX(12px);opacity:0}100%{transform:none;opacity:1}}
+.enter{animation:enter 320ms var(--spring-playful)}
+[dir="rtl"] .enter{animation-name:enter-rtl}
+.summary{position:relative}
+.loaded{position:absolute;inset-inline-end:16px;top:-16px;padding:4px 12px;border-radius:999px;background:var(--navy);color:var(--cream);font-size:.875rem;font-weight:800;opacity:0;pointer-events:none}
+.loaded.go{animation:loaded 1400ms var(--spring-playful)}
+@keyframes loaded{0%{opacity:0;transform:translateY(6px) scale(.8)}15%{opacity:1;transform:translateY(0) scale(1.06)}25%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(-4px)}}
+.tick{display:inline-block;animation:tick 320ms var(--spring-playful)}
+@keyframes tick{0%{transform:translateY(-3px)}100%{transform:none}}
 .qty{display:inline-flex;align-items:center;gap:8px;border:1.5px solid #CFC3AE;border-radius:999px;padding:4px;background:var(--cream)}
 .qty button{width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:1.25rem;font-weight:800}
 .qty button:disabled{opacity:.4;cursor:not-allowed}
@@ -307,6 +343,15 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
 
 .flip{display:inline-block}
 [dir="rtl"] .flip{transform:scaleX(-1)}
+.honest{display:grid;grid-template-columns:1fr auto;gap:0 16px;align-items:start}
+.honest .spud-still{width:72px;height:108px;grid-row:1/4;grid-column:2}
+/* Scroll reveals: first view only, transform + opacity, never on the hero */
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity 450ms ease-out,transform 450ms var(--ease-out)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important}
+  .js .reveal{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
@@ -333,7 +378,6 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
 <!-- 1 · HERO -->
 <section class="hero dark" id="top" aria-labelledby="hero-h">
   <div class="wrap">
-    <img class="hero-art" src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious mascot" data-ar-alt="مستر سبود، تميمة سبودلشيس" width="1000" height="666" decoding="async">
     <div>
       <p class="eyebrow" data-ar="البسيتين · أول شاحنة بطاطس محمّلة في البحرين">Busaiteen · Bahrain's first loaded-potato truck</p>
       <h1 id="hero-h" data-ar="حيث تُصبح كل بطاطس تحفةً فنية.">Where every potato becomes a masterpiece.</h1>
@@ -347,6 +391,11 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
       </div>
       <p class="open-line" id="open-line"><span class="dot" id="open-dot" aria-hidden="true"></span><span id="open-text">Open daily from 7 PM, until late</span></p>
     </div>
+    <figure class="hero-media">
+      <img class="hero-food" src="assets/web/lean/closeup-topping.jpg" alt="A spoon digging into a Spudlicious bowl loaded with golden cheese" data-ar-alt="ملعقة في وعاء سبودلشيس محمّل بالجبن الذهبي" width="400" height="440">
+      <img class="hero-spud" src="assets/web/lean/mr-spud-200.webp" alt="Mr. Spud, the Spudlicious mascot" data-ar-alt="مستر سبود، تميمة سبودلشيس" width="200" height="300">
+      <figcaption data-ar="وعاء حقيقي من الشاحنة، كما صوّره أحد عملائنا.">A real bowl from the truck, filmed by one of our customers.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -358,6 +407,11 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
     <p class="lead" data-ar="كل البطاطس بسعر 2.900 د.ب شاملة ضريبة القيمة المضافة. اختر واحدة لتبدأ طلبك.">Every spud is BHD 2.900, VAT included. Tap one to start your order.</p>
     <div class="menu-grid" id="menu-grid"></div>
     <p class="addons-line" id="addons-line"></p>
+    <div class="real">
+      <figure><img src="assets/web/lean/hero-spoonful.jpg" alt="A spoonful lifted from a fresh loaded potato bowl" data-ar-alt="ملعقة من وعاء بطاطس محمّل طازج" width="580" height="470" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/web/lean/closeup-sauce.jpg" alt="A loaded bowl finished with a drizzle of sauce" data-ar-alt="وعاء محمّل مع لمسة من الصلصة" width="290" height="240" loading="lazy" decoding="async"></figure>
+      <figcaption data-ar="أوعية حقيقية، من مقاطع صوّرها عملاؤنا عند الشاحنة.">Real bowls, from clips our customers filmed at the truck.</figcaption>
+    </div>
     <noscript><p class="addons-line">Chicken Béchamel · Beef Béchamel · Chicken Ranch · Beef Ranch — BHD 2.900 each. Extra Cheese +BHD 0.300 · Jalapeños +BHD 0.200. Order on WhatsApp: +973 3326 0007.</p></noscript>
   </div>
 </section>
@@ -392,6 +446,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
       </form>
 
       <aside class="summary" aria-labelledby="sum-h">
+        <span class="loaded" id="loaded" aria-hidden="true">🥔 Loaded!</span>
         <h3 id="sum-h" data-ar="طلبك">Your order</h3>
         <ul class="lines" id="lines"></ul>
         <div class="totals">
@@ -399,7 +454,7 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
           <div class="grand"><span data-ar="المجموع">Total</span><span id="total-amt"></span></div>
         </div>
         <a class="btn-gold" id="order-wa" href="https://wa.me/97333260007" target="_blank" rel="noopener">Order on WhatsApp</a>
-        <button type="button" class="add-more" id="add-more" data-ar="+ أضف بطاطس أخرى">+ Add another spud</button>
+        <button type="button" class="add-more" id="add-more" data-ar="+ حمّل بطاطس أخرى">+ Load another spud</button>
         <p class="fine" data-ar="يفتح واتساب وطلبك والمجموع مكتوبان مسبقاً. نؤكد الطلب في المحادثة. الدفع: نقد · BenefitPay · KNET.">Opens WhatsApp with your order and total filled in. We confirm it in the chat. Pay by Cash · BenefitPay · KNET.</p>
         <p class="sr-only" id="sum-status" role="status" aria-live="polite"></p>
       </aside>
@@ -433,7 +488,8 @@ legend .step{display:inline-grid;place-items:center;width:28px;height:28px;borde
     <p class="eyebrow" data-ar="التقييمات">Reviews</p>
     <h2 id="reviews-h" data-ar="ما يقوله عملاؤنا.">What our customers say.</h2>
     <div class="honest">
-      <h3 data-ar="لا نعرض تقييماً بالنجوم بعد.">No star rating shown here yet.</h3>
+      <img class="spud-still" src="assets/web/lean/mr-spud-200.webp" alt="" width="200" height="300" loading="lazy" decoding="async">
+      <h3 data-ar="مستر سبود لا يعرض إلا الأرقام التي يستطيع إثباتها.">Mr. Spud only shows stars he can prove.</h3>
       <p data-ar="ننشر فقط الأرقام التي يمكن التحقق منها. حتى نربط تقييمنا على Google بمتوسطه وعدده وتاريخ آخر مراجعة، تبقى كل المراجعات، الجيدة والسيئة، على Google.">We only publish numbers that can be checked. Until our Google rating is linked here with its average, count and latest date, every review, good or bad, lives on Google.</p>
       <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener" data-ar="اقرأ أو اكتب تقييماً على Google ←">Read or write a review on Google →</a>
     </div>
@@ -557,14 +613,14 @@ window.SPUD_MENU = {
   var bhd = function(n){ return ar() ? fmt(n) + ' د.ب' : 'BHD ' + fmt(n); };
   var bhdHtml = function(n){ return '<span class="bhd"><bdi dir="ltr">' + (ar() ? fmt(n) + '</bdi> د.ب' : 'BHD ' + fmt(n) + '</bdi>') + '</span>'; };
   var T = {
-    en:{ best:'Best seller', choose:'Choose', incl:'incl. VAT', addons:'Add-ons', each:'each', vat:'VAT ' + Math.round(VAT.rate*100) + '% (included)',
-         order:'Order on WhatsApp', remove:'Remove', removed:'Removed from your order', added:'Spud added. Build the next one.',
+    en:{ best:'Best seller', choose:'Load it up', incl:'incl. VAT', addons:'Add-ons', each:'each', vat:'VAT ' + Math.round(VAT.rate*100) + '% (included)',
+         order:'Order on WhatsApp', remove:'Remove', removed:'Removed from your order', added:'Spud loaded! Build the next one.', loaded:'🥔 Loaded!',
          hi:"Hi Spudlicious! I'd like to order:", total:'Total', inclVat:'incl. ' + Math.round(VAT.rate*100) + '% VAT', name:'Name:', pickup:'Pickup time:',
          openNow:function(c){ return 'Open now · until ' + (c ? '1 AM' : 'midnight'); },
          opens:function(c){ return 'Opens tonight at 7 PM · until ' + (c ? '1 AM' : 'midnight'); },
          heroMsg:"Hi Spudlicious! I'd like to order.", picked:function(n){ return n + ' selected in Build your spud'; } },
-    ar:{ best:'الأكثر طلباً', choose:'اختر', incl:'شامل الضريبة', addons:'الإضافات', each:'للواحدة', vat:'ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '% (مشمولة)',
-         order:'اطلب عبر واتساب', remove:'إزالة', removed:'تمت الإزالة من طلبك', added:'تمت إضافة البطاطس. اصنع التالية.',
+    ar:{ best:'الأكثر طلباً', choose:'حمّلها', incl:'شامل الضريبة', addons:'الإضافات', each:'للواحدة', vat:'ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '% (مشمولة)',
+         order:'اطلب عبر واتساب', remove:'إزالة', removed:'تمت الإزالة من طلبك', added:'تم تحميل البطاطس! اصنع التالية.', loaded:'🥔 محمّلة!',
          hi:'مرحباً سبودلشيس! أود أن أطلب:', total:'المجموع', inclVat:'شامل ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '%', name:'الاسم:', pickup:'وقت الاستلام:',
          openNow:function(c){ return 'مفتوح الآن · حتى ' + (c ? '1 صباحاً' : 'منتصف الليل'); },
          opens:function(c){ return 'نفتح الليلة الساعة 7 مساءً · حتى ' + (c ? '1 صباحاً' : 'منتصف الليل'); },
@@ -588,7 +644,8 @@ window.SPUD_MENU = {
 
   /* ── Builder state: defaults = the best seller, no paid add-ons, quantity 1 ── */
   var best = M.items.filter(function(i){ return i.best; })[0] || M.items[0];
-  var cur, saved = [];
+  var cur, saved = [], fresh_addon = null, fresh_line = false;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function fresh(){ return { protein:best.protein, sauce:best.sauce, addons:[], qty:1 }; }
   cur = fresh();
   function itemOf(c){ return M.items.filter(function(i){ return i.protein===c.protein && i.sauce===c.sauce; })[0]; }
@@ -613,8 +670,8 @@ window.SPUD_MENU = {
   }
 
   function lineHtml(c, idx){
-    var it = itemOf(c), h = '<li class="line' + (idx < 0 ? ' current' : '') + '"><span>' + c.qty + ' × ' + esc(nm(it)) + '</span>' + bhdHtml(it.price * c.qty);
-    c.addons.forEach(function(id){ var a = addonOf(id); h += '<span class="addon"><span>+ ' + esc(nm(a)) + (c.qty > 1 ? ' × ' + c.qty : '') + '</span>' + bhdHtml(a.price * c.qty) + '</span>'; });
+    var it = itemOf(c), h = '<li class="line' + (idx < 0 ? ' current' : '') + (idx < 0 && fresh_line ? ' enter' : '') + '"><span>' + c.qty + ' × ' + esc(nm(it)) + '</span>' + bhdHtml(it.price * c.qty);
+    c.addons.forEach(function(id){ var a = addonOf(id); h += '<span class="addon' + (idx < 0 && id === fresh_addon ? ' enter' : '') + '"><span>+ ' + esc(nm(a)) + (c.qty > 1 ? ' × ' + c.qty : '') + '</span>' + bhdHtml(a.price * c.qty) + '</span>'; });
     if (idx > -1) h += '<button type="button" class="rm" data-rm="' + idx + '">' + t('remove') + ' <span class="sr-only">' + esc(nm(it)) + '</span></button>';
     return h + '</li>';
   }
@@ -635,10 +692,29 @@ window.SPUD_MENU = {
     var vat = VAT.rate ? total - total / (1 + VAT.rate) : 0;
     $('vat-label').textContent = t('vat');
     $('vat-amt').innerHTML = bhdHtml(vat);
-    $('total-amt').innerHTML = bhdHtml(total);
     var b = $('order-wa');
-    b.textContent = t('order') + ' · ' + bhd(total);
     b.href = wa(message(all, total));
+    countTo(total);
+    fresh_addon = null; fresh_line = false;
+  }
+  /* The price ticks up/down to the new total (~350 ms, eased); instant under reduced motion. */
+  var shownTotal = null, raf = 0;
+  function paintTotal(v){ $('total-amt').innerHTML = bhdHtml(v); $('order-wa').textContent = t('order') + ' · ' + bhd(v); }
+  function countTo(to){
+    var from = shownTotal === null ? to : shownTotal; shownTotal = to;
+    cancelAnimationFrame(raf);
+    if (reduce || Math.abs(to - from) < 0.0005) { paintTotal(to); return; }
+    var t0 = performance.now();
+    (function step(now){
+      var k = Math.min(1, (now - t0) / 350), e = 1 - Math.pow(1 - k, 3);
+      paintTotal(from + (to - from) * e);
+      if (k < 1) raf = requestAnimationFrame(step); else { $('total-amt').firstChild.classList.add('tick'); }
+    })(t0);
+  }
+  /* The peak: a short "Loaded!" beat when a topping goes on or another spud is loaded. */
+  function loadedBeat(){
+    var el = $('loaded'); el.textContent = t('loaded');
+    el.classList.remove('go'); void el.offsetWidth; el.classList.add('go');
   }
   function render(){ renderOptions(); renderSummary(); }
 
@@ -646,13 +722,16 @@ window.SPUD_MENU = {
     var el = e.target;
     if (el.name === 'protein') cur.protein = el.value;
     else if (el.name === 'sauce') cur.sauce = el.value;
-    else if (el.name === 'addon') cur.addons = [].slice.call(document.querySelectorAll('input[name=addon]:checked')).map(function(i){ return i.value; });
+    else if (el.name === 'addon') {
+      cur.addons = [].slice.call(document.querySelectorAll('input[name=addon]:checked')).map(function(i){ return i.value; });
+      if (el.checked) { fresh_addon = el.value; loadedBeat(); }
+    }
     renderSummary();
   });
   $('qty-minus').addEventListener('click', function(){ if (cur.qty > 1) { cur.qty--; render(); } });
   $('qty-plus').addEventListener('click', function(){ if (cur.qty < 20) { cur.qty++; render(); } });
   $('add-more').addEventListener('click', function(){
-    saved.push(cur); cur = fresh(); render();
+    saved.push(cur); cur = fresh(); fresh_line = true; render(); loadedBeat();
     $('sum-status').textContent = t('added');
     $('opt-protein').querySelector('input').focus();
   });
@@ -712,6 +791,17 @@ window.SPUD_MENU = {
     window.dataLayer.push({ event:'whatsapp_order_click', source:a.id || 'find-us' });
   });
 
+  /* Hero: Mr. Spud bobs three times, then the order button nudges once. One motion at a time, then rest. */
+  var spud = document.querySelector('.hero-spud');
+  if (spud) spud.addEventListener('animationend', function(){ $('hero-wa').classList.add('nudge'); }, { once:true });
+
+  /* Scroll reveals: each section after the hero rises in once, the first time it is seen. */
+  if (!reduce && 'IntersectionObserver' in window) {
+    var secs = document.querySelectorAll('main > section:not(.hero)');
+    var ro = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }); }, { threshold:0.08 });
+    secs.forEach(function(sec){ if (sec.getBoundingClientRect().top > innerHeight) { sec.classList.add('reveal'); ro.observe(sec); } });
+  }
+
   /* Video posters load only when the clips near the viewport (they are below the fold). */
   var vids = document.querySelectorAll('video[data-poster]');
   var showPoster = function(v){ v.poster = v.getAttribute('data-poster'); v.removeAttribute('data-poster'); };
@@ -720,6 +810,11 @@ window.SPUD_MENU = {
     vids.forEach(function(v){ io.observe(v); });
   } else vids.forEach(showPoster);
 
+  addEventListener('load', function(){
+    var f = document.createElement('link'); f.rel = 'stylesheet';
+    f.href = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Cairo:wght@400;700;800&display=optional';
+    document.head.appendChild(f);
+  });
   if ('serviceWorker' in navigator) addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
 })();
 </script>
