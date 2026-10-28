@@ -8,7 +8,7 @@
 <meta name="description" content="Loaded. Delicious. Legendary. Bahrain's first loaded baked potato food truck: 4 spuds at BHD 2.000, oven-baked and never microwaved, 100% Halal, open from 7 PM in Busaiteen. Build your spud and order on WhatsApp.">
 <link rel="canonical" href="https://spudlicious.bh/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#081324">
+<meta name="theme-color" content="#1C91F2">
 <meta name="color-scheme" content="light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Spudlicious">
@@ -156,16 +156,20 @@
 </script>
 <style>
 @font-face{font-family:'Fredoka';src:url(assets/fonts/fredoka-latin-500-700.woff2) format('woff2');font-weight:500 700;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* BRIGHT SPUD BLUE. Contrast rules (measured): white on #1C91F2 = 3.29 → large text only (≥ 24px, or ≥ 19px bold);
+   navy #07203C on #1C91F2 = 4.98 → small text on blue is navy; body copy sits on white cards;
+   gold on blue = 2.0 → the gold accent word always carries a navy outline (measured against the outline, 11:1). */
 :root{
-  --blue:#1C91F2;--blue-dark:#0D6FBF;--blue-soft:#E3F1FE;--gold:#FFC107;--cream:#FFF6E6;--navy:#081324;
-  --ink:#081324;--muted:#3C4A5E;--line:#E7DCC8;--card:#FFFFFF;
-  --r:20px;--r-sm:12px;--wrap:1120px;--head:64px;
-  --bd:2px solid var(--navy);--pop:4px 4px 0 var(--navy);--pop-sm:3px 3px 0 var(--navy);
+  --blue:#1C91F2;--blue-deep:#0F7AD4;--blue-light:#2A9BF5;--blue-dark:#0D6FBF;--blue-soft:#E3F1FE;
+  --gold:#FFC107;--cream:#FFF6E6;--white:#FFFFFF;--navy:#081324;--ink:#07203C;--muted:#3C4A5E;
+  --r:24px;--r-sm:12px;--wrap:1120px;--head:64px;
+  --bd:2px solid var(--ink);--pop:4px 4px 0 var(--ink);--pop-sm:3px 3px 0 var(--ink);
+  --lift:0 12px 28px -12px rgba(7,32,60,.45);
   --display:'Fredoka','Arial Rounded MT Bold','Trebuchet MS',system-ui,sans-serif;
   --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --display-ar:'Baloo Bhaijaan 2','Cairo','Geeza Pro',Tahoma,sans-serif;
   --font-ar:'Cairo','Geeza Pro','Noto Sans Arabic',Tahoma,sans-serif;
-  /* Motion tokens (code-deem-nature Law 15; playful brand) */
+  --on-blue-shadow:0 2px 0 rgba(7,32,60,.28);
   --ease-out:cubic-bezier(0.16,1,0.3,1);--ease-in:cubic-bezier(0.3,0,0.8,0.15);
   --spring-snappy:var(--ease-out);--spring-playful:var(--ease-out);
 }
@@ -174,8 +178,8 @@
   --spring-playful:linear(0,0.116,0.372,0.656,0.897,1.06,1.144,1.163,1.139,1.096,1.05,1.012,0.987,0.976,0.974,0.978,0.986,0.993,0.999,1.002,1.004,1.004,1.003,1.002,1);
 }}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--head) + 8px);-webkit-text-size-adjust:100%}
-body{font:400 1rem/1.6 var(--font);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--head) + 8px);-webkit-text-size-adjust:100%;background:var(--blue)}
+body{font:400 1rem/1.6 var(--font);color:var(--ink);background:var(--blue);-webkit-font-smoothing:antialiased}
 .ar-pending body{visibility:hidden}
 html[lang="ar"] body{font-family:var(--font-ar);font-size:1.075rem;line-height:1.8}
 img,video,iframe{display:block;max-width:100%}
@@ -183,26 +187,29 @@ a{color:var(--blue-dark);text-underline-offset:3px}
 button{font:inherit;color:inherit;cursor:pointer}
 h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;letter-spacing:-.01em}
 html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3{font-family:var(--display-ar);line-height:1.35;letter-spacing:0}
-h2{font-size:clamp(2rem,5vw,2.75rem)}
 p{max-width:62ch}
-:focus-visible{outline:3px solid var(--blue-dark);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
 .dark :focus-visible,.intro :focus-visible{outline-color:var(--cream)}
-video:focus-within{outline:3px solid var(--blue-dark);outline-offset:3px}
+video:focus-within{outline:3px solid var(--ink);outline-offset:3px}
 .wrap{width:min(100% - 32px,var(--wrap));margin-inline:auto}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;inset-inline-start:12px;top:-60px;background:var(--navy);color:var(--cream);padding:12px 16px;border-radius:var(--r-sm);z-index:60;font-weight:700}
 .skip:focus{top:12px}
 section{padding-block:64px}
-.eyebrow{display:inline-block;font-family:var(--display);font-size:1rem;font-weight:600;color:var(--blue-dark);margin-bottom:8px}
-html[lang="ar"] .eyebrow{font-family:var(--font-ar);font-weight:700;font-size:1.0625rem}
-.lead{font-size:1.0625rem;color:var(--muted);margin-top:12px}
 .bhd{white-space:nowrap;font-variant-numeric:tabular-nums}
+/* Section heads on blue: eyebrow pill (navy on white), white display headline, bold white lead (large text) */
+.eyebrow{display:inline-block;padding:4px 12px;border-radius:999px;background:var(--white);color:var(--ink);font:600 .9375rem/1.4 var(--display);margin-bottom:12px}
+html[lang="ar"] .eyebrow{font-family:var(--font-ar);font-weight:700}
+.on-blue h2{color:var(--white);font-size:clamp(2rem,5vw,2.75rem);text-shadow:var(--on-blue-shadow)}
+.on-blue .lead{color:var(--white);font-weight:700;font-size:1.1875rem;margin-top:12px;text-shadow:var(--on-blue-shadow)}
+.sheet{background:var(--white);border-radius:var(--r);padding:24px;box-shadow:var(--lift)}
+.fine{color:var(--muted);margin-top:8px}
+.on-blue .note{color:var(--ink);font-weight:600;margin-top:12px}
 
-/* ── INTRO (once per session; CSS transforms only) ── */
+/* ── INTRO (navy overlay, once per session, CSS transforms only) ── */
 .intro{position:fixed;inset:0;z-index:100;background:var(--navy);color:var(--cream);overflow:hidden;animation:intro-out 400ms var(--ease-in) 3000ms forwards}
 .no-intro .intro{display:none}
 .intro-fly{position:absolute;top:18vh;left:50%;width:150px;height:218px;margin-left:-75px;perspective:700px;animation:fly 2200ms cubic-bezier(.2,.75,.25,1) both,settle 420ms var(--spring-playful) 2200ms}
-[dir="rtl"] .intro-fly{animation-name:fly-rtl,settle}
 .intro-spud{width:150px;height:218px;animation:flip 2200ms cubic-bezier(.2,.75,.25,1) both}
 .intro-word{position:absolute;left:0;right:0;top:calc(18vh + 240px);text-align:center;font:700 clamp(2.5rem,11vw,5.5rem)/1 var(--display);letter-spacing:.04em;color:var(--gold);opacity:0;animation:word 480ms var(--spring-playful) 2250ms forwards;max-width:none}
 .intro-tag{position:absolute;left:0;right:0;top:calc(18vh + 240px + clamp(3.25rem,13vw,6.5rem));text-align:center;font:600 clamp(1rem,3.6vw,1.375rem)/1.4 var(--display);letter-spacing:.06em;color:var(--cream);opacity:0;animation:rise 350ms var(--ease-out) 2500ms forwards;max-width:none}
@@ -211,7 +218,6 @@ html[lang="ar"] .intro-tag{font-family:var(--display-ar);letter-spacing:0}
 .intro-skip:hover{background:var(--cream);color:var(--navy)}
 .intro.skip{animation:intro-fade 200ms ease-out forwards}
 @keyframes fly{from{transform:translateX(-75vw)}to{transform:none}}
-@keyframes fly-rtl{from{transform:translateX(75vw)}to{transform:none}}
 @keyframes flip{from{transform:rotateY(0)}to{transform:rotateY(2520deg)}}
 @keyframes settle{0%{transform:none}35%{transform:translateY(-14px) scale(1.04)}70%{transform:translateY(3px) scale(.99)}100%{transform:none}}
 @keyframes word{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
@@ -219,111 +225,107 @@ html[lang="ar"] .intro-tag{font-family:var(--display-ar);letter-spacing:0}
 @keyframes intro-out{to{transform:translateY(-100%);visibility:hidden}}
 @keyframes intro-fade{to{opacity:0;visibility:hidden}}
 
-/* ── Header ── */
-.site-head{position:sticky;top:0;z-index:50;background:rgba(255,246,230,.96);border-bottom:var(--bd)}
+/* ── Header (white bar so nav text stays small and AA) ── */
+.site-head{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:0 2px 0 rgba(7,32,60,.12)}
 .site-head .wrap{display:flex;align-items:center;gap:16px;height:var(--head)}
-.logo{display:flex;align-items:center;gap:8px;min-height:44px;margin-inline-end:auto;color:var(--navy);text-decoration:none;font:700 1.375rem/1 var(--display)}
+.logo{display:flex;align-items:center;gap:8px;min-height:44px;margin-inline-end:auto;color:var(--ink);text-decoration:none;font:700 1.375rem/1 var(--display)}
 .logo img{width:30px;height:44px}
 .nav{display:none;gap:4px}
 .nav a{display:flex;align-items:center;min-height:44px;padding-inline:12px;color:var(--ink);font-weight:600;text-decoration:none;border-radius:999px}
 .nav a:hover{background:var(--blue-soft)}
-.lang{min-height:44px;min-width:44px;padding-inline:16px;border:var(--bd);border-radius:999px;background:#fff;font-weight:700;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
-.lang:hover{background:var(--navy);color:var(--cream)}
+.lang{min-height:44px;min-width:44px;padding-inline:16px;border:var(--bd);border-radius:999px;background:var(--white);color:var(--ink);font-weight:700;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.lang:hover{background:var(--ink);color:var(--white)}
 @media (min-width:900px){.nav{display:flex}}
 
-/* ── Buttons (sticker style) ── */
-.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:12px 24px;border-radius:999px;background:var(--gold);color:var(--navy);font:700 1.125rem/1.2 var(--display);text-decoration:none;border:var(--bd);box-shadow:var(--pop)}
+/* ── Buttons ── */
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:12px 24px;border-radius:999px;background:var(--gold);color:var(--ink);font:700 1.125rem/1.2 var(--display);text-decoration:none;border:var(--bd);box-shadow:var(--pop)}
 html[lang="ar"] .btn-gold{font-family:var(--font-ar)}
-.btn-gold:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--navy)}
-.btn-gold:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--navy)}
+.btn-gold:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn-gold:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .btn-gold svg{width:22px;height:22px;flex:none}
-.btn-line{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 24px;border-radius:999px;border:var(--bd);color:var(--navy);background:#fff;font-weight:700;text-decoration:none;box-shadow:var(--pop-sm)}
-.btn-line:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--navy)}
-.btn-line:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--navy)}
+.btn-line{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 24px;border-radius:999px;border:var(--bd);color:var(--ink);background:var(--white);font-weight:700;text-decoration:none;box-shadow:var(--pop-sm)}
+.btn-line:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn-line:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .btn-gold,.btn-line,.spud,.opt,.qty button,.lang,.nav a,.add-more,.rm,.quiet,.site-foot a,.honest a,.intro-skip,input{transition:transform 150ms var(--spring-snappy),box-shadow 150ms var(--spring-snappy),background-color 150ms ease-out,border-color 150ms ease-out,color 150ms ease-out}
 .lang:active,.qty button:active,.opt:active{transform:scale(.96)}
 
-/* ── 1 Hero ── */
-.hero{padding-block:32px 64px;overflow:hidden;background:radial-gradient(60% 70% at 85% 30%,#D3E9FD 0,rgba(211,233,253,0) 70%),var(--cream)}
+/* ── 1 Hero (the approved gradient) ── */
+.hero{padding-block:32px 64px;overflow:hidden;background:linear-gradient(165deg,var(--blue-deep),var(--blue) 55%,var(--blue-light))}
 .hero .wrap{display:grid;gap:48px;align-items:center}
-.hero h1{font-size:clamp(2.75rem,9vw,4.75rem);max-width:12ch}
-.hero h1 em{font-style:normal;color:var(--blue-dark)}
-.hero p.sub{font-size:1.125rem;color:var(--muted);max-width:40ch;margin-top:16px}
+.hero h1{font-size:clamp(2.75rem,9vw,4.75rem);max-width:12ch;color:var(--white);text-shadow:0 3px 0 rgba(7,32,60,.3)}
+.accent{color:var(--gold);text-shadow:none;-webkit-text-stroke:0;paint-order:stroke fill;-webkit-text-stroke:6px var(--ink)}
+@supports not (paint-order:stroke){.accent{-webkit-text-stroke:2px var(--ink)}}
+.hero p.sub{font-size:1.25rem;font-weight:700;color:var(--white);max-width:34ch;margin-top:16px;text-shadow:var(--on-blue-shadow)}
 .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:24px}
-.hero-actions .quiet{display:inline-flex;align-items:center;min-height:48px;color:var(--navy);font-weight:700}
+.hero-actions .quiet{display:inline-flex;align-items:center;min-height:48px;color:var(--ink);font-weight:700;font-size:1.125rem}
 .badges{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.badges li{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 16px;border:var(--bd);border-radius:999px;background:#fff;font-weight:700;font-size:.9375rem}
+.badges li{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 16px;border-radius:999px;background:var(--white);color:var(--ink);font-weight:700;font-size:.9375rem;box-shadow:0 3px 0 rgba(7,32,60,.25)}
 .badges .dot{width:10px;height:10px;border-radius:50%;background:#8A96A6;flex:none}
 .badges .dot.on{background:#16A34A}
-.hero-media{position:relative;max-width:460px;width:100%;justify-self:center}
-.hero-frame{border:3px solid var(--navy);border-radius:28px;box-shadow:8px 8px 0 var(--navy);overflow:hidden;transform:rotate(-2deg);background:var(--blue-soft)}
-[dir="rtl"] .hero-frame{transform:rotate(2deg)}
-.hero-food{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 62%}
-.hero-spud{position:absolute;width:104px;height:152px;bottom:-30px;inset-inline-start:-14px;filter:drop-shadow(0 6px 8px rgba(8,19,36,.3))}
+.hero-media{position:relative;max-width:440px;width:100%;justify-self:center}
+.hero-frame{border:8px solid var(--white);border-radius:32px;overflow:hidden;transform:rotate(-2deg);background:var(--white);box-shadow:0 24px 48px -16px rgba(7,32,60,.55)}
+.hero-food{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 45%}
+.hero-spud{position:absolute;width:104px;height:152px;bottom:-32px;inset-inline-start:-16px;filter:drop-shadow(0 8px 10px rgba(7,32,60,.35))}
 .intro-done .hero-spud,.no-intro .hero-spud{animation:spud-bob 1.6s ease-in-out .3s 3}
-.hero-media figcaption{font-size:.875rem;color:var(--muted);margin-top:16px;padding-inline-start:100px}
 @keyframes spud-bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(-3deg)}}
 .hero .btn-gold.nudge{animation:cta-nudge 700ms var(--spring-playful) 300ms 1}
 @keyframes cta-nudge{0%,100%{transform:none}35%{transform:scale(1.06) rotate(-1deg)}}
 @media (min-width:900px){
   .hero{padding-block:64px 96px}
   .hero .wrap{grid-template-columns:55fr 45fr;gap:64px}
-  .hero-spud{width:136px;height:198px;bottom:-40px;inset-inline-start:-48px}
-  .hero-media figcaption{padding-inline-start:104px}
+  .hero-spud{width:136px;height:198px;bottom:-48px;inset-inline-start:-56px}
 }
 
-/* ── 2 Menu ── */
+/* ── 2 Menu: white cards pop off the blue ── */
 .menu-grid{display:grid;gap:24px;margin-top:32px}
 @media (min-width:640px){.menu-grid{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1024px){.menu-grid{grid-template-columns:repeat(4,1fr)}}
-.spud{display:flex;flex-direction:column;gap:8px;text-align:start;background:var(--card);border:var(--bd);border-radius:var(--r);padding:12px 12px 24px;min-height:100%;box-shadow:var(--pop);overflow:hidden}
-.spud:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--navy)}
-.spud:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--navy)}
-.spud .ph,.spud .photo{width:100%;aspect-ratio:4/3;border-radius:12px;object-fit:cover}
-.spud .ph{display:grid;place-items:center;align-content:center;gap:4px;background:repeating-linear-gradient(45deg,#FFF0D1 0 12px,#FFE9BD 12px 24px);border:2px dashed #D9B76A;color:#6B5320;font-size:.8125rem;font-weight:700}
+.spud{position:relative;display:flex;flex-direction:column;gap:8px;text-align:start;background:var(--white);color:var(--ink);border:0;border-radius:var(--r);padding:12px 12px 24px;min-height:100%;box-shadow:var(--lift);overflow:hidden}
+.spud:hover{transform:translateY(-4px);box-shadow:0 20px 36px -14px rgba(7,32,60,.55)}
+.spud:active{transform:scale(.98)}
+.spud .ph,.spud .photo{width:100%;aspect-ratio:4/3;border-radius:16px;object-fit:cover}
+.spud .ph{display:grid;place-items:center;align-content:center;gap:4px;background:var(--blue-soft);border:2px dashed #8CC4F5;color:#0A4F8A;font-size:.8125rem;font-weight:700}
 .spud .ph span:first-child{font-size:2.5rem;line-height:1}
 .spud .body{display:flex;flex-direction:column;gap:8px;flex:1;padding-inline:8px}
 .spud h3{font-size:1.375rem;margin-top:4px}
 .spud p{color:var(--muted);flex:1}
 .spud .row{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:4px}
 .spud .row>span:first-child{display:flex;flex-direction:column}
-.price{font:700 1.25rem/1.2 var(--display);color:var(--navy)}
-.vat-note{font-size:.8125rem;color:var(--muted)}
+.price{font:700 1.25rem/1.2 var(--display);color:var(--ink);text-decoration:underline 4px var(--gold);text-underline-offset:6px;text-decoration-skip-ink:none}
+.vat-note{font-size:.8125rem;color:var(--muted);margin-top:4px}
 .choose{font-weight:700;color:var(--blue-dark);white-space:nowrap}
 .choose .flip{transition:transform 150ms var(--spring-snappy)}
 .spud:hover .choose .flip{transform:translateX(3px)}
 [dir="rtl"] .spud:hover .choose .flip{transform:scaleX(-1) translateX(3px)}
-.tag{position:absolute;margin:8px;padding:4px 12px;border-radius:999px;background:var(--navy);color:var(--cream);font-size:.8125rem;font-weight:700}
-.spud{position:relative}
-.addons-line{margin-top:32px;color:var(--muted)}
+.tag{position:absolute;margin:8px;padding:4px 12px;border-radius:999px;background:var(--ink);color:var(--white);font-size:.8125rem;font-weight:700}
+.addons-line{display:inline-block;margin-top:32px;padding:8px 16px;border-radius:999px;background:var(--white);color:var(--muted)}
 .addons-line strong{color:var(--ink)}
-.real{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:32px;max-width:640px}
-.real img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-sm);border:var(--bd)}
-.real figcaption{grid-column:1/-1;font-size:.875rem;color:var(--muted)}
+.feature{margin-top:32px;max-width:640px}
+.feature img{width:100%;height:auto;aspect-ratio:919/601;object-fit:cover;border:8px solid var(--white);border-radius:var(--r);box-shadow:var(--lift)}
+.feature figcaption{color:var(--ink);font-weight:600;margin-top:12px}
 
 /* ── 3 Build ── */
-.build{background:var(--blue-soft);border-block:var(--bd)}
 .build-grid{display:grid;gap:32px;margin-top:32px}
 @media (min-width:900px){.build-grid{grid-template-columns:1.2fr 1fr;align-items:start}.summary{position:sticky;top:calc(var(--head) + 16px)}}
 fieldset{border:0;margin-bottom:24px}
-legend{font-family:var(--display);font-weight:600;font-size:1.1875rem;margin-bottom:12px}
-html[lang="ar"] legend{font-family:var(--font-ar);font-weight:700}
-legend .step{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--cream);font-size:.9375rem;margin-inline-end:8px}
+legend{font:700 1.25rem/1.3 var(--display);color:var(--white);text-shadow:var(--on-blue-shadow);margin-bottom:12px}
+html[lang="ar"] legend{font-family:var(--font-ar)}
+legend .step{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--white);color:var(--ink);font-size:1rem;margin-inline-end:8px;text-shadow:none}
 .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.opt{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:56px;padding:12px 16px;border:var(--bd);border-radius:var(--r-sm);background:#fff;cursor:pointer;font-weight:700;box-shadow:var(--pop-sm)}
+.opt{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:56px;padding:12px 16px;border:3px solid transparent;border-radius:16px;background:var(--white);color:var(--ink);cursor:pointer;font-weight:700;box-shadow:0 3px 0 rgba(7,32,60,.25)}
 .opt small{font-weight:400;color:var(--muted);font-size:.875rem}
 .opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.opt:has(input:checked){background:#fff;border-color:var(--blue-dark);box-shadow:3px 3px 0 var(--blue-dark),inset 0 0 0 1.5px var(--blue-dark);color:var(--blue-dark)}
-.opt:has(input:focus-visible){outline:3px solid var(--navy);outline-offset:3px}
-.opt:has(input:checked)::after{content:"✓";position:absolute;top:8px;inset-inline-end:12px;color:var(--blue-dark);font-weight:800;animation:pop 320ms var(--spring-playful)}
-.qty{display:inline-flex;align-items:center;gap:8px;border:var(--bd);border-radius:999px;padding:4px;background:#fff}
-.qty button{width:44px;height:44px;border-radius:50%;border:0;background:var(--blue-soft);font-size:1.25rem;font-weight:800}
+.opt:has(input:checked){border-color:var(--ink);box-shadow:var(--pop-sm)}
+.opt:has(input:focus-visible){outline:3px solid var(--white);outline-offset:3px}
+.opt:has(input:checked)::after{content:"✓";position:absolute;top:8px;inset-inline-end:12px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--white);font-size:.8125rem;font-weight:800;animation:pop 320ms var(--spring-playful)}
+.qty{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:4px;background:var(--white);box-shadow:0 3px 0 rgba(7,32,60,.25)}
+.qty button{width:44px;height:44px;border-radius:50%;border:0;background:var(--blue-soft);color:var(--ink);font-size:1.25rem;font-weight:800}
 .qty button:disabled{opacity:.4;cursor:not-allowed}
-.qty output{min-width:2ch;text-align:center;font:700 1.25rem/1 var(--display)}
-.summary{position:relative;background:#fff;border:var(--bd);border-radius:var(--r);padding:24px;box-shadow:var(--pop)}
+.qty output{min-width:2ch;text-align:center;font:700 1.25rem/1 var(--display);color:var(--ink)}
+.summary{position:relative;background:var(--white);border-radius:var(--r);padding:24px;box-shadow:var(--lift)}
 .summary h3{font-size:1.375rem;margin-bottom:12px}
 .lines{list-style:none;display:grid;gap:12px}
-.line{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-bottom:12px;border-bottom:2px dashed #D9CBB2}
+.line{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-bottom:12px;border-bottom:2px dashed #C9DDF0}
 .line .addon{grid-column:1/-1;display:flex;justify-content:space-between;font-size:.9375rem;color:var(--muted)}
 .line .rm{grid-column:1/-1;justify-self:start;min-height:44px;background:none;border:0;color:var(--blue-dark);text-decoration:underline;font-weight:700;padding:0}
 .line.current{font-weight:700}
@@ -335,8 +337,7 @@ html[lang="ar"] .totals .grand{font-family:var(--font-ar)}
 .summary .btn-gold{margin-top:24px;min-height:48px;padding:8px 24px;font-size:1.0625rem;white-space:nowrap}
 @media (max-width:379px){.summary{padding:16px}.summary .btn-gold{white-space:normal;width:100%}}
 .add-more{display:block;margin-top:12px;min-height:44px;background:none;border:0;color:var(--blue-dark);font-weight:700;text-decoration:underline}
-.fine{color:var(--muted);margin-top:8px}
-.loaded{position:absolute;inset-inline-end:16px;top:-18px;padding:4px 12px;border-radius:999px;background:var(--navy);color:var(--cream);font-size:.875rem;font-weight:800;opacity:0;pointer-events:none}
+.loaded{position:absolute;inset-inline-end:16px;top:-16px;padding:4px 12px;border-radius:999px;background:var(--ink);color:var(--white);font-size:.875rem;font-weight:800;opacity:0;pointer-events:none}
 .loaded.go{animation:loaded 1400ms var(--spring-playful)}
 @keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
 @keyframes enter{0%{transform:translateX(-12px);opacity:0}100%{transform:none;opacity:1}}
@@ -348,42 +349,44 @@ html[lang="ar"] .totals .grand{font-family:var(--font-ar)}
 @keyframes tick{0%{transform:translateY(-3px)}100%{transform:none}}
 
 /* ── 4 Story ── */
-.story-grid{display:grid;gap:48px;align-items:center}
-@media (min-width:900px){.story-grid{grid-template-columns:1fr 1.1fr}}
-.story figure img{width:100%;height:auto;aspect-ratio:640/631;object-fit:cover;border-radius:var(--r);border:var(--bd);box-shadow:var(--pop)}
-.story figcaption{font-size:.875rem;color:var(--muted);margin-top:12px}
-.story blockquote{margin-top:24px;padding:16px 24px;border:var(--bd);border-radius:var(--r-sm);background:#fff;font:600 1.25rem/1.4 var(--display)}
+.story-grid{display:grid;gap:32px;align-items:center;margin-top:32px}
+@media (min-width:900px){.story-grid{grid-template-columns:1fr 1.15fr}}
+.story figure img{width:100%;height:auto;aspect-ratio:640/631;object-fit:cover;border:8px solid var(--white);border-radius:var(--r);box-shadow:var(--lift)}
+.story figcaption{color:var(--ink);font-weight:600;margin-top:12px}
+.story .sheet p{color:var(--muted)}
+.story .sheet p+p{margin-top:12px}
+.story blockquote{margin-block:16px;padding:16px 24px;border-radius:16px;background:var(--blue-soft);font:600 1.25rem/1.4 var(--display);color:var(--ink)}
 html[lang="ar"] .story blockquote{font-family:var(--font-ar);font-weight:700}
+.story blockquote p{color:var(--ink)!important}
 .story blockquote footer{font:400 .9375rem/1.5 var(--font);color:var(--muted);margin-top:8px}
 html[lang="ar"] .story blockquote footer{font-family:var(--font-ar)}
 
 /* ── 5 Reviews ── */
-.reviews{background:#fff;border-block:var(--bd)}
-.honest{display:grid;grid-template-columns:1fr auto;gap:0 16px;align-items:start;margin-top:24px;padding:24px;border:var(--bd);border-radius:var(--r);background:var(--cream);max-width:720px;box-shadow:var(--pop)}
+.honest{display:grid;grid-template-columns:1fr auto;gap:0 16px;align-items:start;margin-top:32px;max-width:720px}
 .honest .spud-still{width:64px;height:93px;grid-row:1/4;grid-column:2}
 .honest h3{font-size:1.25rem}
 .honest p{color:var(--muted);margin-top:8px}
 .honest a{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-weight:700}
 .clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:32px;max-width:720px}
-.clips video{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r-sm);background:var(--navy);border:var(--bd)}
-.clips figcaption{font-size:.8125rem;color:var(--muted);margin-top:4px}
+.clips video{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:16px;background:var(--navy);border:4px solid var(--white)}
+.clips figcaption{font-size:.875rem;color:var(--ink);font-weight:600;margin-top:4px}
 
 /* ── 6 Find us ── */
 .find-grid{display:grid;gap:32px;margin-top:32px}
 @media (min-width:900px){.find-grid{grid-template-columns:1fr 1fr}}
 .facts{display:grid;gap:16px}
-.facts dt{font-family:var(--display);font-weight:600;font-size:1.0625rem}
+.facts dt{font:600 1.0625rem/1.4 var(--display)}
 html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
 .facts dd{color:var(--muted)}
 .find-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
-.map{width:100%;aspect-ratio:4/3;border:var(--bd);border-radius:var(--r);background:#E9E0CF}
-.truck img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r);border:var(--bd);max-height:420px}
+.map{width:100%;aspect-ratio:4/3;border:8px solid var(--white);border-radius:var(--r);background:var(--blue-soft)}
+.truck img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border:8px solid var(--white);border-radius:var(--r);max-height:420px}
 .find-media{display:grid;gap:16px}
 @media (min-width:600px){.find-media{grid-template-columns:1fr 1fr}.map{aspect-ratio:auto;height:100%;min-height:280px}}
 
 /* ── 7 Footer ── */
 .site-foot{background:var(--navy);color:#D6DEE8;padding-block:48px 32px}
-.site-foot .brand{font:700 1.75rem/1 var(--display);color:var(--cream);margin-bottom:16px}
+.site-foot .brand{font:700 1.75rem/1 var(--display);color:var(--white);margin-bottom:16px}
 .site-foot nav ul,.site-foot .social{list-style:none;display:flex;flex-wrap:wrap;gap:4px 8px}
 .site-foot .social{margin-top:16px}
 .site-foot a{display:inline-flex;align-items:center;min-height:44px;padding-inline:8px;color:var(--cream);font-weight:700}
@@ -391,7 +394,6 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
 
 .flip{display:inline-block}
 [dir="rtl"] .flip{transform:scaleX(-1)}
-/* Scroll reveals: first view only, transform + opacity, never the hero */
 .js .reveal{opacity:0;transform:translateY(16px);transition:opacity 450ms ease-out,transform 450ms var(--ease-out)}
 .js .reveal.in{opacity:1;transform:none}
 
@@ -439,7 +441,7 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
 <section class="hero" id="top" aria-labelledby="hero-h">
   <div class="wrap">
     <div>
-      <h1 id="hero-h" data-ar="كل بطاطس، تحفة فنية.">Every potato, a masterpiece.</h1>
+      <h1 id="hero-h"><span data-ar="كل بطاطس،">Every potato, a</span> <span class="accent" data-ar="تحفة فنية.">masterpiece.</span></h1>
       <p class="sub" data-ar="مخبوزة في الفرن، لا ميكروويف أبداً. محمّلة حتى الآخر في شاحنتنا في البسيتين.">Oven-baked, never microwaved. Loaded to the max at our truck in Busaiteen.</p>
       <div class="hero-actions">
         <a class="btn-gold" id="hero-wa" href="https://wa.me/97333260007?text=Hi%20Spudlicious!%20I'd%20like%20to%20order." target="_blank" rel="noopener">
@@ -456,36 +458,33 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
       </ul>
     </div>
     <figure class="hero-media">
-      <!-- SLOT: HERO FOOD — replace src with the hyper-real food render/photo (4:3, ≥ 1200×900, warm grade).
-           Interim: a real bowl cropped from a customer clip. Keep width/height (CLS) and no lazy-loading (LCP). -->
+      <!-- HERO FOOD: real Spudlicious bowl (spud-hero). 720w for phones, 1106w for desktop. No lazy-loading (LCP). -->
       <div class="hero-frame" data-slot="hero-food">
-        <img class="hero-food" src="assets/web/lean/closeup-topping.jpg" alt="A spoon digging into a Spudlicious bowl loaded with golden cheese" data-ar-alt="ملعقة في وعاء سبودلشيس محمّل بالجبن الذهبي" width="400" height="440">
+        <img class="hero-food" src="assets/web/food/spud-hero-720.webp" srcset="assets/web/food/spud-hero-720.webp 720w, assets/web/food/spud-hero.webp 1106w" sizes="(min-width:900px) 440px, 92vw" alt="A Spudlicious loaded potato bowl topped with shredded cheese, creamy sauce and a hot-sauce drizzle" data-ar-alt="وعاء بطاطس محمّل من سبودلشيس مع جبن مبشور وصلصة كريمية ولمسة من الصلصة الحارة" width="720" height="821">
       </div>
       <img class="hero-spud" src="assets/mascot/mrspud-intro.webp" alt="Mr. Spud, the Spudlicious mascot" data-ar-alt="مستر سبود، تميمة سبودلشيس" width="302" height="440">
-      <figcaption data-ar="وعاء حقيقي من الشاحنة، كما صوّره أحد عملائنا.">A real bowl from the truck, filmed by one of our customers.</figcaption>
     </figure>
   </div>
 </section>
 
 <!-- 2 · MENU -->
-<section id="menu" aria-labelledby="menu-h">
+<section class="on-blue" id="menu" aria-labelledby="menu-h">
   <div class="wrap">
     <p class="eyebrow" data-ar="القائمة">Menu</p>
     <h2 id="menu-h" data-ar="أربع بطاطس محمّلة. سعر واحد.">Four loaded spuds. One price.</h2>
     <p class="lead" id="menu-lead">Every spud is BHD 2.000, VAT included. Tap one to start your order.</p>
     <div class="menu-grid" id="menu-grid"></div>
     <p class="addons-line" id="addons-line"></p>
-    <div class="real">
-      <figure><img src="assets/web/lean/hero-spoonful.jpg" alt="A spoonful lifted from a fresh loaded potato bowl" data-ar-alt="ملعقة من وعاء بطاطس محمّل طازج" width="580" height="470" loading="lazy" decoding="async"></figure>
-      <figure><img src="assets/web/lean/closeup-sauce.jpg" alt="A loaded bowl finished with a drizzle of sauce" data-ar-alt="وعاء محمّل مع لمسة من الصلصة" width="290" height="240" loading="lazy" decoding="async"></figure>
-      <figcaption data-ar="أوعية حقيقية، من مقاطع صوّرها عملاؤنا عند الشاحنة.">Real bowls, from clips our customers filmed at the truck.</figcaption>
-    </div>
+    <figure class="feature">
+      <img src="assets/web/food/spud-truck.webp" alt="A loaded potato bowl piled with melted cheese, held up at the Spudlicious truck" data-ar-alt="وعاء بطاطس محمّل بالجبن الذائب عند شاحنة سبودلشيس" width="919" height="601" loading="lazy" decoding="async">
+      <figcaption data-ar="طازجة من الشاحنة، كل ليلة.">Fresh from the truck, every night.</figcaption>
+    </figure>
     <noscript><p class="addons-line">Chicken Béchamel · Beef Béchamel · Chicken Ranch · Beef Ranch — BHD 2.000 each. Extra Cheese +BHD 0.200 · Jalapeños +BHD 0.200. Order on WhatsApp: +973 3326 0007.</p></noscript>
   </div>
 </section>
 
 <!-- 3 · BUILD YOUR SPUD -->
-<section class="build" id="build" aria-labelledby="build-h">
+<section class="on-blue build" id="build" aria-labelledby="build-h">
   <div class="wrap">
     <p class="eyebrow" data-ar="اصنع بطاطستك">Build your spud</p>
     <h2 id="build-h" data-ar="اختر، راجع المجموع، واطلب.">Pick, check the total, order.</h2>
@@ -531,31 +530,33 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
 </section>
 
 <!-- 4 · OUR STORY -->
-<section class="story" id="story" aria-labelledby="story-h">
-  <div class="wrap story-grid">
-    <figure>
-      <img src="assets/web/lean/founder-640.jpg" alt="Abdulrahman Alhamad smiling at the counter of the Spudlicious truck at night" data-ar-alt="عبدالرحمن الحمد مبتسماً عند نافذة شاحنة سبودلشيس ليلاً" width="640" height="631" loading="lazy" decoding="async">
-      <figcaption data-ar="عبدالرحمن الحمد، المؤسس">Abdulrahman Alhamad, founder</figcaption>
-    </figure>
-    <div>
-      <p class="eyebrow" data-ar="قصتنا">Our story</p>
-      <h2 id="story-h" data-ar="تعرّف على من أعاد ابتكار البطاطس.">Meet the man who reinvented the potato.</h2>
-      <p class="lead" data-ar="مهندسٌ برؤية رائد أعمال، أخذ عبدالرحمن الحمد طعامًا يعرفه الجميع وحوّله إلى تجربة لا تُنسى في البحرين.">An engineer with an entrepreneur's mind, Abdulrahman Alhamad took a comfort food everyone knows and turned it into an experience Bahrain won't forget.</p>
-      <blockquote>
-        <p data-ar="«كل عملٍ عظيم يبدأ بفكرة بسيطة. فكرتي بدأت بشغفٍ لصنع شيءٍ يجمع الناس.»">“Every great business begins with a simple idea. Mine started with a passion for creating something that brings people together.”</p>
-        <footer data-ar="عبدالرحمن الحمد، مؤسس سبودلشيس">Abdulrahman Alhamad, founder of Spudlicious</footer>
-      </blockquote>
-      <p style="margin-top:24px" data-ar="علّمتني الهندسة التفكير الاستراتيجي وحلّ المشكلات والاهتمام بكل التفاصيل، ومنحتني ريادة الأعمال فرصة تحويل الإبداع إلى واقع. من الوصفات إلى العلامة، كل قرار بهدف واحد: تجربة تجعلك تعود.">Engineering taught him to think strategically, solve problems and obsess over every detail. Entrepreneurship let him turn that into something real. From the recipes to the brand, every decision has one goal: an experience that keeps people coming back.</p>
+<section class="on-blue story" id="story" aria-labelledby="story-h">
+  <div class="wrap">
+    <p class="eyebrow" data-ar="قصتنا">Our story</p>
+    <h2 id="story-h" data-ar="تعرّف على من أعاد ابتكار البطاطس.">Meet the man who reinvented the potato.</h2>
+    <div class="story-grid">
+      <figure>
+        <img src="assets/web/lean/founder-640.jpg" alt="Abdulrahman Alhamad smiling at the counter of the Spudlicious truck at night" data-ar-alt="عبدالرحمن الحمد مبتسماً عند نافذة شاحنة سبودلشيس ليلاً" width="640" height="631" loading="lazy" decoding="async">
+        <figcaption data-ar="عبدالرحمن الحمد، المؤسس">Abdulrahman Alhamad, founder</figcaption>
+      </figure>
+      <div class="sheet">
+        <p data-ar="مهندسٌ برؤية رائد أعمال، أخذ عبدالرحمن الحمد طعامًا يعرفه الجميع وحوّله إلى تجربة لا تُنسى في البحرين.">An engineer with an entrepreneur's mind, Abdulrahman Alhamad took a comfort food everyone knows and turned it into an experience Bahrain won't forget.</p>
+        <blockquote>
+          <p data-ar="«كل عملٍ عظيم يبدأ بفكرة بسيطة. فكرتي بدأت بشغفٍ لصنع شيءٍ يجمع الناس.»">“Every great business begins with a simple idea. Mine started with a passion for creating something that brings people together.”</p>
+          <footer data-ar="عبدالرحمن الحمد، مؤسس سبودلشيس">Abdulrahman Alhamad, founder of Spudlicious</footer>
+        </blockquote>
+        <p data-ar="علّمتني الهندسة التفكير الاستراتيجي وحلّ المشكلات والاهتمام بكل التفاصيل، ومنحتني ريادة الأعمال فرصة تحويل الإبداع إلى واقع. من الوصفات إلى العلامة، كل قرار بهدف واحد: تجربة تجعلك تعود.">Engineering taught him to think strategically, solve problems and obsess over every detail. Entrepreneurship let him turn that into something real. From the recipes to the brand, every decision has one goal: an experience that keeps people coming back.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- 5 · REVIEWS -->
-<section class="reviews" id="reviews" aria-labelledby="reviews-h">
+<section class="on-blue reviews" id="reviews" aria-labelledby="reviews-h">
   <div class="wrap">
     <p class="eyebrow" data-ar="التقييمات">Reviews</p>
     <h2 id="reviews-h" data-ar="ما يقوله عملاؤنا.">What our customers say.</h2>
-    <div class="honest">
+    <div class="honest sheet">
       <img class="spud-still" src="assets/mascot/mrspud-nav.webp" alt="" width="64" height="93" loading="lazy" decoding="async">
       <h3 data-ar="مستر سبود لا يعرض إلا الأرقام التي يستطيع إثباتها.">Mr. Spud only shows stars he can prove.</h3>
       <p data-ar="ننشر فقط الأرقام التي يمكن التحقق منها. حتى نربط تقييمنا على Google بمتوسطه وعدده وتاريخ آخر مراجعة، تبقى كل المراجعات، الجيدة والسيئة، على Google.">We only publish numbers that can be checked. Until our Google rating is linked here with its average, count and latest date, every review, good or bad, lives on Google.</p>
@@ -575,17 +576,17 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
         <figcaption data-ar="مقطع حقيقي من عميل">Real customer clip</figcaption>
       </figure>
     </div>
-    <p class="fine" data-ar="مقاطع غير ممولة صوّرها عملاء عند الشاحنة.">Unsponsored clips filmed by customers at the truck.</p>
+    <p class="note" data-ar="مقاطع غير ممولة صوّرها عملاء عند الشاحنة.">Unsponsored clips filmed by customers at the truck.</p>
   </div>
 </section>
 
 <!-- 6 · FIND US -->
-<section id="find-us" aria-labelledby="find-h">
+<section class="on-blue" id="find-us" aria-labelledby="find-h">
   <div class="wrap">
     <p class="eyebrow" data-ar="موقعنا">Find us</p>
     <h2 id="find-h" data-ar="ابحث عن الأضواء في البسيتين.">Look for the lights in Busaiteen.</h2>
     <div class="find-grid">
-      <div>
+      <div class="sheet">
         <dl class="facts">
           <div><dt data-ar="الموقع">Where</dt><dd data-ar="البسيتين، مملكة البحرين">Busaiteen, Kingdom of Bahrain</dd></div>
           <div><dt data-ar="ساعات العمل">Hours</dt><dd data-ar="السبت – الخميس 7:00م – 12:00ص · الجمعة 7:00م – 1:00ص">Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM</dd></div>
@@ -683,7 +684,7 @@ window.SPUD_MENU = {
   var bhd = function(n){ return ar() ? fmt(n) + ' د.ب' : 'BHD ' + fmt(n); };
   var bhdHtml = function(n){ return '<span class="bhd"><bdi dir="ltr">' + (ar() ? fmt(n) + '</bdi> د.ب' : 'BHD ' + fmt(n) + '</bdi>') + '</span>'; };
   var T = {
-    en:{ best:'Best seller', choose:'Load it up', incl:'incl. VAT', addons:'Add-ons', each:'each', vat:'VAT ' + Math.round(VAT.rate*100) + '% (included)',
+    en:{ best:'Best seller', choose:'Choose', incl:'incl. VAT', addons:'Add-ons', each:'each', vat:'VAT ' + Math.round(VAT.rate*100) + '% (included)',
          order:'Order on WhatsApp', remove:'Remove', removed:'Removed from your order', added:'Spud loaded! Build the next one.', loaded:'🥔 Loaded!',
          hi:"Hi Spudlicious! I'd like to order:", total:'Total', inclVat:'incl. ' + Math.round(VAT.rate*100) + '% VAT', name:'Name:', pickup:'Pickup time:',
          openNow:function(c){ return 'Open now · till ' + (c ? '1 AM' : 'late'); },
@@ -691,7 +692,7 @@ window.SPUD_MENU = {
          spuds:function(n){ return n + ' Spuds'; }, soon:'Photo coming soon',
          lead:function(p){ return 'Every spud is ' + p + ', VAT included. Tap one to start your order.'; },
          heroMsg:"Hi Spudlicious! I'd like to order.", picked:function(n){ return n + ' selected in Build your spud'; } },
-    ar:{ best:'الأكثر طلباً', choose:'حمّلها', incl:'شامل الضريبة', addons:'الإضافات', each:'للواحدة', vat:'ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '% (مشمولة)',
+    ar:{ best:'الأكثر طلباً', choose:'اختر', incl:'شامل الضريبة', addons:'الإضافات', each:'للواحدة', vat:'ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '% (مشمولة)',
          order:'اطلب عبر واتساب', remove:'إزالة', removed:'تمت الإزالة من طلبك', added:'تم تحميل البطاطس! اصنع التالية.', loaded:'🥔 محمّلة!',
          hi:'مرحباً سبودلشيس! أود أن أطلب:', total:'المجموع', inclVat:'شامل ضريبة القيمة المضافة ' + Math.round(VAT.rate*100) + '%', name:'الاسم:', pickup:'وقت الاستلام:',
          openNow:function(c){ return 'مفتوح الآن · حتى ' + (c ? '1 صباحاً' : 'وقت متأخر'); },
