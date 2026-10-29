@@ -156,10 +156,10 @@
           "@type": "MenuSection",
           "name": "Loaded Baked Potatoes",
           "hasMenuItem": [
-            { "@type": "MenuItem", "name": "Chicken Béchamel", "description": "Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Beef Béchamel", "description": "Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Chicken Ranch", "description": "Juicy chicken combined with our flavourful ranch sauce — fresh, satisfying, and totally addictive.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } },
-            { "@type": "MenuItem", "name": "Beef Ranch", "description": "Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour.", "offers": { "@type": "Offer", "price": "2.900", "priceCurrency": "BHD" } }
+            { "@type": "MenuItem", "name": "Chicken Béchamel", "description": "Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Beef Béchamel", "description": "Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Chicken Ranch", "description": "Juicy chicken combined with our flavourful ranch sauce — fresh, satisfying, and totally addictive.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } },
+            { "@type": "MenuItem", "name": "Beef Ranch", "description": "Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour.", "offers": { "@type": "Offer", "price": "2.000", "priceCurrency": "BHD" } }
           ]
         },
         {
@@ -177,7 +177,7 @@
       "@id": "https://spudlicious.bh/#faq",
       "mainEntity": [
         { "@type": "Question", "name": "Is Spudlicious 100% Halal?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, absolutely. Every single ingredient — from our meats to our sauces — is 100% Halal certified. No exceptions, ever." } },
-        { "@type": "Question", "name": "How do I place an order?", "acceptedAnswer": { "@type": "Answer", "text": "Add items to your cart on the website and tap Send Order via WhatsApp — we'll confirm and prepare your spud. Or visit the truck directly in Busaiteen." } },
+        { "@type": "Question", "name": "How do I place an order?", "acceptedAnswer": { "@type": "Answer", "text": "Add spuds to your basket on the website and tap Order on WhatsApp — your order and total arrive pre-filled and we confirm it in the chat. Or visit the truck in Busaiteen." } },
         { "@type": "Question", "name": "Where exactly are you located?", "acceptedAnswer": { "@type": "Answer", "text": "We're based in Busaiteen, Kingdom of Bahrain. DM us on Instagram @spudlicious.bh for our exact spot each day." } },
         { "@type": "Question", "name": "What are your opening hours?", "acceptedAnswer": { "@type": "Answer", "text": "Our hours: Sat – Thu 7:00 PM – 12:00 AM · Fri 7:00 PM – 1:00 AM. Follow @spudlicious.bh on Instagram for daily location updates." } },
         { "@type": "Question", "name": "Do you cater for events?", "acceptedAnswer": { "@type": "Answer", "text": "Yes! We cater corporate events, weddings, private parties, schools, universities, and festivals. Use the booking form or WhatsApp us." } }
@@ -260,6 +260,15 @@ button,input,select,textarea{font-family:var(--font-body)}
   transition:opacity 1s cubic-bezier(0.4,0,0.2,1),visibility 1s;
 }
 #loader.gone{opacity:0;visibility:hidden;pointer-events:none}
+.intro-seen #loader{display:none}
+.loader-skip{position:absolute;top:max(16px,env(safe-area-inset-top));inset-inline-end:16px;z-index:3;min-height:44px;min-width:44px;padding:8px 18px;border-radius:999px;border:2px solid rgba(255,255,255,.8);background:transparent;color:#fff;font:700 .9rem/1 var(--font-body);cursor:pointer}
+.loader-skip:hover,.loader-skip:focus-visible{background:#fff;color:#05090f}
+@media (prefers-reduced-motion:reduce){
+  #loader *{animation:none!important}
+  .loader-logo-wrap,.loader-mascot-wrap,.loader-sub{opacity:1!important;transform:none!important}
+  .loader-bar{display:none}
+  #loader{transition:opacity .2s linear,visibility .2s}
+}
 /* Ambient lighting layer — rises first */
 .loader-ambient{
   position:absolute;inset:0;pointer-events:none;
@@ -3456,9 +3465,13 @@ body.spa-account #page-account{padding-top:130px}
   .spud-founder--companion{display:none}
 }
 </style>
+<script>
+/* Intro plays once per session (sessionStorage). Decided before first paint so returning visitors never see it. */
+try{ if(sessionStorage.getItem('spud-intro')==='1') document.documentElement.classList.add('intro-seen'); }catch(e){}
+</script>
 </head>
 <body class="loading">
-<a href="#menu" class="skip-to-main">Skip to main content</a>
+<a href="#main-start" class="skip-to-main" id="skip-main" data-ar="تخطَّ إلى المحتوى">Skip to main content</a>
 <div id="scroll-progress" aria-hidden="true"></div>
 <!-- SCROLL STORY RAIL -->
 <nav class="scroll-story" id="scroll-story" aria-label="Page progress" aria-hidden="true">
@@ -3490,196 +3503,86 @@ body.spa-account #page-account{padding-top:130px}
   </div>
   <div class="loader-sub">Bahrain's Home of Loaded Potatoes</div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
+  <button type="button" class="loader-skip" id="loader-skip" data-ar="تخطَّ المقدمة">Skip intro</button>
 </div>
 
 <div id="progress-bar"></div>
 <div id="status-badge"></div>
 
-<!-- NAV -->
-<nav>
+<!-- NAV — link map: 7 destinations, each named once; settings grouped; one order action -->
+<header class="site-header">
+<nav aria-label="Main" data-ar-label="الرئيسية">
   <div class="nav-inner">
-    <button class="nav-logo" data-sp="" aria-label="Spudlicious — Home">
+    <a class="nav-logo" data-sp="" href="#/" aria-label="Spudlicious — Home" data-ar-label="سبودلشيس — الرئيسية">
       <!-- Official Spudlicious brand logo — DO NOT replace with SVG or recreate -->
-      <img class="nav-logo-img" src="assets/web/spudlicious-logo-web.webp" alt="Spudlicious" draggable="false"/>
-    </button>
+      <img class="nav-logo-img" src="assets/web/spudlicious-logo-web.webp" alt="" draggable="false"/><span class="sr-only">Spudlicious — Home</span>
+    </a>
 
-    <!-- Breadcrumb — visible when not on home page -->
-    <nav class="nav-breadcrumb" id="nav-breadcrumb" aria-label="You are here" aria-hidden="true">
-      <button class="bc-home" data-sp="" aria-label="Go home">Home</button>
-      <span class="bc-sep" aria-hidden="true">›</span>
-      <span class="bc-current" id="bc-current"></span>
-    </nav>
-
-    <!-- Desktop mega nav -->
     <div class="nav-links" id="nav-links">
-
-      <button class="nav-link sp-link" data-sp="" data-ar="الرئيسية">Home</button>
-
-      <div class="nav-dd-wrap">
-        <button class="nav-link sp-link has-dd" data-sp="menu" aria-haspopup="true" aria-expanded="false" data-ar="القائمة">Menu</button>
-        <div class="nav-dd-panel" role="menu">
-          <button class="nav-dd-item" data-sp="menu" role="menuitem" data-ar="🥔 كل البطاطس">🥔 All Spuds</button>
-          <button class="nav-dd-item" role="menuitem" onclick="spudNavigate('menu');document.querySelectorAll('.nav-dd-wrap.dd-open').forEach(function(w){w.classList.remove('dd-open')});setTimeout(openBuilder,420)" data-ar="🔧 ابنِ طلبك">🔧 Build Your Own</button>
-          <button class="nav-dd-item" data-sp="rewards" role="menuitem" data-ar="✨ العروض والمميزات">✨ Deals & Specials</button>
-        </div>
-      </div>
-
-      <div class="nav-dd-wrap has-mega">
-        <button class="nav-link sp-link has-dd" data-sp="story" aria-haspopup="true" aria-expanded="false" data-ar="التجربة">Experience</button>
-        <div class="nav-dd-panel nav-mega-panel" role="menu">
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="علامتنا">Our Brand</div>
-            <button class="nav-dd-item" data-sp="story" role="menuitem" data-ar="📖 قصتنا">📖 Our Story</button>
-            <button class="nav-dd-item" data-sp="founder" role="menuitem" data-ar="👨‍🍳 المؤسس">👨‍🍳 The Founder</button>
-            <button class="nav-dd-item" data-sp="gallery" role="menuitem" data-ar="📸 المعرض">📸 Gallery</button>
-            <button class="nav-dd-item" data-sp="reviews" role="menuitem" data-ar="💛 التقييمات">💛 Reviews</button>
-          </div>
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="تواصل معنا">Connect</div>
-            <button class="nav-dd-item" data-sp="catering" role="menuitem" data-ar="🎉 التموين">🎉 Catering</button>
-            <button class="nav-dd-item" data-sp="food-truck" role="menuitem" data-ar="🚚 الشاحنة">🚚 The Food Truck</button>
-            <button class="nav-dd-item" data-sp="contact" role="menuitem" data-ar="✉️ اتصل بنا">✉️ Contact</button>
-            <button class="nav-dd-item" data-sp="faq" role="menuitem" data-ar="❓ الأسئلة الشائعة">❓ FAQ</button>
-            <button class="nav-dd-item" data-sp="find-us" role="menuitem" data-ar="📍 موقعنا">📍 Find Us</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="nav-dd-wrap has-mega">
-        <button class="nav-link sp-link has-dd" data-sp="rewards" aria-haspopup="true" aria-expanded="false" data-ar="المكافآت">Rewards</button>
-        <div class="nav-dd-panel nav-mega-panel nav-mega-right" role="menu">
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="نقاطي">My Rewards</div>
-            <button class="nav-dd-item" data-sp="rewards" role="menuitem" data-ar="⭐ نظرة عامة">⭐ Overview</button>
-            <button class="nav-dd-item" role="menuitem" onclick="spudNavigate('rewards');setTimeout(function(){var el=document.getElementById('rh-status-widget');if(el)el.scrollIntoView({behavior:'smooth'});},420)" data-ar="📊 تقدم XP">📊 XP Progress</button>
-            <button class="nav-dd-item" data-sp="rewards" role="menuitem" data-ar="🎁 العروض">🎁 Offers & Deals</button>
-          </div>
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="حسابي">Account</div>
-            <button class="nav-dd-item" data-sp="account" role="menuitem" data-ar="🏆 الإنجازات">🏆 Achievements</button>
-            <button class="nav-dd-item" data-sp="account" role="menuitem" data-ar="👤 حسابي">👤 My Account</button>
-            <button class="nav-dd-item" role="menuitem" onclick="spudNavigate('menu');confettiBurst()" data-ar="🥔 اطلب الآن">🥔 Order Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="nav-dd-wrap has-mega">
-        <button class="nav-link sp-link has-dd" data-sp="catering" aria-haspopup="true" aria-expanded="false" data-ar="التموين">Catering</button>
-        <div class="nav-dd-panel nav-mega-panel nav-mega-right" role="menu">
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="الفعاليات">Events</div>
-            <button class="nav-dd-item" data-sp="catering" role="menuitem" data-ar="🎉 نظرة عامة">🎉 Overview</button>
-            <button class="nav-dd-item" data-sp="catering" role="menuitem" data-ar="🥂 فعاليات خاصة">🥂 Private Events</button>
-            <button class="nav-dd-item" data-sp="catering" role="menuitem" data-ar="🏢 فعاليات شركاتية">🏢 Corporate</button>
-            <button class="nav-dd-item" data-sp="catering" role="menuitem" data-ar="🎂 أعياد الميلاد">🎂 Birthdays</button>
-          </div>
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="احجز">Book</div>
-            <button class="nav-dd-item" data-sp="catering" role="menuitem" data-ar="🏫 فعاليات مدرسية">🏫 School Events</button>
-            <button class="nav-dd-item" role="menuitem" onclick="spudNavigate('catering');setTimeout(function(){var el=document.querySelector('.catering-form');if(el)el.scrollIntoView({behavior:'smooth'});},420)" data-ar="📋 طلب تموين">📋 Request Catering</button>
-            <button class="nav-dd-item" data-sp="faq" role="menuitem" data-ar="❓ الأسئلة الشائعة">❓ Catering FAQ</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="nav-dd-wrap has-mega">
-        <button class="nav-link sp-link has-dd" data-sp="find-us" aria-haspopup="true" aria-expanded="false" data-ar="موقعنا">Find Us</button>
-        <div class="nav-dd-panel nav-mega-panel nav-mega-right" role="menu">
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="الموقع">Location</div>
-            <button class="nav-dd-item" data-sp="find-us" role="menuitem" data-ar="📍 موقعنا">📍 Current Location</button>
-            <a class="nav-dd-item" href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener" role="menuitem" data-ar="🗺️ الاتجاهات">🗺️ Get Directions</a>
-            <a class="nav-dd-item" href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener" role="menuitem" data-ar="🌐 خرائط Google">🌐 Google Maps</a>
-            <button class="nav-dd-item" data-sp="find-us" role="menuitem" data-ar="🕓 ساعات العمل">🕓 Opening Hours</button>
-          </div>
-          <div class="nav-mega-col">
-            <div class="nav-mega-label" data-ar="تواصل">Contact</div>
-            <button class="nav-dd-item" data-sp="contact" role="menuitem" data-ar="✉️ اتصل بنا">✉️ Contact Us</button>
-            <a class="nav-dd-item" href="https://wa.me/97333260007" target="_blank" rel="noopener" role="menuitem" data-ar="💬 واتساب">💬 WhatsApp</a>
-            <button class="nav-dd-item" data-sp="food-truck" role="menuitem" data-ar="🚚 موقع الشاحنة">🚚 Food Truck</button>
-          </div>
-        </div>
-      </div>
-
+      <button class="nav-link sp-link" data-sp="menu" data-ar="القائمة">Menu</button>
+      <button class="nav-link sp-link" data-sp="story" data-ar="قصتنا">Our Story</button>
+      <button class="nav-link sp-link" data-sp="rewards" data-ar="المكافآت">Rewards</button>
+      <button class="nav-link sp-link" data-sp="catering" data-ar="التموين">Catering</button>
+      <button class="nav-link sp-link" data-sp="gallery" data-ar="المعرض">Gallery</button>
+      <button class="nav-link sp-link" data-sp="reviews" data-ar="التقييمات">Reviews</button>
+      <button class="nav-link sp-link" data-sp="find-us" data-ar="موقعنا">Find Us</button>
     </div>
 
     <div class="nav-actions">
-      <button class="nav-btn" id="lang-toggle" title="Arabic/English">AR</button>
-      <button class="nav-btn" id="dark-toggle" title="Dark Mode">🌙</button>
-      <button class="nav-btn" id="sound-toggle" title="Sound Effects" aria-label="Toggle sound effects">🔇</button>
-      <button class="nav-btn cart-btn" id="cart-open-btn" title="Your Order">
-        🛒<span class="cart-count" id="cart-count">0</span>
+      <!-- Settings: one group (moves into the menu sheet on small screens) -->
+      <div class="nav-tools" id="nav-tools" role="group" aria-label="Settings" data-ar-label="الإعدادات">
+        <button class="nav-btn nav-btn-text" id="lang-toggle" type="button" lang="ar" dir="rtl" title="التبديل إلى العربية">العربية</button>
+        <button class="nav-btn" id="dark-toggle" type="button" aria-label="Dark mode" data-ar-label="الوضع الداكن" aria-pressed="false">🌙</button>
+        <button class="nav-btn" id="sound-toggle" type="button" aria-label="Sound effects" data-ar-label="المؤثرات الصوتية" aria-pressed="false">🔇</button>
+      </div>
+      <button class="nav-btn cart-btn" id="cart-open-btn" type="button" aria-label="Basket" data-ar-label="السلة">
+        <span aria-hidden="true">🛒</span><span class="nav-btn-label" data-ar="السلة">Basket</span><span class="cart-count" id="cart-count">0</span>
       </button>
-      <button class="order-nav-btn" data-sp="menu" data-ar="اطلب الآن">Order Now</button>
-      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+      <a class="order-nav-btn" id="nav-wa" data-wa-order href="https://wa.me/97333260007?text=Hi%20Spudlicious!%20I'd%20like%20to%20order." target="_blank" rel="noopener" data-ar="اطلب عبر واتساب">Order on WhatsApp</a>
+      <button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-label="Open navigation menu" data-ar-label="فتح القائمة" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </nav>
+</header>
 
-<!-- MOBILE NAV PANEL -->
-<div id="mobile-nav" class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+<!-- MOBILE NAV PANEL — the same 7 destinations as the header, same names -->
+<div id="mobile-nav" class="mobile-nav" role="navigation" aria-label="Mobile navigation" data-ar-label="قائمة الجوال">
   <div class="mobile-nav-section">
-    <div class="mobile-nav-section-label" data-ar="الطلب">Order</div>
-    <button class="mobile-nav-link sp-link" data-sp="" onclick="closeMobileMenu()" data-ar="🏠 الرئيسية">🏠 Home</button>
-    <button class="mobile-nav-link sp-link" data-sp="menu" onclick="closeMobileMenu()" data-ar="🥔 القائمة">🥔 Menu</button>
-    <button class="mobile-nav-link sp-link" data-sp="rewards" onclick="closeMobileMenu()" data-ar="⭐ المكافآت والعروض">⭐ Rewards & Deals</button>
-    <button class="mobile-nav-link sp-link" data-sp="catering" onclick="closeMobileMenu()" data-ar="🎉 التموين">🎉 Catering</button>
+    <button class="mobile-nav-link sp-link" data-sp="menu" onclick="closeMobileMenu()" data-ar="القائمة">Menu</button>
+    <button class="mobile-nav-link sp-link" data-sp="story" onclick="closeMobileMenu()" data-ar="قصتنا">Our Story</button>
+    <button class="mobile-nav-link sp-link" data-sp="rewards" onclick="closeMobileMenu()" data-ar="المكافآت">Rewards</button>
+    <button class="mobile-nav-link sp-link" data-sp="catering" onclick="closeMobileMenu()" data-ar="التموين">Catering</button>
+    <button class="mobile-nav-link sp-link" data-sp="gallery" onclick="closeMobileMenu()" data-ar="المعرض">Gallery</button>
+    <button class="mobile-nav-link sp-link" data-sp="reviews" onclick="closeMobileMenu()" data-ar="التقييمات">Reviews</button>
+    <button class="mobile-nav-link sp-link" data-sp="find-us" onclick="closeMobileMenu()" data-ar="موقعنا">Find Us</button>
   </div>
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-section-label" data-ar="استكشف">Explore</div>
-    <button class="mobile-nav-link sp-link" data-sp="story" onclick="closeMobileMenu()" data-ar="📖 قصتنا">📖 Our Story</button>
-    <button class="mobile-nav-link sp-link" data-sp="founder" onclick="closeMobileMenu()" data-ar="👨‍🍳 المؤسس">👨‍🍳 The Founder</button>
-    <button class="mobile-nav-link sp-link" data-sp="gallery" onclick="closeMobileMenu()" data-ar="📸 المعرض">📸 Gallery</button>
-    <button class="mobile-nav-link sp-link" data-sp="reviews" onclick="closeMobileMenu()" data-ar="💛 التقييمات">💛 Reviews</button>
+  <div class="mobile-nav-section" id="mobile-tools-slot">
+    <div class="mobile-nav-section-label" data-ar="الإعدادات">Settings</div>
   </div>
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-section-label" data-ar="معلومات">Info</div>
-    <button class="mobile-nav-link sp-link" data-sp="find-us" onclick="closeMobileMenu()" data-ar="📍 موقعنا">📍 Find Us</button>
-    <button class="mobile-nav-link sp-link" data-sp="faq" onclick="closeMobileMenu()" data-ar="❓ الأسئلة الشائعة">❓ FAQ</button>
-    <button class="mobile-nav-link sp-link" data-sp="food-truck" onclick="closeMobileMenu()" data-ar="🚚 الشاحنة">🚚 The Food Truck</button>
-    <button class="mobile-nav-link sp-link" data-sp="contact" onclick="closeMobileMenu()" data-ar="✉️ تواصل معنا">✉️ Contact</button>
-  </div>
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-section-label" data-ar="حسابي">Account</div>
-    <button class="mobile-nav-link sp-link" data-sp="order" onclick="closeMobileMenu()" data-ar="🛒 اطلب">🛒 Order</button>
-    <button class="mobile-nav-link sp-link" data-sp="account" onclick="closeMobileMenu()" data-ar="⭐ حسابي">⭐ My Account</button>
-  </div>
-</div>
-
-<!-- FLOAT -->
-<div id="float-cta">
-  <a class="float-btn float-wa" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer">
-    <span>💬</span><span class="float-label" data-ar="واتساب">WhatsApp</span>
-  </a>
-  <button class="float-btn float-order" onclick="document.getElementById('cart-open-btn').click()">
-    <span>🛒</span><span class="float-label" data-ar="طلبي">My Order</span>
-  </button>
 </div>
 
 <!-- CART -->
-<div id="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-overlay" role="presentation" onclick="closeCart()"></div>
 <div id="cart-drawer">
   <div class="cart-header">
-    <h3>🛒 Your Order</h3>
-    <button class="cart-close" onclick="closeCart()">✕</button>
+    <h3 data-ar="🛒 السلة">🛒 Basket</h3>
+    <button class="cart-close" onclick="closeCart()" aria-label="Close basket" data-ar-label="إغلاق السلة">✕</button>
   </div>
   <div class="cart-items" id="cart-items">
     <div class="cart-empty">
       <div class="cart-empty-icon">🥔</div>
-      <p style="font-weight:700;color:var(--text-muted)">Your spud cart is empty!</p>
-      <p style="font-size:.85rem;color:var(--text-muted);margin-top:6px">Add something delicious 👆</p>
+      <p style="font-weight:700;color:var(--text-muted)">Your basket is empty</p>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-top:6px">Add a spud from the menu.</p>
     </div>
   </div>
   <div class="cart-footer" id="cart-footer" style="display:none">
     <div class="cart-total">
-      <span>Total</span>
+      <span id="cart-total-label">Total</span>
       <span id="cart-total-price">BHD 0.000</span>
     </div>
-    <button class="cart-wa-btn" onclick="orderViaWhatsApp()">
-      💬 Send Order via WhatsApp
-    </button>
+    <button type="button" class="cart-wa-btn" id="cart-wa-btn" onclick="orderViaWhatsApp()">Order on WhatsApp</button>
   </div>
 </div>
 
@@ -3727,8 +3630,7 @@ body.spa-account #page-account{padding-top:130px}
       </h1>
       <p class="hero-sub" data-ar="مقرمشة من الخارج، هشّة بشكل لا يصدق من الداخل — محشوّة حتى الآخر. أول شاحنة طعام في البحرين متخصصة في البطاطس المحمّلة. حلال 100%.">Crispy outside, impossibly fluffy inside — loaded to the max. Bahrain's first dedicated loaded potato food truck. 100% Halal.</p>
       <div class="hero-ctas">
-        <button class="btn-primary" onclick="spudNavigate('menu');confettiBurst()" data-ar="اطلب الآن 🥔">Order Now 🥔</button>
-        <button class="btn-secondary" data-sp="catering" data-ar="احجز تموين">Book Catering</button>
+        <a class="btn-primary" id="hero-wa" data-wa-order href="https://wa.me/97333260007?text=Hi%20Spudlicious!%20I'd%20like%20to%20order." target="_blank" rel="noopener" data-ar="اطلب عبر واتساب">Order on WhatsApp</a>
       </div>
       <div class="hero-badges">
         <span class="badge badge-primary" data-ar="🌿 حلال 100%">🌿 100% Halal</span>
@@ -3808,52 +3710,6 @@ body.spa-account #page-account{padding-top:130px}
       <h2 class="section-title" data-ar="اكتشف عالمنا.">Explore Our World.</h2>
       <p class="section-sub" data-ar="من بطاطسنا الأسطورية المحملة إلى القصة وراء كل قضمة — هناك الكثير لاكتشافه.">From our legendary loaded potatoes to the story behind every bite — there's so much to discover.</p>
     </div>
-    <div class="explore-grid">
-      <div class="explore-card reveal" data-sp="menu">
-        <div class="ec-atmosphere"></div>
-        <div class="ec-icon">🥔</div>
-        <h3 class="ec-title" data-ar="القائمة">Menu</h3>
-        <p class="ec-sub" data-ar="٤ بطاطس محملة أسطورية، مصنوعة يدوياً طازجة كل يوم">4 legendary loaded potatoes, handcrafted fresh every day</p>
-        <div class="ec-cta" data-ar="استكشف القائمة →">Explore Menu →</div>
-      </div>
-      <div class="explore-card reveal" data-sp="story" style="--ec-delay:.08s">
-        <div class="ec-atmosphere"></div>
-        <div class="ec-icon">📖</div>
-        <h3 class="ec-title" data-ar="قصتنا">Our Story</h3>
-        <p class="ec-sub" data-ar="كيف تحول الحلم إلى أول شاحنة بطاطس محملة في البحرين">How a dream became Bahrain's first loaded potato truck</p>
-        <div class="ec-cta" data-ar="اقرأ القصة →">Read Story →</div>
-      </div>
-      <div class="explore-card reveal" data-sp="founder" style="--ec-delay:.16s">
-        <div class="ec-atmosphere"></div>
-        <div class="ec-icon">👨‍🍳</div>
-        <h3 class="ec-title" data-ar="المؤسس">The Founder</h3>
-        <p class="ec-sub" data-ar="تعرف على الشخص الذي أشعل ثورة، بطاطسة واحدة في كل مرة">Meet the person who started a revolution, one potato at a time</p>
-        <div class="ec-cta" data-ar="تعرف على الفريق →">Meet the Team →</div>
-      </div>
-      <div class="explore-card reveal" data-sp="rewards" style="--ec-delay:.24s">
-        <div class="ec-atmosphere"></div>
-        <div class="ec-icon">⭐</div>
-        <h3 class="ec-title" data-ar="المكافآت">Rewards</h3>
-        <p class="ec-sub" data-ar="اجمع نقاطاً، افتح مستويات، واستمتع بعروض حصرية">Earn points, unlock tiers, and enjoy exclusive deals</p>
-        <div class="loyalty-soon soon-pill soon-pill-sm" data-ar="قريباً">Coming soon</div>
-        <div class="ec-cta" data-ar="انضم للمكافآت →">Join Rewards →</div>
-      </div>
-      <div class="explore-card reveal" data-sp="catering" style="--ec-delay:.32s">
-        <div class="ec-atmosphere"></div>
-        <div class="ec-icon">🎉</div>
-        <h3 class="ec-title" data-ar="التموين">Catering</h3>
-        <p class="ec-sub" data-ar="احضر سبودلشيس لفعاليتك القادمة — نأتي إليك">Bring Spudlicious to your next event — we travel to you</p>
-        <div class="ec-cta" data-ar="احجز الشاحنة →">Book the Truck →</div>
-      </div>
-      <div class="explore-card reveal" data-sp="find-us" style="--ec-delay:.40s">
-        <div class="ec-atmosphere"></div>
-        <div class="ec-icon">📍</div>
-        <h3 class="ec-title" data-ar="موقعنا">Find Us</h3>
-        <p class="ec-sub" data-ar="البسيتين، البحرين — تعال واعثر على شاحنتنا اليوم">Busaiteen, Bahrain — come find our truck today</p>
-        <div class="ec-cta" data-ar="احصل على الاتجاهات →">Get Directions →</div>
-      </div>
-    </div>
-
     <!-- Homepage Video Preview Strip -->
     <div class="vid-section reveal" style="margin-top:48px">
       <div class="vid-section-hd" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px">
@@ -3861,7 +3717,6 @@ body.spa-account #page-account{padding-top:130px}
           <div class="vid-section-tag2" data-ar="🎬 قصص العملاء">🎬 Customer Stories</div>
           <h3 class="vid-section-title" data-ar="ماذا يقول عملاؤنا">What Our Customers Say</h3>
         </div>
-        <button class="btn btn-secondary" style="margin-left:auto;white-space:nowrap" onclick="spudNavigate('reviews')" data-ar="شاهد الكل →">Watch All →</button>
       </div>
       <div class="vid-strip" id="vid-home-strip"></div>
     </div>
@@ -3965,7 +3820,6 @@ body.spa-account #page-account{padding-top:130px}
       </div>
     </div>
     <div class="ingr-cta reveal">
-      <button class="btn-primary" onclick="spudNavigate('menu');confettiBurst()" data-ar="شاهد القائمة الكاملة 🥔">See the Full Menu 🥔</button>
     </div>
   </div>
 </section>
@@ -4171,7 +4025,7 @@ body.spa-account #page-account{padding-top:130px}
     <div class="kitchen-strip reveal" aria-label="Inside the Spudlicious kitchen">
       <figure class="ks-item ks-wide">
         <img src="assets/web/truck/kitchen-baked-potato-oven-02.jpg" alt="The Spudlicious barrel oven where potatoes are baked, inside the truck kitchen" loading="lazy" decoding="async" onerror="this.closest('.ks-item').style.display='none'"/>
-        <figcaption class="ks-cap"><span class="ks-cap-tag" data-ar="الفرن">The oven</span><span class="sr-only">. </span><span class="ks-cap-title" data-ar="مخبوزة على الفحم، ليس بالميكروويف">Charcoal-baked, never microwaved.</span></figcaption>
+        <figcaption class="ks-cap"><span class="ks-cap-tag" data-ar="الفرن">The oven</span><span class="sr-only">. </span><span class="ks-cap-title" data-ar="مخبوزة في الفرن، لا ميكروويف أبداً">Oven-baked, never microwaved.</span></figcaption>
       </figure>
       <figure class="ks-item">
         <img src="assets/web/truck/kitchen-oven-hood-01.jpg" alt="The extraction hood and cooking station inside the Spudlicious truck" loading="lazy" decoding="async" onerror="this.closest('.ks-item').style.display='none'"/>
@@ -4186,10 +4040,7 @@ body.spa-account #page-account{padding-top:130px}
 </section>
 
 <!-- MINI-CTA STRIP -->
-<div class="mini-cta-strip" aria-label="Quick order prompt">
-  <p data-ar-html="هل أنت مستعد لتذوق العملية؟ <strong>ابنِ بطاطستك المثالية في ثوانٍ.</strong>">Ready to taste the process? <strong>Build your perfect spud in seconds.</strong></p>
-  <button class="mini-cta-btn" onclick="openBuilder()" data-ar="🥔 ابنِ بطاطستك">🥔 Build Your Spud</button>
-</div>
+
 
 <div class="stripe-divider"></div>
 
@@ -4216,7 +4067,7 @@ body.spa-account #page-account{padding-top:130px}
       <button class="filter-btn" data-filter="ranch" data-ar="رانش">Ranch</button>
       <button class="filter-btn" data-filter="chicken" data-ar="دجاج">Chicken</button>
       <button class="filter-btn" data-filter="beef" data-ar="لحم">Beef</button>
-      <button class="filter-btn builder-trigger-btn" onclick="openBuilder()" data-ar="🥔 ابنِ طلبك">🥔 Build Your Own</button>
+      <button class="filter-btn builder-trigger-btn" onclick="openBuilder()" data-ar="🥔 اصنع بطاطستك">🥔 Build Your Spud</button>
     </div>
     <div class="menu-grid stagger">
 
@@ -4230,8 +4081,8 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Chicken Béchamel</div>
           <div class="card-desc">Tender chicken smothered in a rich, creamy homemade béchamel sauce. Loaded over a perfectly baked potato.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
-            <button class="card-btn" onclick="addToCart('Chicken Béchamel',2.9,'🍗')">Add to Order</button>
+            <div class="card-price" data-menu-price="chicken-bechamel">BHD 2.000 <span>/ spud</span></div>
+            <button class="card-btn" onclick="addMenuItem('chicken-bechamel')" data-ar="أضف إلى السلة">Add to Basket</button>
           </div>
         </div>
       </div>
@@ -4246,8 +4097,8 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Beef Béchamel</div>
           <div class="card-desc">Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
-            <button class="card-btn" onclick="addToCart('Beef Béchamel',2.9,'🥩')">Add to Order</button>
+            <div class="card-price" data-menu-price="beef-bechamel">BHD 2.000 <span>/ spud</span></div>
+            <button class="card-btn" onclick="addMenuItem('beef-bechamel')" data-ar="أضف إلى السلة">Add to Basket</button>
           </div>
         </div>
       </div>
@@ -4262,8 +4113,8 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Chicken Ranch</div>
           <div class="card-desc">Juicy chicken combined with our flavourful ranch sauce — a fresh, satisfying, and totally addictive combo.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
-            <button class="card-btn" onclick="addToCart('Chicken Ranch',2.9,'🤠')">Add to Order</button>
+            <div class="card-price" data-menu-price="chicken-ranch">BHD 2.000 <span>/ spud</span></div>
+            <button class="card-btn" onclick="addMenuItem('chicken-ranch')" data-ar="أضف إلى السلة">Add to Basket</button>
           </div>
         </div>
       </div>
@@ -4278,8 +4129,8 @@ body.spa-account #page-account{padding-top:130px}
           <div class="card-name">Beef Ranch</div>
           <div class="card-desc">Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour every bite.</div>
           <div class="card-footer">
-            <div class="card-price">BHD 2.9 <span>/ spud</span></div>
-            <button class="card-btn" onclick="addToCart('Beef Ranch',2.9,'🌶️')">Add to Order</button>
+            <div class="card-price" data-menu-price="beef-ranch">BHD 2.000 <span>/ spud</span></div>
+            <button class="card-btn" onclick="addMenuItem('beef-ranch')" data-ar="أضف إلى السلة">Add to Basket</button>
           </div>
         </div>
       </div>
@@ -4289,8 +4140,8 @@ body.spa-account #page-account{padding-top:130px}
     <div class="addons-section reveal">
       <div class="addons-title">🧀 Customise Your Spud</div>
       <div class="addons-grid">
-        <div class="addon-chip" onclick="addToCart('Extra Cheese',0.3,'🧀')">🧀 Extra Cheese <strong>+ BHD 0.3</strong></div>
-        <div class="addon-chip" onclick="addToCart('Jalapeños',0.2,'🌶')">🌶 Jalapeños <strong>+ BHD 0.2</strong></div>
+        <button type="button" class="addon-chip" onclick="addMenuItem('extra-cheese')">🧀 Extra Cheese <strong data-menu-price="extra-cheese">+ BHD 0.300</strong></button>
+        <button type="button" class="addon-chip" onclick="addMenuItem('jalapenos')">🌶 Jalapeños <strong data-menu-price="jalapenos">+ BHD 0.200</strong></button>
       </div>
     </div>
     <!-- FOUNDER — holds potato, recommends from menu -->
@@ -4301,10 +4152,7 @@ body.spa-account #page-account{padding-top:130px}
 </section>
 
 <!-- MINI-CTA: after menu -->
-<div class="mini-cta-strip" aria-label="Order prompt">
-  <p data-ar-html="🥔 <strong>جائع؟</strong> طلبك جاهز في ~8 دقائق. اطلب الآن عبر واتساب.">🥔 <strong>Hungry?</strong> Your order is ready in ~8 minutes. Order now via WhatsApp.</p>
-  <a class="mini-cta-btn" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" data-ar="💬 اطلب عبر واتساب">💬 Order on WhatsApp</a>
-</div>
+
 
 <div class="stripe-divider"></div>
 
@@ -4451,7 +4299,6 @@ body.spa-account #page-account{padding-top:130px}
         <div class="rhs-bar" id="rhs-xp-bar"></div>
       </div>
       <div class="rhs-next" id="rhs-next-display">200 XP to Regular</div>
-      <button class="btn-primary" onclick="spudNavigate('menu')" data-ar="🥔 ابدأ الكسب — اطلب الآن">🥔 Start Earning — Order Now</button>
     </div>
 
     <!-- FOUNDER — celebrates with you on rewards page -->
@@ -4472,7 +4319,7 @@ body.spa-account #page-account{padding-top:130px}
     </div>
     <div class="insta-grid stagger">
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
+      <div class="insta-card">
         <div class="insta-badge">📱 REEL</div>
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -4500,9 +4347,9 @@ body.spa-account #page-account{padding-top:130px}
           <div class="insta-label">🔥 The Classic Load</div>
           <div class="insta-views">@spudlicious.bh · Watch on Instagram</div>
         </div>
-      </a>
+      </div>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
+      <div class="insta-card">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#0D6FBF"/><stop offset="100%" stop-color="#1C91F2"/></linearGradient></defs>
@@ -4523,9 +4370,9 @@ body.spa-account #page-account{padding-top:130px}
           <div class="insta-label">🥩 Beef Béchamel Drop</div>
           <div class="insta-views">Tap to watch on Instagram</div>
         </div>
-      </a>
+      </div>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
+      <div class="insta-card">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#15803d"/></linearGradient></defs>
@@ -4547,9 +4394,9 @@ body.spa-account #page-account{padding-top:130px}
           <div class="insta-label">🤠 Ranch Season</div>
           <div class="insta-views">Tap to watch on Instagram</div>
         </div>
-      </a>
+      </div>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
+      <div class="insta-card">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <rect width="200" height="356" fill="#FFD5B3"/>
@@ -4568,9 +4415,9 @@ body.spa-account #page-account{padding-top:130px}
           <div class="insta-label">🎬 Behind The Scenes</div>
           <div class="insta-views">Tap to watch on Instagram</div>
         </div>
-      </a>
+      </div>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
+      <div class="insta-card">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/></linearGradient></defs>
@@ -4588,9 +4435,9 @@ body.spa-account #page-account{padding-top:130px}
           <div class="insta-label">😍 Customer Reactions</div>
           <div class="insta-views">Tap to watch on Instagram</div>
         </div>
-      </a>
+      </div>
 
-      <a class="insta-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
+      <div class="insta-card">
         <div class="insta-thumb">
           <svg viewBox="0 0 200 356" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="g6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0A2E5C"/><stop offset="100%" stop-color="#1C91F2"/></linearGradient></defs>
@@ -4609,7 +4456,7 @@ body.spa-account #page-account{padding-top:130px}
           <div class="insta-label">🚚 Find The Truck</div>
           <div class="insta-views">Tap to watch on Instagram</div>
         </div>
-      </a>
+      </div>
 
     </div>
 
@@ -4658,47 +4505,11 @@ body.spa-account #page-account{padding-top:130px}
         <li data-ar="إعداد كامل لشاحنة الطعام">Fully equipped food truck setup</li>
       </ul>
     </div>
+    <!-- Catering goes to WhatsApp: distinct label + distinct pre-written enquiry, same channel. No separate form. -->
     <div class="catering-form reveal">
-      <div class="form-title" data-ar="📋 احجز فعاليتك">📋 Book Your Event</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" data-ar="اسمك *">Your Name *</label>
-          <input class="form-input" type="text" id="form-name" placeholder="Ahmed Al-Mansoor" data-ar-placeholder="أحمد الكريم">
-        </div>
-        <div class="form-group">
-          <label class="form-label" data-ar="رقم واتساب *">WhatsApp Number *</label>
-          <input class="form-input" type="tel" id="form-phone" placeholder="+973 3XXX XXXX" data-ar-placeholder="+973 3XXX XXXX">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" for="form-type" data-ar="نوع الفعالية">Event Type</label>
-          <select class="form-select" id="form-type" aria-label="Event Type">
-            <option data-ar="فعالية شركاتية">Corporate Event</option>
-            <option data-ar="حفل زفاف">Wedding</option>
-            <option data-ar="حفلة عيد ميلاد">Birthday Party</option>
-            <option data-ar="مدرسة / جامعة">School / University</option>
-            <option data-ar="مهرجان">Festival</option>
-            <option data-ar="حفلة خاصة">Private Party</option>
-            <option data-ar="أخرى">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" data-ar="عدد الضيوف المتوقع">Expected Guests</label>
-          <input class="form-input" type="number" id="form-guests" placeholder="50">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label" data-ar="تاريخ ومكان الفعالية">Event Date & Location</label>
-        <input class="form-input" type="text" id="form-details" placeholder="e.g. March 15, Manama" data-ar-placeholder="مثال: 15 مارس، المنامة">
-      </div>
-      <div class="form-group">
-        <label class="form-label" data-ar="ملاحظات إضافية">Additional Notes</label>
-        <textarea class="form-textarea" id="form-notes" placeholder="Any special requirements?" data-ar-placeholder="أي متطلبات خاصة؟"></textarea>
-      </div>
-      <button class="form-submit" onclick="submitCatering()" data-ar="💬 أرسل الحجز عبر واتساب">
-        💬 Send Booking via WhatsApp
-      </button>
+      <div class="form-title" data-ar="📋 احجز فعاليتك عبر واتساب">📋 Book your event on WhatsApp</div>
+      <p class="catering-wa-note" data-ar="نفتح لك محادثة واتساب برسالة جاهزة. أضف نوع الفعالية والتاريخ والمكان وعدد الضيوف، ونرد عليك بعرض سعر.">We open a WhatsApp chat with a ready-made enquiry. Add your event type, date, location and guest count, and we reply with a quote.</p>
+      <a class="form-submit" id="catering-wa" data-wa-catering href="https://wa.me/97333260007?text=Hi%20Spudlicious!%20I'd%20like%20to%20book%20catering." target="_blank" rel="noopener" data-ar="احجز التموين">Book Catering</a>
     </div>
     <!-- FOUNDER — legacy static float superseded by FounderOS concierge (fo-host) on this page.
          Hidden to prevent two founders showing at once; kept in source per asset-preservation rule. -->
@@ -4823,9 +4634,7 @@ body.spa-account #page-account{padding-top:130px}
         <span class="fs-sig-role" data-ar="المؤسس، سبودلشيس">Founder, Spudlicious</span>
       </div>
       <div class="fs-future-cta">
-        <button class="btn btn-primary" onclick="spudNavigate('menu')" data-ar="🥔 ابدأ رحلتك">🥔 Start your journey</button>
         <a class="fs-social" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" aria-label="Spudlicious on Instagram">📸</a>
-        <a class="fs-social" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" aria-label="Message Spudlicious on WhatsApp">💬</a>
       </div>
     </div>
 
@@ -4846,7 +4655,6 @@ body.spa-account #page-account{padding-top:130px}
         <h3 class="vid-section-title" data-ar="اسمع من عملائنا">Hear From Our Customers</h3>
         <p class="vid-section-sub" data-ar="مقاطع غير ممولة من مجتمعنا في البحرين.">Unsponsored clips straight from our Bahrain community.</p>
       </div>
-      <button class="btn btn-secondary" style="margin-left:auto;white-space:nowrap" onclick="spudNavigate('reviews')" data-ar="عرض الكل →">View All →</button>
     </div>
     <div class="vid-strip" id="vid-founder-strip"></div>
   </div>
@@ -4875,7 +4683,7 @@ body.spa-account #page-account{padding-top:130px}
           <span class="mascot-cameo-bubble" data-ar="📖 أقرأ التقييمات...">📖 Reading reviews...</span>
           <img src="assets/web/mascot-web.webp" alt="Mr. Spud, the Spudlicious potato mascot waving" style="width:90px;opacity:.92"/>
         </div>
-        <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" data-ar="⭐ اكتب تقييماً" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--blue-dark);color:#fff;border-radius:50px;font-weight:800;font-size:.85rem;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='#0a5da8'" onmouseout="this.style.background='var(--blue-dark)'">⭐ Write a Review</a>
+        <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" data-ar="⭐ اكتب تقييماً على Google" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--blue-dark);color:#fff;border-radius:50px;font-weight:800;font-size:.85rem;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='#0a5da8'" onmouseout="this.style.background='var(--blue-dark)'">⭐ Write a Google Review</a>
       </div>
     </div>
     <!-- Customer Video Reviews -->
@@ -4894,11 +4702,8 @@ body.spa-account #page-account{padding-top:130px}
       <div class="review-g-info">
         <div class="review-g-name" data-ar="سبودلشيس البحرين">Spudlicious Bahrain</div>
         <div class="review-g-rating">
-          <span class="review-g-stars">★★★★★</span>
-          <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" class="review-g-link" data-ar="عرض على Google">View on Google</a>
         </div>
       </div>
-      <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" class="review-g-btn" data-ar="⭐ اكتب تقييماً">⭐ Write a Review</a>
     </div>
 
     <!-- Review invite cards — no fake names/ratings; pure invitation -->
@@ -4907,29 +4712,23 @@ body.spa-account #page-account{padding-top:130px}
         <div class="ric-icon">🍽️</div>
         <p class="ric-prompt" data-ar="جربت بطاطستنا؟ أخبرنا برأيك!">Tried our loaded potatoes? Tell us what you thought!</p>
         <p class="ric-sub" data-ar="أي تركيبة جربت؟ ما الذي فاجأك؟ تقييمك الصادق يساعدنا.">Which combination did you go for? What surprised you? Your honest take helps us grow.</p>
-        <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" class="ric-btn" data-ar="اكتب تقييماً على Google →">Write a Google Review →</a>
       </div>
       <div class="review-invite-card">
         <div class="ric-icon">🎉</div>
         <p class="ric-prompt" data-ar="حجزتنا لفعاليتك؟ أخبرنا كيف سارت!">Booked us for an event? Share how it went!</p>
         <p class="ric-sub" data-ar="سواء كان تجمعاً عائلياً أو حفل شركة، تجربتك تعني لنا الكثير وتساعد الآخرين على اتخاذ قرارهم.">Whether a family gathering or corporate event, your experience matters and helps others decide.</p>
-        <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" class="ric-btn" data-ar="اكتب تقييماً على Google →">Write a Google Review →</a>
       </div>
       <div class="review-invite-card">
         <div class="ric-icon">📸</div>
         <p class="ric-prompt" data-ar="صورت بطاطستك؟ شارك اللحظة!">Snapped a photo of your spud? Share the moment!</p>
         <p class="ric-sub" data-ar="أضف صورتك وتقييمك على Google Maps — يستغرق دقيقة ويعني الكثير لفريقنا.">Add your photo and review to Google Maps — takes 60 seconds and means the world to our team.</p>
-        <a href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" class="ric-btn" data-ar="اكتب تقييماً على Google →">Write a Google Review →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- MINI-CTA: after reviews -->
-<div class="mini-cta-strip" aria-label="Community prompt">
-  <p data-ar-html="🇧🇭 <strong>انضم للمجتمع.</strong> تابعنا على إنستغرام لمحتوى البطاطس اليومي وخلف الكواليس.">🇧🇭 <strong>Join the community.</strong> Follow us on Instagram for daily spud content and behind-the-scenes.</p>
-  <a class="mini-cta-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" data-ar="📸 @spudlicious.bh">📸 @spudlicious.bh</a>
-</div>
+
 
 <!-- Community Gallery -->
 <section id="community">
@@ -4981,7 +4780,7 @@ body.spa-account #page-account{padding-top:130px}
       </div>
       <div class="faq-item reveal">
         <div class="faq-q" onclick="toggleFaq(this)"><span data-ar="كيف أقدم طلبي؟">How do I place an order?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p data-ar='أضف العناصر إلى سلة التسوق في هذه الصفحة واضغط على "إرسال الطلب عبر واتساب" — سنؤكد ونجهز بطاطستك. أو تفضل بزيارة الشاحنة مباشرة في البسيتين!'>Simply add items to your cart on this page and tap "Send Order via WhatsApp" — we'll confirm and get your spud ready. Or swing by the truck directly in Busaiteen!</p></div>
+        <div class="faq-a"><p data-ar='أضف البطاطس إلى السلة ثم اضغط "اطلب عبر واتساب" — يصلنا طلبك والمجموع مكتوبين مسبقاً ونؤكده في المحادثة. أو تفضل بزيارة الشاحنة في البسيتين!'>Add spuds to your basket and tap "Order on WhatsApp" — your order and total arrive pre-filled and we confirm it in the chat. Or swing by the truck in Busaiteen!</p></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-q" onclick="toggleFaq(this)"><span data-ar="أين موقعكم بالضبط؟">Where exactly are you located?</span><div class="faq-icon">+</div></div>
@@ -5035,10 +4834,10 @@ body.spa-account #page-account{padding-top:130px}
           </div>
         </div>
         <div class="loc-card">
-          <div class="loc-icon">💬</div>
+          <div class="loc-icon" aria-hidden="true">📞</div>
           <div>
-            <div class="loc-label" data-ar="طلبات واتساب">WhatsApp Orders</div>
-            <div class="loc-value"><a href="https://wa.me/97333260007" style="color:var(--blue)">+973 3326 0007</a></div>
+            <div class="loc-label" data-ar="الهاتف وواتساب">Phone &amp; WhatsApp</div>
+            <div class="loc-value"><a href="tel:+97333260007" style="color:var(--blue)">+973 3326 0007</a></div>
           </div>
         </div>
         <div class="loc-card">
@@ -5066,7 +4865,7 @@ body.spa-account #page-account{padding-top:130px}
           allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="Spudlicious — Busaiteen, Bahrain">
         </iframe>
-        <a class="map-directions-btn" href="https://maps.app.goo.gl/LvbUb8yd5P9XZ4Mt8" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Spudlicious" data-ar="🗺️ احصل على الاتجاهات">
+        <a class="map-directions-btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=26.2686034,50.5932179" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Spudlicious" data-ar="🗺️ احصل على الاتجاهات">
           🗺️ Get Directions
         </a>
       </div>
@@ -5097,23 +4896,11 @@ body.spa-account #page-account{padding-top:130px}
       <span class="fw-role" data-ar="المؤسس">Founder, Spudlicious</span>
     </div>
     <div class="fw-dots" id="fw-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-    <button class="fw-cta" onclick="spudNavigate('founder')" data-ar="اقرأ قصته ←">Read his story &rarr;</button>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section id="final-cta">
-  <div class="final-cta-inner reveal">
-    <div class="final-cta-emoji steam-container">🥔<div class="steam-wisp"></div><div class="steam-wisp"></div><div class="steam-wisp"></div></div>
-    <p class="final-cta-tagline" data-ar="محملة. لذيذة. أسطورية.">Loaded. Delicious. Legendary.</p>
-    <h2 class="final-cta-title" data-ar-html="جائع الآن؟<br>دعنا نحل ذلك.">Hungry Yet?<br>Let's Fix That.</h2>
-    <p class="final-cta-sub" data-ar="أكثر البطاطس المحملة في البحرين على بعد نقرة واحدة. اطلب الآن أو احجزنا لفعاليتك القادمة.">Bahrain's most loaded potatoes are just one tap away. Order now or book us for your next event.</p>
-    <div class="final-cta-btns">
-      <button class="btn-white" onclick="spudNavigate('menu');confettiBurst()" data-ar="اطلب الآن 🥔">Order Now 🥔</button>
-      <button class="btn-outline-white" data-sp="catering" data-ar="احجز التموين والفعاليات">Book Catering & Events</button>
-    </div>
-  </div>
-</section>
+
 
 <!-- ══ PLACEHOLDER PAGES ══════════════════════════════════════════ -->
 
@@ -5197,8 +4984,6 @@ body.spa-account #page-account{padding-top:130px}
     </div>
 
     <div class="placeholder-actions">
-      <button class="btn-primary" data-sp="find-us" data-ar="📍 اعثر علينا">📍 Find Us</button>
-      <button class="btn-secondary" data-sp="catering" data-ar="🎉 احجز للفعاليات">🎉 Book for Events</button>
     </div>
 
     <div class="placeholder-stats">
@@ -5216,9 +5001,9 @@ body.spa-account #page-account{padding-top:130px}
     <h2 class="section-title" data-ar="تواصل مع سبودلشيس.">Contact Spudlicious.</h2>
     <p class="section-sub" data-ar="أسئلة، ملاحظات، شراكات، أو استفسارات صحفية — نسعد بسماعك.">Questions, feedback, partnerships, or press enquiries — we'd love to hear from you.</p>
     <div class="placeholder-contact-grid">
-      <a class="ph-contact-card" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer">
-        <span class="ph-contact-icon">💬</span>
-        <span class="ph-contact-label" data-ar="واتساب">WhatsApp</span>
+      <a class="ph-contact-card" href="tel:+97333260007">
+        <span class="ph-contact-icon" aria-hidden="true">📞</span>
+        <span class="ph-contact-label" data-ar="اتصل بنا">Call us</span>
         <span class="ph-contact-val">+973 3326 0007</span>
       </a>
       <a class="ph-contact-card" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer">
@@ -5228,8 +5013,7 @@ body.spa-account #page-account{padding-top:130px}
       </a>
     </div>
     <div class="placeholder-actions" style="margin-top:32px">
-      <button class="btn-secondary" data-sp="catering" data-ar="احجز تموين">Book Catering</button>
-      <button class="btn-secondary" data-sp="faq" data-ar="عرض الأسئلة الشائعة">View FAQ</button>
+      <button class="btn-secondary" data-sp="faq" data-ar="الأسئلة الشائعة">FAQ</button>
     </div>
   </div>
 </section>
@@ -5299,8 +5083,6 @@ body.spa-account #page-account{padding-top:130px}
     </div>
 
     <div class="placeholder-actions">
-      <button class="btn-primary" onclick="if(window.toggleLoyaltyPanel)window.toggleLoyaltyPanel();else spudNavigate('rewards')" data-ar="⭐ عرض مكافآتي">⭐ View My Rewards</button>
-      <button class="btn-secondary" data-sp="rewards" data-ar="برنامج المكافآت">Rewards Programme</button>
     </div>
     <div class="placeholder-stats">
       <div class="ph-stat"><span class="ph-stat-n">4</span><span class="ph-stat-l" data-ar="مستويات المكافآت">Reward Tiers</span></div>
@@ -5318,38 +5100,34 @@ body.spa-account #page-account{padding-top:130px}
         <div class="footer-brand-name">🥔 Spudlicious</div>
         <p class="footer-tagline" data-ar="محملة. لذيذة. أسطورية. موطن البطاطس المحملة في البحرين. حيث كل بطاطسة تصبح تحفة فنية. حلال 100%، طازج في كل طلب. بفخر بحريني.">Loaded. Delicious. Legendary. Bahrain's Home of Loaded Potatoes. Where Every Potato Becomes a Masterpiece. 100% Halal, made fresh every order. Proudly Bahraini.</p>
         <div class="footer-socials">
-          <a class="social-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" title="Instagram">📸</a>
-          <a class="social-btn" href="https://www.tiktok.com/@spudlicious.bh" target="_blank" rel="noopener noreferrer" title="TikTok">🎵</a>
-          <a class="social-btn" href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬</a>
+          <a class="social-btn" href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @spudlicious.bh">📸</a>
+          <a class="social-btn" href="https://www.tiktok.com/@spudlicious.bh" target="_blank" rel="noopener noreferrer" aria-label="TikTok @spudlicious.bh">🎵</a>
         </div>
       </div>
       <div class="footer-col">
-        <h4 data-ar="روابط سريعة">Quick Links</h4>
+        <h4 data-ar="خريطة الموقع">Site map</h4>
         <ul class="footer-links">
           <li><a class="footer-link" data-sp="menu" href="#/menu" data-ar="القائمة">Menu</a></li>
           <li><a class="footer-link" data-sp="story" href="#/story" data-ar="قصتنا">Our Story</a></li>
-          <li><a class="footer-link" data-sp="founder" href="#/founder" data-ar="المؤسس">The Founder</a></li>
-          <li><a class="footer-link" data-sp="gallery" href="#/gallery" data-ar="المعرض">Gallery</a></li>
           <li><a class="footer-link" data-sp="rewards" href="#/rewards" data-ar="المكافآت">Rewards</a></li>
           <li><a class="footer-link" data-sp="catering" href="#/catering" data-ar="التموين">Catering</a></li>
-          <li><a class="footer-link" data-sp="food-truck" href="#/food-truck" data-ar="شاحنة الطعام">The Food Truck</a></li>
-          <li><a class="footer-link" data-sp="contact" href="#/contact" data-ar="تواصل معنا">Contact</a></li>
-          <li><a class="footer-link" data-sp="faq" href="#/faq" data-ar="الأسئلة الشائعة">FAQ</a></li>
+          <li><a class="footer-link" data-sp="gallery" href="#/gallery" data-ar="المعرض">Gallery</a></li>
+          <li><a class="footer-link" data-sp="reviews" href="#/reviews" data-ar="التقييمات">Reviews</a></li>
           <li><a class="footer-link" data-sp="find-us" href="#/find-us" data-ar="موقعنا">Find Us</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4 data-ar="الطلبات والتواصل">Order & Contact</h4>
+        <h4 data-ar="معلومات">Info</h4>
         <ul class="footer-links">
-          <li><a class="footer-link" data-sp="order" href="#/order" data-ar="اطلب أونلاين">Order Online</a></li>
-          <li><a href="https://wa.me/97333260007" target="_blank" rel="noopener noreferrer" data-ar="اطلب عبر واتساب">Order via WhatsApp</a></li>
-          <li><a class="footer-link" data-sp="catering" href="#/catering" data-ar="احجز تموين">Book Catering</a></li>
-          <li><a class="footer-link" data-sp="contact" href="#/contact" data-ar="تواصل معنا">Contact Us</a></li>
+          <li><a class="footer-link" data-sp="faq" href="#/faq" data-ar="الأسئلة الشائعة">FAQ</a></li>
+          <li><a class="footer-link" data-sp="food-truck" href="#/food-truck" data-ar="شاحنة الطعام">The Food Truck</a></li>
+          <li><a class="footer-link" data-sp="contact" href="#/contact" data-ar="تواصل معنا">Contact</a></li>
+          <li><a class="footer-link" data-sp="account" href="#/account" data-ar="حسابي">My Account</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy" data-ar="© 2025 سبودلشيس. جميع الحقوق محفوظة. البسيتين، مملكة البحرين.">© 2025 Spudlicious. All rights reserved. Busaiteen, Kingdom of Bahrain.</p>
+      <p class="footer-copy" id="footer-copy" data-ar="© 2026 سبودلشيس. جميع الحقوق محفوظة. البسيتين، مملكة البحرين. @spudlicious.bh">© 2026 Spudlicious. All rights reserved. Busaiteen, Kingdom of Bahrain. @spudlicious.bh</p>
       <div class="halal-badge" data-ar="🌿 حلال 100% معتمد">🌿 100% Halal Certified</div>
     </div>
   </div>
@@ -5391,46 +5169,42 @@ window.SPUD_TIERS = [
 window.SPUD_MENU = {
   currency: 'BHD',
   items: [
-    { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', emoji:'🍗', price:2.9, badge:'🔥 Best Seller',
+    { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', emoji:'🍗', price:2.0, badge:'🔥 Best Seller',
       desc:'Tender chicken smothered in a rich, creamy homemade béchamel sauce. Loaded over a perfectly baked potato.', tags:['chicken','bechamel'] },
-    { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', emoji:'🥩', price:2.9, badge:'⭐ Signature',
+    { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', emoji:'🥩', price:2.0, badge:'⭐ Signature',
       desc:'Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.', tags:['beef','bechamel'] },
-    { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', emoji:'🤠', price:2.9, badge:'🌿 Fresh Pick',
+    { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', emoji:'🤠', price:2.0, badge:'🌿 Fresh Pick',
       desc:'Juicy chicken combined with our flavourful ranch sauce — a fresh, satisfying, and totally addictive combo.', tags:['chicken','ranch'] },
-    { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', emoji:'🌶️', price:2.9, badge:'💥 Bold',
+    { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', emoji:'🌶️', price:2.0, badge:'💥 Bold',
       desc:'Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty, and packed with flavour every bite.', tags:['beef','ranch'] }
   ],
   addons: [
-    { id:'extra-cheese', name:'Extra Cheese', emoji:'🧀', price:0.3 },
-    { id:'jalapenos',    name:'Jalapeños',    emoji:'🌶',  price:0.2 }
+    { id:'extra-cheese', name:'Extra Cheese', name_ar:'جبنة إضافية', emoji:'🧀', price:0.3 },
+    { id:'jalapenos',    name:'Jalapeños',    name_ar:'هالبينو',     emoji:'🌶',  price:0.2 }
   ]
 };
 
-// ══ CINEMATIC LOADER ══════════════════════════════════════════
+// ══ CINEMATIC LOADER — once per session, skippable, reduced-motion safe, never waits on images ══
 (function(){
   var loader=document.getElementById('loader');
   if(!loader)return;
-  // Read visits BEFORE the returning-visitor block increments it
-  var visits=parseInt(localStorage.getItem('spud-visits')||'0');
-  var isReturn=visits>0;
-
+  var seen=document.documentElement.classList.contains('intro-seen');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var done=false;
   function dismissLoader(){
+    if(done)return; done=true;
     loader.classList.add('gone');
-    // Trigger hero zoom-reveal only on first visit
-    if(!isReturn){
-      document.body.classList.add('loader-done'); // set up transition
-      void document.body.offsetHeight;            // force reflow
-    }
-    document.body.classList.remove('loading');   // release the scale
+    if(!reduce&&!seen){ document.body.classList.add('loader-done'); void document.body.offsetHeight; }
+    document.body.classList.remove('loading');
+    setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); },1100);
   }
-
-  window.addEventListener('load',function(){
-    if(isReturn){
-      setTimeout(dismissLoader, 380);  // near-instant on return
-    } else {
-      setTimeout(dismissLoader, 2900); // full cinematic sequence
-    }
-  });
+  if(seen){ document.body.classList.remove('loading'); loader.parentNode.removeChild(loader); return; }
+  try{ sessionStorage.setItem('spud-intro','1'); }catch(e){}
+  var skip=document.getElementById('loader-skip');
+  if(skip) skip.addEventListener('click',dismissLoader);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!done) dismissLoader(); });
+  /* Starts now (not on window.load), so the intro never waits for images. Reduced motion: the finished frame, briefly. */
+  setTimeout(dismissLoader, reduce?1200:2900);
 })();
 
 // ══ SCROLL STORY RAIL ═══════════════════════════════════════
@@ -5520,7 +5294,7 @@ function scrollToSection(id){var el=document.getElementById(id);if(el)el.scrollI
 // DARK MODE
 var darkBtn=document.getElementById('dark-toggle');
 var dark=localStorage.getItem('spud-dark')==='1';
-function applyDark(){document.documentElement.setAttribute('data-theme',dark?'dark':'light');darkBtn.textContent=dark?'☀️':'🌙';}
+function applyDark(){document.documentElement.setAttribute('data-theme',dark?'dark':'light');darkBtn.textContent=dark?'☀️':'🌙';darkBtn.setAttribute('aria-pressed',dark?'true':'false');}
 applyDark();
 darkBtn.addEventListener('click',function(){dark=!dark;localStorage.setItem('spud-dark',dark?'1':'0');applyDark();});
 
@@ -5531,8 +5305,15 @@ var ar=false;
 function applyLang(){
   document.documentElement.lang=ar?'ar':'en';
   document.body.dir=ar?'rtl':'ltr';
-  langBtn.textContent=ar?'EN':'AR';
+  /* Switcher is labelled in its own language (Law 50). */
+  langBtn.textContent=ar?'English':'العربية';
+  langBtn.setAttribute('lang',ar?'en':'ar'); langBtn.setAttribute('dir',ar?'ltr':'rtl');
   langBtn.title=ar?'Switch to English':'التبديل إلى العربية';
+  document.querySelectorAll('[data-ar-label]').forEach(function(el){
+    if(!el.hasAttribute('data-en-label')) el.setAttribute('data-en-label',el.getAttribute('aria-label')||'');
+    el.setAttribute('aria-label',ar?el.getAttribute('data-ar-label'):el.getAttribute('data-en-label'));
+  });
+  if(typeof renderCart==='function'&&typeof cart!=='undefined') renderCart();
 
   // Swap text for all [data-ar] elements (simple text nodes)
   document.querySelectorAll('[data-ar]').forEach(function(el){
@@ -5579,62 +5360,89 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){var d=document.getElementById('cart-drawer');if(d&&d.classList.contains('open'))closeCart();}
 });
 
-function addToCart(name,price,emoji){
-  var existing=cart.find(function(i){return i.name===name;});
-  if(existing){existing.qty++;}else{cart.push({name:name,price:parseFloat(price),emoji:emoji,qty:1});}
-  renderCart();
-  showToast(emoji+' '+name+' added!');
-  confettiBurst();
-  document.dispatchEvent(new CustomEvent('cart-item-added'));
+/* Basket = where the order is assembled. WhatsApp is the only order channel (no payment on the site). */
+var WA_NUMBER='97333260007';
+function basketT(){
+  var a=(typeof ar!=='undefined'&&ar);
+  return a?{added:'أُضيفت إلى السلة',empty:'سلتك فارغة',emptySub:'أضف بطاطس من القائمة.',total:'المجموع',order:'اطلب عبر واتساب',less:'واحدة أقل',more:'واحدة أكثر',
+            hi:'مرحباً سبودلشيس! أود أن أطلب:',confirm:'الرجاء تأكيد طلبي.',generic:'مرحباً سبودلشيس! أود أن أطلب.'}
+           :{added:'added to your basket',empty:'Your basket is empty',emptySub:'Add a spud from the menu.',total:'Total',order:'Order on WhatsApp',less:'One less',more:'One more',
+            hi:"Hi Spudlicious! I'd like to order:",confirm:'Please confirm my order.',generic:"Hi Spudlicious! I'd like to order."};
 }
-function changeQty(name,delta){
-  var idx=cart.findIndex(function(i){return i.name===name;});
-  if(idx<0)return;
+function bhd(n){return 'BHD '+(Math.round(n*1000)/1000).toFixed(3);}
+function addToCart(name,price,emoji,qty){
+  qty=qty||1;
+  var existing=cart.find(function(i){return i.name===name;});
+  if(existing){existing.qty+=qty;}else{cart.push({name:name,price:parseFloat(price),emoji:emoji,qty:qty});}
+  renderCart();
+  showToast(emoji+' '+name+' — '+basketT().added);
+  document.dispatchEvent(new CustomEvent('cart-item-added',{detail:{name:name}}));
+}
+/* Menu cards + add-on chips add by id; the price always comes from window.SPUD_MENU. */
+function addMenuItem(id){
+  var M=window.SPUD_MENU, it=M.items.concat(M.addons).filter(function(x){return x.id===id;})[0];
+  if(it)addToCart(it.name,it.price,it.emoji,1);
+}
+function changeQty(idx,delta){
+  if(!cart[idx])return;
   cart[idx].qty+=delta;
   if(cart[idx].qty<=0){cart.splice(idx,1);}
   renderCart();
   if(delta<0)document.dispatchEvent(new CustomEvent('cart-item-removed'));
 }
+function cartTotal(){return cart.reduce(function(s,i){return s+i.price*i.qty;},0);}
 function renderCart(){
-  var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  var count=cart.reduce(function(s,i){return s+i.qty;},0);
+  var t=basketT(), total=cartTotal(), count=cart.reduce(function(s,i){return s+i.qty;},0);
   document.getElementById('cart-count').textContent=count;
   var itemsEl=document.getElementById('cart-items');
   var footerEl=document.getElementById('cart-footer');
   if(cart.length===0){
-    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🥔</div><p style="font-weight:700;color:var(--text-muted)">Your spud cart is empty!</p><p style="font-size:.85rem;color:var(--text-muted);margin-top:6px">Add something delicious 👆</p></div>';
+    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true">🥔</div><p style="font-weight:700;color:var(--text-muted)">'+t.empty+'</p><p style="font-size:.85rem;color:var(--text-muted);margin-top:6px">'+t.emptySub+'</p></div>';
     footerEl.style.display='none';
     return;
   }
   footerEl.style.display='block';
-  document.getElementById('cart-total-price').textContent='BHD '+total.toFixed(3);
-  itemsEl.innerHTML=cart.map(function(i){
-    return '<div class="cart-item"><div class="cart-item-icon">'+i.emoji+'</div><div class="cart-item-info"><div class="cart-item-name">'+i.name+'</div><div class="cart-item-price">BHD '+(i.price*i.qty).toFixed(3)+'</div></div><div class="cart-item-qty"><button class="qty-btn" onclick="changeQty(\''+i.name+'\',-1)">−</button><span>'+i.qty+'</span><button class="qty-btn" onclick="changeQty(\''+i.name+'\',1)">+</button></div></div>';
+  document.getElementById('cart-total-label').textContent=t.total;
+  document.getElementById('cart-total-price').textContent=bhd(total);
+  document.getElementById('cart-wa-btn').textContent=t.order+' · '+bhd(total);
+  itemsEl.innerHTML=cart.map(function(i,idx){
+    var n=String(i.name).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});
+    return '<div class="cart-item"><div class="cart-item-icon" aria-hidden="true">'+i.emoji+'</div><div class="cart-item-info"><div class="cart-item-name">'+n+'</div><div class="cart-item-price">'+bhd(i.price*i.qty)+'</div></div>'+
+      '<div class="cart-item-qty"><button type="button" class="qty-btn" onclick="changeQty('+idx+',-1)" aria-label="'+t.less+': '+n+'">−</button><span>'+i.qty+'</span><button type="button" class="qty-btn" onclick="changeQty('+idx+',1)" aria-label="'+t.more+': '+n+'">+</button></div></div>';
   }).join('');
 }
-
-function orderViaWhatsApp(){
-  if(cart.length===0)return;
-  var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  var msg='🥔 *Spudlicious Order*\n\n';
-  cart.forEach(function(i){msg+=i.emoji+' '+i.name+' x'+i.qty+' — BHD '+(i.price*i.qty).toFixed(3)+'\n';});
-  msg+='\n💰 *Total: BHD '+total.toFixed(3)+'*\n\nPlease confirm my order!';
-  window.open('https://wa.me/97333260007?text='+encodeURIComponent(msg),'_blank');
+/* The one order message: every line, quantity and the total, pre-filled into WhatsApp. */
+function orderMessage(){
+  var t=basketT();
+  if(!cart.length) return t.generic;
+  var msg=t.hi+'\n\n';
+  cart.forEach(function(i){msg+='• '+i.qty+' × '+i.name+' — '+bhd(i.price*i.qty)+'\n';});
+  return msg+'\n'+t.total+': '+bhd(cartTotal())+'\n\n'+t.confirm;
 }
-
-// CATERING FORM
-function submitCatering(){
-  var name=document.getElementById('form-name').value.trim();
-  var phone=document.getElementById('form-phone').value.trim();
-  var type=document.getElementById('form-type').value;
-  var guests=document.getElementById('form-guests').value;
-  var details=document.getElementById('form-details').value;
-  var notes=document.getElementById('form-notes').value;
-  if(!name||!phone){showToast('⚠️ Please enter your name and phone number');return;}
-  var msg='🎉 *Spudlicious Catering Request*\n\n👤 Name: '+name+'\n📱 Phone: '+phone+'\n🎊 Event: '+type+'\n👥 Guests: '+(guests||'TBD')+'\n📅 Date/Location: '+(details||'TBD')+'\n📝 Notes: '+(notes||'None');
-  window.open('https://wa.me/97333260007?text='+encodeURIComponent(msg),'_blank');
-  showToast('✅ Opening WhatsApp...');
+function waOrderUrl(){return 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(orderMessage());}
+function orderViaWhatsApp(){window.open(waOrderUrl(),'_blank','noopener');}
+/* Catering enquiry: a separate, pre-written message on the same WhatsApp channel. */
+function cateringMessage(){
+  return (typeof ar!=='undefined'&&ar)
+    ? 'مرحباً سبودلشيس! أود حجز التموين لفعالية.\n\nنوع الفعالية: \nالتاريخ: \nالمكان: \nعدد الضيوف: '
+    : "Hi Spudlicious! I'd like to book catering for an event.\n\nEvent type: \nDate: \nLocation: \nGuests: ";
 }
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[data-wa-catering]'); if(a) a.href='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(cateringMessage());
+},true);
+/* Header + hero "Order on WhatsApp" links: always carry the current basket (or a generic hello). */
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[data-wa-order]'); if(a) a.href=waOrderUrl();
+},true);
+/* Keep printed prices in sync with window.SPUD_MENU. */
+(function(){
+  var M=window.SPUD_MENU, all=M.items.concat(M.addons);
+  document.querySelectorAll('[data-menu-price]').forEach(function(el){
+    var it=all.filter(function(x){return x.id===el.getAttribute('data-menu-price');})[0]; if(!it)return;
+    var isAddon=M.addons.indexOf(it)>-1;
+    if(isAddon) el.textContent='+ '+bhd(it.price); else el.firstChild.nodeValue=bhd(it.price)+' ';
+  });
+})();
 
 // FAQ
 function toggleFaq(el){
@@ -5984,6 +5792,44 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   },{passive:true});
 })();
 
+// ══ SKIP LINK: focus the current page's first visible section (a plain #hash would make the router go home) ══
+(function(){
+  var sk=document.getElementById('skip-main'); if(!sk)return;
+  sk.addEventListener('click',function(e){
+    e.preventDefault();
+    var t=[].slice.call(document.querySelectorAll('section[id]')).filter(function(x){return !x.closest('[data-spa-hidden]')&&x.getClientRects().length;})[0];
+    if(!t)return; if(!t.hasAttribute('tabindex')) t.setAttribute('tabindex','-1');
+    t.focus({preventScroll:true}); t.scrollIntoView();
+  });
+})();
+
+// ══ SETTINGS GROUP: header on wide screens, menu sheet on small ones (one set of controls, never duplicated) ══
+(function(){
+  var tools=document.getElementById('nav-tools'), slot=document.getElementById('mobile-tools-slot');
+  var home=tools&&tools.parentNode, anchor=tools&&tools.nextSibling;
+  if(!tools||!slot)return;
+  var mq=matchMedia('(max-width:1180px)');
+  function place(){ if(mq.matches){ if(tools.parentNode!==slot) slot.appendChild(tools); } else if(tools.parentNode!==home){ home.insertBefore(tools,anchor); } }
+  place(); mq.addEventListener?mq.addEventListener('change',place):mq.addListener(place);
+})();
+
+// ══ ONE HIGHLIGHTED ACTION PER VIEWPORT: the header order link goes quiet while any page-level primary is on screen ══
+(function(){
+  var nav=document.getElementById('nav-wa');
+  if(!nav||!('IntersectionObserver' in window))return;
+  var seen=new Set();
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
+    sync();
+  });
+  function sync(){
+    var any=false; seen.forEach(function(el){ if(!el.closest('[data-spa-hidden]')&&el.getClientRects().length) any=true; });
+    nav.classList.toggle('is-quiet',any);
+  }
+  document.querySelectorAll('main .btn-primary, section .btn-primary, .form-submit').forEach(function(el){ if(!el.closest('nav')) io.observe(el); });
+  document.addEventListener('click',function(){ setTimeout(sync,700); setTimeout(sync,1300); });
+})();
+
 // ══ DESKTOP DROPDOWN — HARDENED HOVER MANAGER ════════════════════════
 (function(){
   var CLOSE_DELAY = 700;
@@ -6132,165 +5978,76 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   }catch(e){}
 })();
 
-// ══ BUILD YOUR POTATO ═════════════════════════════════════════
+// ══ BUILD YOUR SPUD (rendered from window.SPUD_MENU; defaults on every step) ═══
 (function(){
-  var BASE_PRICE=2.9;
-  var BASE_KCAL=430;
-  var BASE_PREP=8;
-  var state={size:'Regular',protein:null,sauce:null,extras:[]};
-
-  var lastFocus=null;
-
-  function openBuilder(){
-    state={size:'Regular',protein:null,sauce:null,extras:[]};
-    document.querySelectorAll('.builder-opt').forEach(function(b){b.classList.remove('selected');});
-    // Pre-select Regular size
-    var reg=document.querySelector('.builder-opt[data-val="Regular"]');
-    if(reg)reg.classList.add('selected');
-    updatePreview();
-    updateProgress();
-    var el=document.getElementById('potato-builder');
-    if(el){
-      lastFocus=document.activeElement;
-      el.classList.add('open');
-      document.body.style.overflow='hidden';
-      setTimeout(function(){var cb=document.querySelector('.builder-close-btn');if(cb)cb.focus();},520);
-    }
+  var M=window.SPUD_MENU;
+  var PROTEINS=[{id:'chicken',name:'Chicken',name_ar:'دجاج',emoji:'🍗'},{id:'beef',name:'Beef',name_ar:'لحم',emoji:'🥩'}];
+  var SAUCES=[{id:'bechamel',name:'Béchamel',name_ar:'بشاميل',emoji:'🫙'},{id:'ranch',name:'Ranch',name_ar:'رانش',emoji:'🤠'}];
+  var best=M.items.filter(function(i){return /best/i.test(i.badge||'');})[0]||M.items[0];
+  var state, lastFocus=null;
+  function isAr(){return document.documentElement.lang==='ar'||document.body.dir==='rtl';}
+  function L(o){return isAr()&&o.name_ar?o.name_ar:o.name;}
+  function fresh(){return {protein:best.tags[0],sauce:best.tags[1],extras:[],qty:1};}
+  function item(){return M.items.filter(function(i){return i.tags.indexOf(state.protein)>-1&&i.tags.indexOf(state.sauce)>-1;})[0];}
+  function addon(id){return M.addons.filter(function(a){return a.id===id;})[0];}
+  function unit(){var p=item().price;state.extras.forEach(function(id){p+=addon(id).price;});return p;}
+  function opt(step,o,on,price){
+    return '<button type="button" class="builder-opt'+(on?' selected':'')+'" data-step="'+step+'" data-val="'+o.id+'" aria-pressed="'+(on?'true':'false')+'">'+
+      (o.emoji||'')+' '+L(o)+(price?' <small>+BHD '+price.toFixed(3)+'</small>':'')+'</button>';
   }
-
+  function renderSteps(){
+    var t=isAr()?{p:'البروتين',s:'الصلصة',e:'إضافات (اختياري)',q:'الكمية',less:'واحدة أقل',more:'واحدة أكثر'}:{p:'Protein',s:'Sauce',e:'Add-ons (optional)',q:'How many',less:'One less',more:'One more'};
+    document.getElementById('builder-steps').innerHTML=
+      '<div class="builder-step"><div class="builder-step-label">1 · '+t.p+'</div><div class="builder-options">'+PROTEINS.map(function(o){return opt('protein',o,state.protein===o.id);}).join('')+'</div></div>'+
+      '<div class="builder-step"><div class="builder-step-label">2 · '+t.s+'</div><div class="builder-options">'+SAUCES.map(function(o){return opt('sauce',o,state.sauce===o.id);}).join('')+'</div></div>'+
+      '<div class="builder-step"><div class="builder-step-label">3 · '+t.e+'</div><div class="builder-options">'+M.addons.map(function(a){return opt('extras',{id:a.id,name:a.name,name_ar:a.name_ar,emoji:a.emoji},state.extras.indexOf(a.id)>-1,a.price);}).join('')+'</div></div>'+
+      '<div class="builder-step"><div class="builder-step-label">4 · '+t.q+'</div><div class="builder-options builder-qty">'+
+        '<button type="button" class="builder-opt" data-qty="-1" aria-label="'+t.less+'"'+(state.qty<=1?' disabled':'')+'>−</button>'+
+        '<output class="builder-qty-val" aria-live="polite">'+state.qty+'</output>'+
+        '<button type="button" class="builder-opt" data-qty="1" aria-label="'+t.more+'"'+(state.qty>=20?' disabled':'')+'>+</button></div></div>';
+  }
+  function updatePreview(){
+    var it=item(), top=(PROTEINS.filter(function(o){return o.id===state.protein;})[0]||{}).emoji||'';
+    top+=(SAUCES.filter(function(o){return o.id===state.sauce;})[0]||{}).emoji||'';
+    state.extras.forEach(function(id){top+=addon(id).emoji;});
+    var td=document.getElementById('spud-toppings-display'); if(td)td.textContent=top;
+    var pd=document.getElementById('builder-price-display');
+    if(pd)pd.innerHTML='BHD '+(unit()*state.qty).toFixed(3)+'<span>'+state.qty+' × '+L(it)+'</span>';
+  }
+  function render(){renderSteps();updatePreview();}
+  function openBuilder(preset){
+    state=fresh();
+    if(preset){var it=M.items.filter(function(i){return i.id===preset;})[0];if(it){state.protein=it.tags[0];state.sauce=it.tags[1];}}
+    render();
+    var el=document.getElementById('potato-builder');
+    if(el){lastFocus=document.activeElement;el.classList.add('open');document.body.style.overflow='hidden';
+      setTimeout(function(){var cb=el.querySelector('.builder-opt.selected');if(cb)cb.focus();},400);}
+  }
   function closeBuilder(){
     var el=document.getElementById('potato-builder');
     if(el){el.classList.remove('open');document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
   }
-  /* Escape closes the builder (parity with the X + backdrop; a11y for modals). */
   document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){
-      var el=document.getElementById('potato-builder');
-      if(el&&el.classList.contains('open')){e.preventDefault();closeBuilder();}
-    }
+    if(e.key==='Escape'){var el=document.getElementById('potato-builder');if(el&&el.classList.contains('open')){e.preventDefault();closeBuilder();}}
   });
-
-  function updateProgress(){
-    var dots=document.querySelectorAll('.bp-dot');
-    var seps=document.querySelectorAll('.bp-sep');
-    var filled=[!!state.size,!!state.protein,!!state.sauce,state.extras.length>0];
-    dots.forEach(function(d,i){d.classList.toggle('filled',filled[i]===true);});
-    seps.forEach(function(s,i){s.classList.toggle('filled',filled[i]&&filled[i+1]);});
-  }
-
-  function updatePreview(){
-    var top='';
-    var price=BASE_PRICE;
-    var kcal=BASE_KCAL;
-    var prep=BASE_PREP;
-
-    // Size
-    if(state.size==='Large'){price+=0.5;kcal+=180;prep+=2;}
-
-    // Protein emoji
-    if(state.protein){
-      var ep=document.querySelector('.builder-opt[data-val="'+state.protein+'"]');
-      if(ep)top+=ep.dataset.emoji;
-    }
-    // Sauce emoji
-    if(state.sauce){
-      var es=document.querySelector('.builder-opt[data-val="'+state.sauce+'"]');
-      if(es)top+=es.dataset.emoji;
-    }
-    // Extras
-    state.extras.forEach(function(e){
-      var ex=document.querySelector('.builder-opt[data-val="'+e+'"]');
-      if(ex){
-        top+=ex.dataset.emoji;
-        price+=parseFloat(ex.dataset.price||0);
-        kcal+=parseInt(ex.dataset.kcal||0);
-        prep+=1;
-      }
-    });
-
-    var td=document.getElementById('spud-toppings-display');
-    if(td)td.textContent=top;
-
-    var pd=document.getElementById('builder-price-display');
-    if(pd){
-      var isBase=state.size==='Regular'&&state.extras.length===0;
-      pd.innerHTML='BHD '+price.toFixed(3)+'<span>'+(isBase?'Base price':'Your price')+'</span>';
-    }
-
-    var pt=document.getElementById('builder-prep-time');
-    if(pt)pt.textContent='~'+prep+' mins';
-
-    var kc=document.getElementById('builder-kcal');
-    if(kc)kc.textContent='~'+kcal+' kcal';
-
-    updateProgress();
-  }
-
-  document.querySelectorAll('.builder-opt').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var step=this.dataset.step;
-      var val=this.dataset.val;
-      if(this.dataset.multi){
-        var idx=state.extras.indexOf(val);
-        if(idx>-1){state.extras.splice(idx,1);this.classList.remove('selected');}
-        else{state.extras.push(val);this.classList.add('selected');}
-      } else {
-        document.querySelectorAll('.builder-opt[data-step="'+step+'"]').forEach(function(b){b.classList.remove('selected');});
-        this.classList.add('selected');
-        state[step]=val;
-      }
-      updatePreview();
-    });
+  /* Delegated: the options are re-rendered, so one listener on the dialog handles every click. */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('#potato-builder .builder-opt'); if(!b||b.disabled)return;
+    if(b.dataset.qty){state.qty=Math.max(1,Math.min(20,state.qty+(+b.dataset.qty)));}
+    else if(b.dataset.step==='extras'){var i=state.extras.indexOf(b.dataset.val);if(i>-1)state.extras.splice(i,1);else state.extras.push(b.dataset.val);}
+    else state[b.dataset.step]=b.dataset.val;
+    var focusKey=b.dataset.qty?'[data-qty="'+b.dataset.qty+'"]':'[data-step="'+b.dataset.step+'"][data-val="'+b.dataset.val+'"]';
+    render();
+    var f=document.querySelector('#potato-builder '+focusKey); if(f)f.focus();
   });
-
-  function showOrderTimeline(){
-    var tl=document.getElementById('order-timeline');
-    if(!tl)return;
-    // Reset
-    [0,1,2,3].forEach(function(i){
-      document.getElementById('otl-'+i).classList.remove('done');
-      var c=document.getElementById('otl-c'+i);
-      if(c)c.classList.remove('done');
-    });
-    tl.classList.add('show');
-    var delays=[0,600,1200,1900];
-    delays.forEach(function(d,i){
-      setTimeout(function(){
-        document.getElementById('otl-'+i).classList.add('done');
-        var c=document.getElementById('otl-c'+i);
-        if(c)c.classList.add('done');
-      },d);
-    });
-    setTimeout(function(){tl.classList.remove('show');},4200);
-  }
-
   function builderAddToCart(){
-    if(!state.protein||!state.sauce){
-      showToast('⚠️ Choose a protein and sauce first!');
-      return;
-    }
-    var sizeLabel=state.size==='Large'?' (Large)':'';
-    var extrasLabel=state.extras.length?' + '+state.extras.join(', '):'';
-    var name=state.protein+' & '+state.sauce+sizeLabel+extrasLabel;
-    var price=BASE_PRICE+(state.size==='Large'?0.5:0);
-    state.extras.forEach(function(e){
-      var el=document.querySelector('.builder-opt[data-val="'+e+'"]');
-      if(el)price+=parseFloat(el.dataset.price||0);
-    });
-    addToCart(name,price,'🥔');
+    var it=item(), names=state.extras.map(function(id){return addon(id).name;});
+    addToCart(it.name+(names.length?' + '+names.join(' + '):''),unit(),it.emoji,state.qty);
     closeBuilder();
-    setTimeout(showOrderTimeline,500);
   }
-
   window.openBuilder=openBuilder;
   window.closeBuilder=closeBuilder;
   window.builderAddToCart=builderAddToCart;
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){
-      var el=document.getElementById('potato-builder');
-      if(el&&el.classList.contains('open'))closeBuilder();
-    }
-  });
 })();
 
 // ══ PHASE 7: MICRO DETAILS ══════════════════════════════════
@@ -6504,6 +6261,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     soundBtn.addEventListener('click',function(){
       soundEnabled=!soundEnabled;
       soundBtn.textContent=soundEnabled?'🔊':'🔇';
+      soundBtn.setAttribute('aria-pressed',soundEnabled?'true':'false');
       soundBtn.classList.toggle('sound-on',soundEnabled);
       if(soundEnabled){getCtx();playSound('success');}
     });
@@ -6924,8 +6682,8 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   var QUICK_REPLIES=[
     ["What's on the menu?","🍽️"],
     ["Recommend something","✨"],
-    ["How spicy?","🌶️"],
-    ["Pickup time?","⏱️"],
+    ["Prices?","💰"],
+    ["Opening hours","🕖"],
     ["Location?","📍"],
   ];
 
@@ -6933,7 +6691,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
      (not just sends text). Shown at the top of the concierge's replies. */
   var OWNER_ACTIONS=[
     ["See the menu","🍽️","menu"],
-    ["Order on WhatsApp","💬","whatsapp"],
+    ["Build my spud","🛠️","builder"],
     ["Where are we?","📍","location"],
     ["Opening hours","🕖","hours"],
   ];
@@ -6952,9 +6710,15 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
       setTimeout(function(){var l=document.getElementById('location')||document.getElementById('find-us');l&&l.scrollIntoView({behavior:'smooth',block:'start'});},650);
     }else if(kind==='hours'){
       addBubble("We fire up the oven every night — "+SPUD_HOURS.summary+". Come hungry! 🕖",'bot');
+    }else if(kind==='builder'){
+      addBubble("Opening the builder — every step starts on a sensible default. 🛠️",'bot');
+      (window.spudNavigate?spudNavigate('menu'):0);
+      setTimeout(function(){ window.openBuilder&&window.openBuilder(); },500);
+    }else if(kind==='catering'){
+      (window.spudNavigate?spudNavigate('catering'):0);
     }else if(kind==='founder'){
       addBubble("\"This is only the beginning of the journey.\" Taking you to his story — it's a good one. 📖",'bot');
-      (window.spudNavigate?spudNavigate('founder'):(location.hash='#founder'));
+      (window.spudNavigate?spudNavigate('story'):(location.hash='#/story'));
     }
     renderQRs(OWNER_ACTIONS);
   }
@@ -7074,72 +6838,85 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     return el;
   }
 
+  /* Every food answer is built from window.SPUD_MENU. The assistant never invents dishes, prices, sizes,
+     specials or promotions; anything it can't answer from the menu goes to WhatsApp. */
+  function menuItems(){ return (window.SPUD_MENU||{items:[]}).items; }
+  function menuAddons(){ return (window.SPUD_MENU||{addons:[]}).addons; }
+  function bd(n){ return 'BHD '+Number(n).toFixed(3); }
+  function itemLine(m){ return m.emoji+' '+m.name+' — '+bd(m.price); }
+  function addonList(){ return menuAddons().map(function(a){ return a.emoji+' '+a.name+' +'+bd(a.price); }).join(', '); }
+  function bestSeller(){ var it=menuItems(); return it.filter(function(m){ return /best/i.test(m.badge||''); })[0]||it[0]; }
+  function priceRange(){ var p=menuItems().map(function(m){return m.price;}); var lo=Math.min.apply(null,p), hi=Math.max.apply(null,p); return lo===hi?bd(lo):bd(lo)+'–'+bd(hi); }
   function getAIResponse(msg){
     var lower=msg.toLowerCase();
     var isOpen=SPUD_HOURS.isOpen();
+    var items=menuItems();
 
     if(/menu|what.*have|food|spud|potato/.test(lower)){
-      renderQRs([["Recommend for me","✨"],["Something spicy","🌶️"],["Vegetarian?","🥗"]]);
-      return AI_KNOWLEDGE.menu.map(function(m){return m.emoji+' '+m.name+' — BD '+m.price.toFixed(3)+'\n'+m.desc;}).join('\n\n');
+      renderQRs([["Recommend something","✨"],["How spicy?","🌶️"],["Build my spud","🛠️"]]);
+      return "Here's the full menu:\n\n"+items.map(function(m){return itemLine(m)+'\n'+m.desc;}).join('\n\n')+"\n\nAdd-ons: "+addonList()+".";
     }
     if(/recommend|suggest|best|popular/.test(lower)){
-      var pick=h<20?AI_KNOWLEDGE.menu[0]:AI_KNOWLEDGE.menu[1];
-      renderQRs([["Add it to cart","🛒"],["What else?","🤔"],["Vegetarian option","🥗"]]);
-      return "For "+getTimeGreeting().toLowerCase()+"s, I'd recommend our "+pick.emoji+" "+pick.name+"! It's got "+pick.desc+". Just BD "+pick.price.toFixed(3)+" — absolute value.";
+      var pick=bestSeller();
+      renderQRs([["Build my spud","🛠️"],["What's on the menu?","🍽️"]]);
+      return "Go for our best seller, the "+pick.emoji+" "+pick.name+" ("+bd(pick.price)+"): "+pick.desc+" Add-ons if you want more: "+addonList()+".";
     }
     if(/spicy|hot|heat|jalap/.test(lower)){
-      renderQRs([["Add jalapeños","🌶️"],["Bahrain Spice","🌶️"],["Something milder","😊"]]);
-      return "For heat lovers: our Bahrain Spice 🌶️ is the boldest — harissa, local spices, serious kick. Want to cool down? Garlic Aioli sauce + Sour Cream extras will balance it perfectly.";
+      var jal=menuAddons().filter(function(a){return /jalap/i.test(a.id+a.name);})[0];
+      renderQRs([["Build my spud","🛠️"],["What's on the menu?","🍽️"]]);
+      return jal ? "None of our spuds is spicy on its own — add "+jal.emoji+" "+jal.name+" (+"+bd(jal.price)+") to any of them for heat." : "None of our spuds is spicy on its own. Ask us on WhatsApp and we'll help.";
     }
     if(/veg|no meat|meatless/.test(lower)){
-      renderQRs([["Cheese Overload","🧀"],["Add sauces","🥄"],["Build my own","🛠️"]]);
-      return "Great choice! Our Cheese Overload 🧀 is vegetarian — triple cheese, caramelised onions, and garlic sauce. Add Guacamole and Coleslaw for the full experience!";
+      renderQRs([["What's on the menu?","🍽️"]]);
+      return "All four spuds come with chicken or beef, so we don't have a vegetarian spud on the menu right now. Message us on WhatsApp and we'll tell you what we can do.";
     }
     if(/time|hour|open|close|when/.test(lower)){
-      renderQRs([["Location?","📍"],["Order now","🛒"]]);
+      renderQRs([["Location?","📍"],["What's on the menu?","🍽️"]]);
       return AI_KNOWLEDGE.hours+(isOpen?' — We\'re OPEN right now! 🟢':' — We\'re closed at the moment, but come back from '+SPUD_HOURS.opensLabel+'! 🔴');
     }
     if(/where|location|find|map|spot/.test(lower)){
-      renderQRs([["Follow on Instagram","📱"],["See menu","🍽️"]]);
+      renderQRs([["Opening hours","🕖","hours"],["See the menu","🍽️","menu"]]);
       return AI_KNOWLEDGE.location+'\n\nFollow us on Instagram for live location updates! 📍';
     }
-    if(/price|cost|how much|bd/.test(lower)){
-      renderQRs([["What's on menu","🍽️"],["Order now","🛒"]]);
-      return "Spuds start at BD 3.500 and go up to BD 4.200 for specials. Extras are 0.3–0.5 BD each. Great value for premium loaded potatoes!";
+    if(/price|cost|how much|bd|bhd/.test(lower)){
+      renderQRs([["What's on the menu?","🍽️"],["Build my spud","🛠️"]]);
+      return "Every spud is "+priceRange()+". Add-ons: "+addonList()+".";
     }
     if(/build|custom|make my own/.test(lower)){
-      renderQRs([["Open Builder","🛠️"]]);
-      return "Love the DIY spirit! 🛠️ Hit the 'Build Your Spud' button in the menu section — choose your size, protein, sauce, and extras. Fully customisable!";
+      renderQRs([["Open the builder","🛠️","builder"]]);
+      return "Pick chicken or beef, then béchamel or ranch, then any add-ons ("+addonList()+") and how many. The total updates as you go, and Order on WhatsApp sends the whole order.";
     }
     if(/instagram|social|follow/.test(lower)){
-      renderQRs([["See community","📸"],["Follow now","💙"]]);
-      return "Find us at "+AI_KNOWLEDGE.instagram+" on Instagram! 📸 We post our live location daily, behind-the-scenes, and feature customer photos.";
+      return "Find us at "+AI_KNOWLEDGE.instagram+" on Instagram! 📸 We post our location, behind-the-scenes and customer photos.";
     }
     if(/sauce/.test(lower)){
       renderQRs([["Build my spud","🛠️"],["What's on the menu?","🍽️"]]);
-      return "Every spud comes loaded with one of our two signature sauces: our rich, creamy homemade Béchamel or our fresh, addictive Ranch. Pair it with chicken or beef — then add Extra Cheese or Jalapeños to make it yours. 🧀🌶️";
+      return "Every spud comes with one of our two sauces: creamy homemade béchamel or ranch. Pair it with chicken or beef, then add "+addonList()+" if you like.";
+    }
+    if(/special|deal|offer|promo|discount|coupon/.test(lower)){
+      renderQRs([["What's on the menu?","🍽️"]]);
+      return "I don't have any specials or promotions to share. The menu is four spuds at "+priceRange()+" each — follow @spudlicious.bh to hear about anything new first.";
     }
     if(/allergen|allergy|gluten|dairy/.test(lower)){
-      return "For specific allergen information, please WhatsApp us directly — our team will guide you through the safest options for your needs. 💙";
+      return "For allergen information, please WhatsApp us directly — our team will guide you through the safest options. 💙";
     }
     if(/catering|event|party|wedding|corporate/.test(lower)){
-      renderQRs([["See catering section","📋"],["Contact us","📱"]]);
-      return "Yes, we do catering! 🎉 We cater for weddings, corporate events, parties, and more. Scroll to our Catering section or reach out on WhatsApp for a custom quote.";
+      renderQRs([["See the Catering page","📋","catering"]]);
+      return "Yes, we do catering for weddings, corporate events, parties and more. The Catering page has a Book Catering button that opens WhatsApp with an enquiry ready to send.";
     }
     if(/thank|thanks|great|awesome|perfect|love/.test(lower)){
-      return "You're welcome! 🥔 Come hungry — we'll make sure you leave happy. Is there anything else I can help with?";
+      return "You're welcome! 🥔 Come hungry. Anything else I can help with?";
     }
     if(/founder|abdulrahman|owner|who.*(behind|made|started)|your story|the story/.test(lower)){
       renderQRs([["Read his story","📖","founder"],["See the menu","🍽️","menu"]]);
-      return "\"Every great business begins with a simple idea.\" — Abdulrahman Alhamad, our founder. An engineer with an entrepreneur's mind who believes success comes from combining discipline with innovation. His full story is worth the read — tap below! 📖";
+      return "\"Every great business begins with a simple idea.\" — Abdulrahman Alhamad, our founder. An engineer with an entrepreneur's mind. His story is on the Our Story page.";
     }
     if(/hi|hello|hey|sup/.test(lower)){
       renderQRs(QUICK_REPLIES.slice(0,3));
-      return getTimeGreeting()+"! 👋 I'm the guy behind the Spudlicious truck. What can I get you today?";
+      return getTimeGreeting()+"! 👋 Ask me about the menu, prices, hours or where to find the truck.";
     }
-    /* Default */
     renderQRs(QUICK_REPLIES);
-    return "Great question! I'm still learning, but I'd love to help. Try asking me about the menu, location, recommendations, or catering! 🥔";
+    return "I can help with the menu, prices, add-ons, hours, location and catering. For anything else, message us on WhatsApp. 🥔";
   }
 
   var aiGreeted=false;
@@ -7268,7 +7045,7 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
     var navActions=document.querySelector('.nav-actions');
     if(!navActions||document.getElementById('notif-btn'))return;
     var btn=document.createElement('button');
-    btn.className='nav-btn';btn.id='notif-btn';btn.setAttribute('aria-label','Notifications');btn.title='Notifications';
+    btn.className='nav-btn';btn.id='notif-btn';btn.type='button';btn.setAttribute('aria-label','Notifications');btn.setAttribute('data-ar-label','الإشعارات');btn.title='Notifications';
     btn.innerHTML='🔔<span class="notif-dot visible" id="notif-dot"></span>';
     var darkBtn=document.getElementById('dark-toggle');
     if(darkBtn&&darkBtn.parentNode)darkBtn.parentNode.insertBefore(btn,darkBtn);
@@ -7811,86 +7588,23 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 
 <!-- ══ POTATO BUILDER MODAL ══════════════════════════════════ -->
 <div id="potato-builder" role="dialog" aria-modal="true" aria-label="Build Your Potato">
-  <div class="builder-backdrop" onclick="closeBuilder()"></div>
+  <div class="builder-backdrop" role="presentation" onclick="closeBuilder()"></div>
   <div class="builder-panel">
     <div class="builder-handle" aria-hidden="true"></div>
     <div class="builder-header">
-      <h3>🥔 Build Your Spud</h3>
+      <h3 data-ar="🥔 اصنع بطاطستك">🥔 Build Your Spud</h3>
       <button class="builder-close-btn" onclick="closeBuilder()" aria-label="Close builder">✕</button>
     </div>
-    <!-- Progress indicator -->
-    <div class="builder-progress" id="builder-progress" aria-hidden="true">
-      <div class="bp-dot" data-prog="size"></div>
-      <div class="bp-sep"></div>
-      <div class="bp-dot" data-prog="protein"></div>
-      <div class="bp-sep"></div>
-      <div class="bp-dot" data-prog="sauce"></div>
-      <div class="bp-sep"></div>
-      <div class="bp-dot" data-prog="extras"></div>
-    </div>
     <div class="builder-preview-area">
-      <div class="spud-preview" id="spud-preview-emoji">🥔</div>
-      <div class="spud-toppings-display" id="spud-toppings-display" aria-live="polite"></div>
+      <div class="spud-preview" id="spud-preview-emoji" aria-hidden="true">🥔</div>
+      <div class="spud-toppings-display" id="spud-toppings-display" aria-hidden="true"></div>
     </div>
-    <!-- Prep time + nutrition -->
-    <div class="builder-meta">
-      <div class="builder-meta-item">⏱️ Ready in <span id="builder-prep-time">~8 mins</span></div>
-      <div class="builder-meta-item">🔥 Est. <span id="builder-kcal">~480 kcal</span></div>
-    </div>
-    <div class="builder-steps">
-      <div class="builder-step">
-        <div class="builder-step-label">📏 Choose Your Size</div>
-        <div class="builder-options">
-          <button class="builder-opt selected" data-step="size" data-val="Regular" data-emoji="" data-price="0">🥔 Regular</button>
-          <button class="builder-opt" data-step="size" data-val="Large" data-emoji="" data-price="0.500">🥔 Large <small>+BHD 0.500</small></button>
-        </div>
-      </div>
-      <div class="builder-step">
-        <div class="builder-step-label">🥩 Choose Your Protein</div>
-        <div class="builder-options">
-          <button class="builder-opt" data-step="protein" data-val="Chicken" data-emoji="🍗" data-price="0">🍗 Chicken</button>
-          <button class="builder-opt" data-step="protein" data-val="Beef" data-emoji="🥩" data-price="0">🥩 Beef</button>
-          <button class="builder-opt" data-step="protein" data-val="Falafel" data-emoji="🧆" data-price="0">🧆 Falafel</button>
-        </div>
-      </div>
-      <div class="builder-step">
-        <div class="builder-step-label">🫙 Choose Your Sauce</div>
-        <div class="builder-options">
-          <button class="builder-opt" data-step="sauce" data-val="Bechamel" data-emoji="🫙" data-price="0">🫙 Béchamel</button>
-          <button class="builder-opt" data-step="sauce" data-val="Ranch" data-emoji="🤠" data-price="0">🤠 Ranch</button>
-          <button class="builder-opt" data-step="sauce" data-val="BBQ" data-emoji="🍖" data-price="0">🍖 BBQ</button>
-          <button class="builder-opt" data-step="sauce" data-val="Special Sauce" data-emoji="⭐" data-price="0">⭐ Special</button>
-        </div>
-      </div>
-      <div class="builder-step">
-        <div class="builder-step-label">✨ Extras <em style="font-style:normal;color:var(--text-muted);font-size:.7rem">(Optional)</em></div>
-        <div class="builder-options">
-          <button class="builder-opt" data-step="extras" data-val="Extra Cheese" data-emoji="🧀" data-price="0.300" data-kcal="90" data-multi="1">🧀 Extra Cheese <small>+BHD 0.300</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Jalapeños" data-emoji="🌶" data-price="0.200" data-kcal="5" data-multi="1">🌶 Jalapeños <small>+BHD 0.200</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Crispy Onions" data-emoji="🧅" data-price="0.200" data-kcal="40" data-multi="1">🧅 Crispy Onions <small>+BHD 0.200</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Mushrooms" data-emoji="🍄" data-price="0.200" data-kcal="15" data-multi="1">🍄 Mushrooms <small>+BHD 0.200</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Corn" data-emoji="🌽" data-price="0.150" data-kcal="30" data-multi="1">🌽 Corn <small>+BHD 0.150</small></button>
-          <button class="builder-opt" data-step="extras" data-val="Green Onions" data-emoji="🌿" data-price="0" data-kcal="5" data-multi="1">🌿 Green Onions</button>
-        </div>
-      </div>
-    </div>
+    <!-- Steps are rendered from window.SPUD_MENU (single source of truth); every step starts on a default. -->
+    <div class="builder-steps" id="builder-steps"></div>
     <div class="builder-footer">
-      <div class="builder-price" id="builder-price-display">BHD 2.900<span>Base price</span></div>
-      <button class="builder-add-btn" onclick="builderAddToCart()">Add to Order →</button>
+      <div class="builder-price" id="builder-price-display" aria-live="polite">BHD 2.000<span>Your spud</span></div>
+      <button class="builder-add-btn" onclick="builderAddToCart()" data-ar="أضف إلى السلة">Add to Basket</button>
     </div>
-  </div>
-</div>
-<!-- Order Timeline Toast -->
-<div class="order-timeline" id="order-timeline" aria-live="polite" aria-atomic="true">
-  <div class="otl-title">Your Spud is Being Made</div>
-  <div class="otl-steps">
-    <div class="otl-step" id="otl-0"><div class="otl-step-icon">👨‍🍳</div><div class="otl-step-label">Prepping</div></div>
-    <div class="otl-connector" id="otl-c0"></div>
-    <div class="otl-step" id="otl-1"><div class="otl-step-icon">🔥</div><div class="otl-step-label">Cooking</div></div>
-    <div class="otl-connector" id="otl-c1"></div>
-    <div class="otl-step" id="otl-2"><div class="otl-step-icon">🥔</div><div class="otl-step-label">Loading</div></div>
-    <div class="otl-connector" id="otl-c2"></div>
-    <div class="otl-step" id="otl-3"><div class="otl-step-icon">🎉</div><div class="otl-step-label">Ready!</div></div>
   </div>
 </div>
 
@@ -7899,8 +7613,9 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
 ════════════════════════════════════════════════════════════ -->
 
 <!-- AI Food Assistant -->
-<button id="ai-fab" aria-label="Chat with The Spud Guy" title="Chat with The Spud Guy — tap and I'll talk!">
-  <img class="ai-fab-avatar" src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="The Spud Guy, smiling" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none';this.parentNode.insertBefore(document.createTextNode('🥔'),this)}"/>
+<button id="ai-fab" type="button" aria-label="Ask the Spud Guy about the menu" data-ar-label="اسأل سبود غاي عن القائمة">
+  <img class="ai-fab-avatar" src="assets/founder/poses/reactions/expression-16-hackett-02.webp" alt="" draggable="false" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('.webp','.png')}else{this.style.display='none'}"/>
+  <span class="ai-fab-label" aria-hidden="true" data-ar="اسأل">Ask</span>
   <span class="ai-fab-badge" id="ai-fab-badge" aria-hidden="true">AI</span>
 </button>
 <div id="ai-panel" role="dialog" aria-label="The Spud Guy — Spudlicious assistant" aria-modal="true">
@@ -8278,7 +7993,6 @@ var PAGE_LABELS = {
   '':           'Home',
   'menu':       'Menu',
   'story':      'Our Story',
-  'founder':    'The Founder',
   'rewards':    'Rewards',
   'gallery':    'Gallery',
   'catering':   'Catering',
@@ -8296,8 +8010,7 @@ var PAGE_LABELS = {
 var PAGE_SECTIONS = {
   '':           ['hero','marquee-strip','stripe-hero-marquee','explore-hub','stripe-home','founder-words','final-cta','wave-home-cta'],
   'menu':       ['process','cta-build','stripe-menu','menu','cta-order'],
-  'story':      ['about','wave-story-1','ingredients','wave-story-2','truck-showcase','truck-live','nights-editorial','stripe-truck-why','why'],
-  'founder':    ['founders'],
+  'story':      ['founders','ingredients','wave-story-2','truck-showcase','truck-live','nights-editorial','stripe-truck-why','why'],
   'rewards':    ['live-kitchen','stripe-lk-rewards','rewards-hub'],
   'gallery':    ['insta','community','cta-instagram'],
   'catering':   ['catering'],
@@ -8442,6 +8155,8 @@ function doNavigate(page){
 }
 
 function applyPage(page){
+  /* Merged / retired routes keep old links working: founder → Our Story; order + build → Menu (the builder lives there). */
+  var ALIAS={founder:'story',order:'menu',build:'menu'}; if(ALIAS[page]!==undefined){ page=ALIAS[page]; history.replaceState({page:page},'','#/'+page); }
   // Normalize unknown routes to home — prevents ghost pages
   if(page && !PAGE_SECTIONS[page]){
     console.warn('[SPA] Unknown route:', page, '— falling back to home');
@@ -9228,6 +8943,70 @@ if(document.readyState === 'loading'){
   .cd-founder{display:none!important}
 }
 </style>
+<style id="ux-dedup-pass">
+/* ══ UI/UX DE-DUP PASS (Law 54 link map) ══════════════════════════════════
+   Header: 7 nav links · one settings group · Basket · one order action.
+   Targets ≥ 44×44px with ≥ 8px gaps. One highlighted action per viewport. */
+.nav-actions{gap:8px}
+.nav-tools{display:flex;align-items:center;gap:8px;padding:0 8px;border-inline-start:1px solid rgba(255,255,255,.28)}
+.nav-btn{width:44px!important;height:44px!important;min-width:44px}
+.nav-btn-text{width:auto!important;padding:0 14px;border-radius:999px!important;font:700 .9rem/1 'Geeza Pro','Noto Sans Arabic','Noto Naskh Arabic',Tahoma,sans-serif}
+.nav-btn-text:lang(en){font-family:var(--font-body)}
+.cart-btn{width:auto!important;padding:0 16px 0 12px;border-radius:999px!important;gap:6px;font-weight:800;font-size:.85rem;color:#fff}
+.cart-btn .cart-count{position:static;margin-inline-start:2px}
+.nav-link{min-height:44px;display:inline-flex;align-items:center}
+.nav-links{gap:8px}
+.order-nav-btn{min-height:44px;display:inline-flex;align-items:center;white-space:nowrap;text-decoration:none}
+/* One highlighted action per viewport: the header order link stays quiet while the hero's is on screen. */
+.order-nav-btn.is-quiet{background:transparent!important;color:#fff!important;border-color:rgba(255,255,255,.6)!important;box-shadow:none!important}
+/* Nav collapses into the menu sheet before it can overflow (7 links + actions). */
+@media(max-width:1180px){
+  .nav-links{display:none!important}
+  .mobile-menu-btn{display:flex!important;width:44px;height:44px}
+  .order-nav-btn{display:none!important}
+}
+.mobile-nav-link{min-height:48px}
+#mobile-tools-slot .nav-tools{border:0;padding:0;flex-wrap:wrap}
+#mobile-tools-slot .nav-btn{border-color:currentColor}
+/* Opening-hours badge sits under the header instead of colliding with it */
+#status-badge{top:auto!important;bottom:clamp(14px,2.2vh,26px);right:auto!important;inset-inline-start:clamp(12px,2.4vw,34px)}
+/* The assistant: one labelled button, fixed in its own corner, no idle pulse */
+#ai-fab{position:fixed!important;right:clamp(12px,2.4vw,34px)!important;left:auto!important;bottom:clamp(14px,2.2vh,26px)!important;z-index:var(--z-float,900);
+  width:auto!important;height:52px!important;padding:4px 16px 4px 4px!important;border-radius:999px!important;gap:8px;animation:none!important}
+[dir="rtl"] #ai-fab{right:auto!important;left:clamp(12px,2.4vw,34px)!important;padding:4px 4px 4px 16px!important}
+[dir="rtl"] #status-badge{inset-inline-start:auto;right:clamp(12px,2.4vw,34px)!important}
+#ai-fab .ai-fab-avatar{width:44px;height:44px;border-radius:50%}
+.ai-fab-label{color:#fff;font-weight:800;font-size:.9rem}
+#ai-fab .ai-fab-badge{position:static}
+/* Catering: one WhatsApp enquiry link replaces the form */
+.catering-wa-note{color:var(--text-muted,#3c4a5e);margin:8px 0 20px;line-height:1.6}
+#catering-wa{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:48px}
+/* Builder: honest steps from SPUD_MENU */
+.builder-qty{align-items:center}
+.builder-qty .builder-opt{min-width:44px;min-height:44px;justify-content:center}
+.builder-qty-val{min-width:2ch;text-align:center;font-weight:800;font-size:1.1rem}
+.builder-opt[disabled]{opacity:.4;cursor:not-allowed}
+.addon-chip{font:inherit;border:inherit;cursor:pointer}
+/* One founder/assistant instance on screen: the Ask button. Standalone founder figures (hero companion, page floats)
+   are hidden; his portrait stays inside Our Story where it belongs. */
+.spud-founder--hero,.spud-founder--float,.spud-founder--companion{display:none!important}
+#mobile-tools-slot #lang-toggle,#mobile-tools-slot #sound-toggle{display:flex!important}
+/* ≤ 1 idle motion in view (Law 06): decorative loops play once and come to rest. The one kept loop is
+   Mr. Spud's float in the hero; the assistant's typing dots are a loading indicator, not decoration. */
+body *:not(#mascot-float):not(.ai-dot),body *::before,body *::after{animation-iteration-count:1!important}
+/* 44px targets (Fitts / WCAG 2.5.8) */
+.footer-link,.footer-links a{display:inline-flex;align-items:center;min-height:44px}
+.social-btn{min-width:44px!important;min-height:44px!important}
+.cart-close,.ai-close-btn,#ai-send,.ai-voice-btn,#np-clear,#ot-close,.builder-close-btn,.ach-close,.qty-btn,#sound-toggle{min-width:44px!important;min-height:44px!important;width:auto;height:auto}
+.ai-close-btn,#ai-send,.ai-voice-btn{width:44px!important;height:44px!important}
+#ai-input{min-height:44px}
+.footer-link{min-width:44px;justify-content:flex-start}
+#ai-panel button,#ai-panel input,#order-tracker button,#notif-panel button,#achievement-toast button,body .ach-close{min-height:44px!important;min-width:44px!important}
+#ai-panel .ai-close-btn,#ai-panel #ai-send,#ai-panel .ai-voice-btn{width:44px!important;height:44px!important}
+#vid-lb-close{min-width:44px!important;min-height:44px!important}
+html{scroll-padding-top:104px}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -9857,8 +9636,11 @@ window.FounderOS = {
 };
 
 /* ── Init ─────────────────────────────────────────────────────────────────── */
+/* One assistant instance: the labelled #ai-fab button is the assistant. The full-body FounderOS figure that
+   rendered next to it (avatar + figure at once) is switched off; set FIGURE_ENABLED = true to bring it back. */
+var FIGURE_ENABLED = false;
 function init() {
-  if (REDUCED) return; /* honour reduced motion — no Phase 3 host */
+  if (REDUCED || !FIGURE_ENABLED) return; /* honour reduced motion — no Phase 3 host */
 
   buildHost();
   hookNavigation();
