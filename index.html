@@ -3474,20 +3474,7 @@ try{ if(sessionStorage.getItem('spud-intro')==='1') document.documentElement.cla
 <a href="#main-start" class="skip-to-main" id="skip-main" data-ar="تخطَّ إلى المحتوى">Skip to main content</a>
 <div id="scroll-progress" aria-hidden="true"></div>
 <!-- SCROLL STORY RAIL -->
-<nav class="scroll-story" id="scroll-story" aria-label="Page progress" aria-hidden="true">
-  <div class="ss-line"><div class="ss-line-fill" id="ss-fill"></div></div>
-  <div class="ss-dot" data-section="hero"     data-label="Welcome"></div>
-  <div class="ss-dot" data-section="about"       data-label="Our Story"></div>
-  <div class="ss-dot" data-section="ingredients" data-label="Ingredients"></div>
-  <div class="ss-dot" data-section="why"         data-label="Why Us"></div>
-  <div class="ss-dot" data-section="process"     data-label="Process"></div>
-  <div class="ss-dot" data-section="menu"        data-label="The Spuds"></div>
-  <div class="ss-dot" data-section="live-kitchen" data-label="Kitchen"></div>
-  <div class="ss-dot" data-section="catering"     data-label="Events"></div>
-  <div class="ss-dot" data-section="reviews"   data-label="Love"></div>
-  <div class="ss-dot" data-section="community" data-label="Community"></div>
-  <div class="ss-dot" data-section="final-cta" data-label="Order"></div>
-</nav>
+<!-- Scroll-story rail removed: its labels overlapped page content. -->
 
 <!-- CINEMATIC LOADER -->
 <div id="loader" role="status" aria-label="Loading Spudlicious">
@@ -5250,7 +5237,8 @@ window.SPUD_MENU = {
 
 // ══ NAV SCROLL STATES ════════════════════════════════════════
 (function(){
-  var navEl=document.querySelector('nav');
+  /* This always matched the (now removed) scroll-story rail, never the main nav; kept scoped so the header looks unchanged. */
+  var navEl=document.querySelector('nav.scroll-story');
   if(!navEl)return;
   var lastY=0;
   function updateNav(){
@@ -5968,13 +5956,6 @@ document.querySelectorAll('.card-btn').forEach(function(btn){
   try{
     var v=parseInt(localStorage.getItem('spud-visits')||'0')+1;
     localStorage.setItem('spud-visits',v);
-    if(v>1){
-      setTimeout(function(){
-        showToast('👋 Welcome back, Spud fan!');
-        var hm=document.getElementById('hero-mascot');
-        if(hm){hm.classList.remove('hat-tip');void hm.offsetWidth;hm.classList.add('hat-tip');setTimeout(function(){hm.classList.remove('hat-tip');},800);}
-      },3800);
-    }
   }catch(e){}
 })();
 
