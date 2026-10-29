@@ -475,10 +475,6 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
     <p class="lead" id="menu-lead">Every spud is BHD 2.000, VAT included. Tap one to start your order.</p>
     <div class="menu-grid" id="menu-grid"></div>
     <p class="addons-line" id="addons-line"></p>
-    <figure class="feature">
-      <img src="assets/web/food/spud-truck.webp" alt="A loaded potato bowl piled with melted cheese, held up at the Spudlicious truck" data-ar-alt="وعاء بطاطس محمّل بالجبن الذائب عند شاحنة سبودلشيس" width="919" height="601" loading="lazy" decoding="async">
-      <figcaption data-ar="طازجة من الشاحنة، كل ليلة.">Fresh from the truck, every night.</figcaption>
-    </figure>
     <noscript><p class="addons-line">Chicken Béchamel · Beef Béchamel · Chicken Ranch · Beef Ranch — BHD 2.000 each. Extra Cheese +BHD 0.200 · Jalapeños +BHD 0.200. Order on WhatsApp: +973 3326 0007.</p></noscript>
   </div>
 </section>
@@ -628,7 +624,7 @@ html[lang="ar"] .facts dt{font-family:var(--font-ar);font-weight:700}
       <li><a href="https://www.instagram.com/spudlicious.bh/" target="_blank" rel="noopener">Instagram @spudlicious.bh</a></li>
       <li><a href="https://www.tiktok.com/@spudlicious.bh" target="_blank" rel="noopener">TikTok @spudlicious.bh</a></li>
     </ul>
-    <small data-ar="© 2026 سبودلشيس · البسيتين، البحرين · حلال 100% · لذيذة. محمّلة. أسطورية.">© 2026 Spudlicious · Busaiteen, Bahrain · 100% Halal · Loaded. Delicious. Legendary.</small>
+    <small id="copy" data-ar="© 2026 سبودلشيس · البسيتين، البحرين · حلال 100% · لذيذة. محمّلة. أسطورية.">© 2026 Spudlicious · Busaiteen, Bahrain · 100% Halal · Loaded. Delicious. Legendary.</small>
   </div>
 </footer>
 
@@ -650,18 +646,19 @@ window.SPUD_HOURS = {
 window.SPUD_VAT = { rate:0.10, inclusive:true };
 window.SPUD_MENU = {
   currency: 'BHD',
-  /* photo: set to an image path (4:3, e.g. 'assets/web/menu/chicken-bechamel.jpg') to replace the card placeholder. */
+  /* photo: card image (shown 4:3, cropped). Interim: the two real bowl photos, alternated; they are decorative (alt="")
+     because the card names the dish. Swap in one photo per spud when the owner sends them. null = placeholder tile. */
   items: [
-    { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', price:2.0, photo:null, best:true, protein:'chicken', sauce:'bechamel',
+    { id:'chicken-bechamel', name:'Chicken Béchamel', name_ar:'تشيكن بشاميل', price:2.0, photo:'assets/web/food/spud-hero-720.webp', best:true, protein:'chicken', sauce:'bechamel',
       desc:'Tender chicken smothered in a rich, creamy homemade béchamel sauce, loaded over a perfectly baked potato.',
       desc_ar:'دجاج طري مغطّى بصلصة بشاميل منزلية غنية وكريمية، فوق بطاطس مخبوزة بإتقان.' },
-    { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', price:2.0, photo:null, protein:'beef', sauce:'bechamel',
+    { id:'beef-bechamel', name:'Beef Béchamel', name_ar:'لحم بشاميل', price:2.0, photo:'assets/web/food/spud-truck.webp', protein:'beef', sauce:'bechamel',
       desc:'Seasoned Halal beef finished with our signature creamy béchamel for a comforting, indulgent experience.',
       desc_ar:'لحم بقري حلال متبّل مع صلصة البشاميل الكريمية المميزة لدينا. دافئ وغني.' },
-    { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', price:2.0, photo:null, protein:'chicken', sauce:'ranch',
+    { id:'chicken-ranch', name:'Chicken Ranch', name_ar:'تشيكن رانش', price:2.0, photo:'assets/web/food/spud-hero-720.webp', protein:'chicken', sauce:'ranch',
       desc:'Juicy chicken combined with our flavourful ranch sauce. Fresh, satisfying and totally addictive.',
       desc_ar:'دجاج طري مع صلصة الرانش المميزة. طازج ومُشبع ولا يُقاوَم.' },
-    { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', price:2.0, photo:null, protein:'beef', sauce:'ranch',
+    { id:'beef-ranch', name:'Beef Ranch', name_ar:'لحم رانش', price:2.0, photo:'assets/web/food/spud-truck.webp', protein:'beef', sauce:'ranch',
       desc:'Perfectly seasoned Halal beef paired with creamy ranch sauce. Bold, hearty and packed with flavour.',
       desc_ar:'لحم بقري حلال متبّل بإتقان مع صلصة رانش كريمية. جريء ومُشبع ومليء بالنكهة.' }
   ],
@@ -858,6 +855,7 @@ window.SPUD_MENU = {
     $('hero-wa').href = wa(t('heroMsg'));
     document.title = lang === 'ar' ? 'سبودلشيس — موطن البطاطس المحمّلة في البحرين | شاحنة طعام في البسيتين'
                                    : "Spudlicious — Bahrain's Home of Loaded Potatoes | Busaiteen Food Truck";
+    var cp = $('copy'); cp.textContent = cp.textContent.replace(/\d{4}/, new Date().getFullYear());
     renderMenu(); render(); renderOpen();
     try { localStorage.setItem('spud-lang', lang); } catch(e){}
   }
