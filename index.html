@@ -155,10 +155,12 @@
 }
 </script>
 <style>
-@font-face{font-family:'Fredoka';src:url(assets/fonts/fredoka-latin-500-700.woff2) format('woff2');font-weight:500 700;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Fredoka Intro';src:url(assets/fonts/fredoka-latin-500-700.woff2) format('woff2');font-weight:500 700;font-display:swap}
+@font-face{font-family:'Fredoka';src:url(assets/fonts/fredoka-latin-500-700.woff2) format('woff2');font-weight:500 700;font-display:optional;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* BRIGHT SPUD BLUE. Contrast rules (measured): white on #1C91F2 = 3.29 → large text only (≥ 24px, or ≥ 19px bold);
    navy #07203C on #1C91F2 = 4.98 → small text on blue is navy; body copy sits on white cards;
-   gold on blue = 2.0 → the gold accent word always carries a navy outline (measured against the outline, 11:1). */
+   gold on blue = 2.0 → the gold accent word always carries a navy outline (measured against the outline, 11:1),
+   drawn with text-shadow: -webkit-text-stroke made first layout ~40% slower on mobile. */
 :root{
   --blue:#1C91F2;--blue-deep:#0F7AD4;--blue-light:#2A9BF5;--blue-dark:#0D6FBF;--blue-soft:#E3F1FE;
   --gold:#FFC107;--cream:#FFF6E6;--white:#FFFFFF;--navy:#081324;--ink:#07203C;--muted:#3C4A5E;
@@ -196,6 +198,8 @@ video:focus-within{outline:3px solid var(--ink);outline-offset:3px}
 .skip{position:absolute;inset-inline-start:12px;top:-60px;background:var(--navy);color:var(--cream);padding:12px 16px;border-radius:var(--r-sm);z-index:60;font-weight:700}
 .skip:focus{top:12px}
 section{padding-block:64px}
+/* Below-the-fold sections skip layout/paint until near the viewport (first layout was ~1 s on a throttled phone). */
+main>section:not(.hero),.site-foot{content-visibility:auto;contain-intrinsic-size:auto 900px}
 .bhd{white-space:nowrap;font-variant-numeric:tabular-nums}
 /* Section heads on blue: eyebrow pill (navy on white), white display headline, bold white lead (large text) */
 .eyebrow{display:inline-block;padding:4px 12px;border-radius:999px;background:var(--white);color:var(--ink);font:600 .9375rem/1.4 var(--display);margin-bottom:12px}
@@ -211,8 +215,8 @@ html[lang="ar"] .eyebrow{font-family:var(--font-ar);font-weight:700}
 .no-intro .intro{display:none}
 .intro-fly{position:absolute;top:18vh;left:50%;width:150px;height:218px;margin-left:-75px;perspective:700px;animation:fly 2200ms cubic-bezier(.2,.75,.25,1) both,settle 420ms var(--spring-playful) 2200ms}
 .intro-spud{width:150px;height:218px;animation:flip 2200ms cubic-bezier(.2,.75,.25,1) both}
-.intro-word{position:absolute;left:0;right:0;top:calc(18vh + 240px);text-align:center;font:700 clamp(2.5rem,11vw,5.5rem)/1 var(--display);letter-spacing:.04em;color:var(--gold);opacity:0;animation:word 480ms var(--spring-playful) 2250ms forwards;max-width:none}
-.intro-tag{position:absolute;left:0;right:0;top:calc(18vh + 240px + clamp(3.25rem,13vw,6.5rem));text-align:center;font:600 clamp(1rem,3.6vw,1.375rem)/1.4 var(--display);letter-spacing:.06em;color:var(--cream);opacity:0;animation:rise 350ms var(--ease-out) 2500ms forwards;max-width:none}
+.intro-word{position:absolute;left:0;right:0;top:calc(18vh + 240px);text-align:center;font:700 clamp(2.5rem,11vw,5.5rem)/1 'Fredoka Intro',var(--display);letter-spacing:.04em;color:var(--gold);opacity:0;animation:word 480ms var(--spring-playful) 2250ms forwards;max-width:none}
+.intro-tag{position:absolute;left:0;right:0;top:calc(18vh + 240px + clamp(3.25rem,13vw,6.5rem));text-align:center;font:600 clamp(1rem,3.6vw,1.375rem)/1.4 'Fredoka Intro',var(--display);letter-spacing:.06em;color:var(--cream);opacity:0;animation:rise 350ms var(--ease-out) 2500ms forwards;max-width:none}
 html[lang="ar"] .intro-tag{font-family:var(--display-ar);letter-spacing:0}
 .intro-skip{position:absolute;top:16px;inset-inline-end:16px;min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--cream);background:transparent;color:var(--cream);font-weight:700}
 .intro-skip:hover{background:var(--cream);color:var(--navy)}
@@ -233,7 +237,9 @@ html[lang="ar"] .intro-tag{font-family:var(--display-ar);letter-spacing:0}
 .nav{display:none;gap:4px}
 .nav a{display:flex;align-items:center;min-height:44px;padding-inline:12px;color:var(--ink);font-weight:600;text-decoration:none;border-radius:999px}
 .nav a:hover{background:var(--blue-soft)}
-.lang{min-height:44px;min-width:44px;padding-inline:16px;border:var(--bd);border-radius:999px;background:var(--white);color:var(--ink);font-weight:700;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.lang{min-height:44px;min-width:44px;padding-inline:16px;border:var(--bd);border-radius:999px;background:var(--white);color:var(--ink);font-weight:700;font-family:var(--font)}
+/* Name an Arabic face for the Arabic label: falling back from system-ui to Arabic cost ~0.8 s of first layout on a throttled phone. */
+.lang:lang(ar){font-family:'Geeza Pro','Noto Sans Arabic','Noto Naskh Arabic',Tahoma,sans-serif}
 .lang:hover{background:var(--ink);color:var(--white)}
 @media (min-width:900px){.nav{display:flex}}
 
@@ -253,8 +259,7 @@ html[lang="ar"] .btn-gold{font-family:var(--font-ar)}
 .hero{padding-block:32px 64px;overflow:hidden;background:linear-gradient(165deg,var(--blue-deep),var(--blue) 55%,var(--blue-light))}
 .hero .wrap{display:grid;gap:48px;align-items:center}
 .hero h1{font-size:clamp(2.75rem,9vw,4.75rem);max-width:12ch;color:var(--white);text-shadow:0 3px 0 rgba(7,32,60,.3)}
-.accent{color:var(--gold);text-shadow:none;-webkit-text-stroke:0;paint-order:stroke fill;-webkit-text-stroke:6px var(--ink)}
-@supports not (paint-order:stroke){.accent{-webkit-text-stroke:2px var(--ink)}}
+.accent{color:var(--gold);text-shadow:-2px -2px 0 var(--ink),2px -2px 0 var(--ink),-2px 2px 0 var(--ink),2px 2px 0 var(--ink),0 -2px 0 var(--ink),0 2px 0 var(--ink),-2px 0 0 var(--ink),2px 0 0 var(--ink),0 5px 0 var(--ink)}
 .hero p.sub{font-size:1.25rem;font-weight:700;color:var(--white);max-width:34ch;margin-top:16px;text-shadow:var(--on-blue-shadow)}
 .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:24px}
 .hero-actions .quiet{display:inline-flex;align-items:center;min-height:48px;color:var(--ink);font-weight:700;font-size:1.125rem}
